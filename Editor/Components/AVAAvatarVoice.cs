@@ -15,6 +15,7 @@ namespace stf.ava.Components
 {
 	public class AVAAvatarVoice : MonoBehaviour, ISTFComponent
 	{
+		public static string _TYPE = "AVA.avatar_voice";
 		public string _id;
 		public string id {get => _id; set => _id = value;}
 		public List<string> _extends;
@@ -43,8 +44,6 @@ namespace stf.ava.Components
 
 	public class AVAAvatarVoiceExporter : ASTFComponentExporter
 	{
-		public static string _TYPE = "AVA.avatar_voice";
-
 		override public List<GameObject> gatherNodes(Component component)
 		{
 			var c = (AVAAvatarVoice)component;
@@ -58,7 +57,7 @@ namespace stf.ava.Components
 			var c = (AVAAvatarVoice)component;
 			var ret = new JObject();
 			string voice_parent_node = state.GetNodeId(c.voice_parent);
-			ret.Add("type", _TYPE);
+			ret.Add("type", AVAAvatarVoice._TYPE);
 			ret.Add("extends", new JArray(c.extends));
 			ret.Add("voice_parent", voice_parent_node);
 			ret.Add("voice_position", new JArray() {c.voice_position.x, c.voice_position.y, c.voice_position.z});
@@ -72,7 +71,7 @@ namespace stf.ava.Components
 	{
 		static Register_AVAAvatarVoice()
 		{
-			STFRegistry.RegisterComponentImporter(AVAAvatarVoiceExporter._TYPE, new AVAAvatarVoiceImporter());
+			STFRegistry.RegisterComponentImporter(AVAAvatarVoice._TYPE, new AVAAvatarVoiceImporter());
 			STFRegistry.RegisterComponentExporter(typeof(AVAAvatarVoice), new AVAAvatarVoiceExporter());
 		}
 	}

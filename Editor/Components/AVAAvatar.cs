@@ -15,6 +15,7 @@ namespace stf.ava.Components
 {
 	public class AVAAvatar : MonoBehaviour, ISTFComponent
 	{
+		public static string _TYPE = "AVA.avatar";
 		public string _id;
 		public string id {get => _id; set => _id = value;}
 		public List<string> _extends;
@@ -32,8 +33,6 @@ namespace stf.ava.Components
 		public string license_link;
 		public GameObject viewport_parent;
 		public Vector3 viewport_position;
-		/*public GameObject voice_parent;
-		public Vector3 voice_position;*/
 	}
 
 	public class AVAAvatarImporter : ASTFComponentImporter
@@ -52,9 +51,6 @@ namespace stf.ava.Components
 			component.viewport_parent = state.GetNode((string)json["viewport_parent"]);
 			var viewport_position_array = (JArray)json["viewport_position"];
 			component.viewport_position = new Vector3((float)viewport_position_array[0], (float)viewport_position_array[1], (float)viewport_position_array[2]);
-			/*component.voice_parent = state.GetNode((string)json["voice_parent"]);
-			var voice_position_array = (JArray)json["voice_position"];
-			component.voice_position = new Vector3((float)voice_position_array[0], (float)voice_position_array[1], (float)voice_position_array[2]);*/
 		}
 	}
 
@@ -66,7 +62,6 @@ namespace stf.ava.Components
 			var c = (AVAAvatar)component;
 			var ret = new List<GameObject>();
 			if(c.viewport_parent) ret.Add(c.viewport_parent);
-			//if(c.voice_parent) ret.Add(c.voice_parent);
 			return ret;
 		}
 
@@ -83,8 +78,7 @@ namespace stf.ava.Components
 			var c = (AVAAvatar)component;
 			var ret = new JObject();
 			string viewport_parent_node = state.GetNodeId(c.viewport_parent);
-			//string voice_parent_node = state.GetNodeId(c.voice_parent);
-			ret.Add("type", "AVA.avatar");
+			ret.Add("type", AVAAvatar._TYPE);
 			ret.Add("avatar_name", c.avatar_name);
 			ret.Add("avatar_version", c.avatar_version);
 			if(c.icon != null)
@@ -94,8 +88,6 @@ namespace stf.ava.Components
 			ret.Add("license_link", c.license_link);
 			ret.Add("viewport_parent", viewport_parent_node);
 			ret.Add("viewport_position", new JArray() {c.viewport_position.x, c.viewport_position.y, c.viewport_position.z});
-			/*ret.Add("voice_parent", voice_parent_node);
-			ret.Add("voice_position", new JArray() {c.voice_position.x, c.voice_position.y, c.voice_position.z});*/
 			return ret;
 		}
 	}
@@ -106,7 +98,7 @@ namespace stf.ava.Components
 	{
 		static Register_AVAAvatar()
 		{
-			STFRegistry.RegisterComponentImporter("AVA.avatar", new AVAAvatarImporter());
+			STFRegistry.RegisterComponentImporter(AVAAvatar._TYPE, new AVAAvatarImporter());
 			STFRegistry.RegisterComponentExporter(typeof(AVAAvatar), new AVAAvatarExporter());
 		}
 	}
