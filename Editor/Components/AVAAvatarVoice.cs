@@ -33,6 +33,8 @@ namespace stf.ava.Components
 		override public void parseFromJson(ISTFImporter state, JToken json, string id, GameObject go)
 		{
 			var component = go.AddComponent<AVAAvatarVoice>();
+			component.id = id;
+			component.extends = json["extends"]?.ToObject<List<string>>();
 			component.voice_parent = state.GetNode((string)json["voice_parent"]);
 			var voice_position_array = (JArray)json["voice_position"];
 			component.voice_position = new Vector3((float)voice_position_array[0], (float)voice_position_array[1], (float)voice_position_array[2]);
@@ -57,6 +59,7 @@ namespace stf.ava.Components
 			var ret = new JObject();
 			string voice_parent_node = state.GetNodeId(c.voice_parent);
 			ret.Add("type", _TYPE);
+			ret.Add("extends", new JArray(c.extends));
 			ret.Add("voice_parent", voice_parent_node);
 			ret.Add("voice_position", new JArray() {c.voice_position.x, c.voice_position.y, c.voice_position.z});
 			return ret;
