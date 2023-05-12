@@ -4,6 +4,7 @@ using stf.serialisation;
 using stf;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -37,7 +38,7 @@ namespace ava.Components
 		
 		public static string _TYPE = "AVA.humanoid_mappings";
 		
-		private static Dictionary<string, string> translations = new Dictionary<string, string> {
+		public static readonly Dictionary<string, string> translations = new Dictionary<string, string> {
 			{"Hip", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.Hips)},
 			{"Spine", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.Spine)},
 			{"Chest", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.Chest)},
@@ -132,7 +133,16 @@ namespace ava.Components
 	{
 		public override void parseFromJson(ISTFImporter state, JToken json, string id, GameObject go)
 		{
-			throw new NotImplementedException();
+			var c = go.AddComponent<AVAHumanoidMapping>();
+			c.locomotion_type = (string)json["locomotion_type"];
+			state.AddTask(new Task(() => {
+				c.armatureInstance = state.GetNode((string)json["target_armature_instance"]).GetComponent<STFArmatureInstance>();
+			}));
+			c.mappings = new List<BoneMappingPair>();
+			foreach(var t in AVAHumanoidMapping.translations)
+			{
+				c.mappings.Add(new BoneMappingPair(t.Key, (string)json[t.Key]));
+			}
 		}
 	}
 
