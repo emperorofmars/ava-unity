@@ -8,13 +8,19 @@ using stf.Components;
 using stf.serialisation;
 using UnityEngine;
 using ava.Components;
+using ava.Converters;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace ava
 {
 	public class AVASecondStageVRC : ISTFSecondStage
 	{
 		private Dictionary<Type, ISTFSecondStageConverter> converters = new Dictionary<Type, ISTFSecondStageConverter>() {
-			{typeof(STFTwistConstraintBack), new STFTwistConstraintBackConverter()}
+			{typeof(STFTwistConstraintBack), new STFTwistConstraintBackConverter()},
+			{typeof(AVAAvatar), new AVAAvatarVRCConverter()}
 		};
 		
 		public bool CanHandle(ISTFAsset asset)
@@ -31,7 +37,7 @@ namespace ava
 
 			convertTree(convertedRoot);
 
-			var secondStageAsset = new STFSecondStageAsset(convertedRoot, asset.getId() + "_sub", asset.GetSTFAssetName());
+			var secondStageAsset = new STFSecondStageAsset(convertedRoot, asset.getId() + "_VRC", asset.GetSTFAssetName(), "VRChat Avatar");
 			return new SecondStageResult {assets = new List<ISTFAsset>{secondStageAsset}, resources = new List<UnityEngine.Object>{}};
 		}
 
@@ -49,11 +55,13 @@ namespace ava
 	}
 
 #if UNITY_EDITOR
+	[InitializeOnLoad]
 	public class Register_AVASecondStageVRC
 	{
 		static Register_AVASecondStageVRC()
 		{
 			STFImporterStageRegistry.RegisterStage(new AVASecondStageVRC());
+			Debug.Log("Registered AVA");
 		}
 	}
 #endif

@@ -4,6 +4,7 @@
 using ava.Components;
 using stf.serialisation;
 using UnityEngine;
+using VRC.SDK3.Avatars.Components;
 
 namespace ava.Converters
 {
@@ -12,6 +13,11 @@ namespace ava.Converters
 		public void convert(Component component, GameObject root)
 		{
 			var avaAvatar = (AVAAvatar)component;
+
+			var vrcAvatar = component.gameObject.AddComponent<VRCAvatarDescriptor>();
+			if(avaAvatar.viewport_parent != null && avaAvatar.viewport_position != null) vrcAvatar.ViewPosition = avaAvatar.viewport_parent.transform.position - root.transform.position + avaAvatar.viewport_position;
+
+			// get all extending components and handle and remove these
 			
 			#if UNITY_EDITOR
             UnityEngine.Object.DestroyImmediate(component);
