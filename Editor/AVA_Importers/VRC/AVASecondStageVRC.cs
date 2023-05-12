@@ -61,7 +61,7 @@ namespace ava
 		static Register_AVASecondStageVRC()
 		{
 			STFImporterStageRegistry.RegisterStage(new AVASecondStageVRC());
-			Debug.Log("Registered AVA");
+			Debug.Log("Registered AVA VRC Loader");
 		}
 	}
 #endif

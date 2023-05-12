@@ -56,7 +56,6 @@ namespace ava.Components
 
 	public class AVAAvatarExporter : ASTFComponentExporter
 	{
-
 		override public List<GameObject> gatherNodes(Component component)
 		{
 			var c = (AVAAvatar)component;
