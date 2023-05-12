@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using UnityEditor;
 #endif
 
-namespace stf.ava.Components
+namespace ava.Components
 {
 	public class AVAAvatar : MonoBehaviour, ISTFComponent
 	{

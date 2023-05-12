@@ -1,4 +1,4 @@
-
+/*
 #if UNITY_EDITOR
 
 using stf.ava.importer.common;
@@ -44,3 +44,4 @@ namespace oap.ava.importer.common
 }
 
 #endif
+*/

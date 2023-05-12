@@ -8,7 +8,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace oap.ava.importer.common
+namespace ava
 {
     [InitializeOnLoad]
     public static class ScriptDefinesManager
