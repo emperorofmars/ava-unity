@@ -1,6 +1,4 @@
 
-#if VRCSDK3_FOUND
-
 using System;
 using System.Collections.Generic;
 using stf;
@@ -87,5 +85,3 @@ namespace ava
 	}
 #endif
 }
-
-#endif
