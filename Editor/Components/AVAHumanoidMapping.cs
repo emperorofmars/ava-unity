@@ -201,36 +201,37 @@ namespace ava.Components
 				var go = TreeUtils.findByBoneId(root, mapping.uuid);
 				if(humanName != null && humanName.Length > 0 && go != null) mappings.Add(new HumanoidTransformMapping(humanName, go));
 			}
-			
-			var hips = mappings.Find(m => m.humanoidName == "Hips");
-			var armature = stfComponent.armatureInstance.bones;
 
 			var humanDescription = new HumanDescription
 			{
-				/*skeleton = armature.Select(t =>
-				{
-					var sb = new SkeletonBone();
-					sb.name = t.name;
-					sb.position = t.transform.localPosition;
-					sb.rotation = t.transform.localRotation;
-					sb.scale = t.transform.localScale;
-					//Debug.Log(sb.name);
-					return sb;
-				}).Append(new SkeletonBone
-				{
-					name = stfComponent.armatureInstance.name,
-					position = stfComponent.armatureInstance.transform.localPosition,
-					rotation = stfComponent.armatureInstance.transform.localRotation,
-					scale = stfComponent.armatureInstance.transform.localScale
-				}).ToArray(),*/
+				armStretch = 0.05f,
+				feetSpacing = 0f,
+				hasTranslationDoF = false,
+				legStretch = 0.05f,
+				lowerArmTwist = 0.5f,
+				lowerLegTwist = 0.5f,
+				upperArmTwist = 0.5f,
+				upperLegTwist = 0.5f,
+				skeleton = (new List<Transform>(root.GetComponentsInChildren<Transform>())).Select(t => {
+					return new SkeletonBone()
+					{
+						name = t.name,
+						position = t.localPosition,
+						rotation = t.localRotation,
+						scale = t.localScale
+					};
+				}).ToArray(),
 				human = mappings.Select(mapping => 
 				{
-					var bone = new HumanBone {humanName = mapping.humanoidName, boneName = mapping.go.name};
+					var bone = new HumanBone {
+						humanName = mapping.humanoidName,
+						boneName = mapping.go.name,
+						limit = new HumanLimit()
+					};
 					//Debug.Log(bone.humanName + " : " + bone.boneName);
 					bone.limit.useDefaultValues = true;
 					return bone;
 				}).ToArray()
-				//not handling all the rest here as its unity specific for now
 			};
 
 			var avatar = AvatarBuilder.BuildHumanAvatar(root, humanDescription);
@@ -240,7 +241,6 @@ namespace ava.Components
 				Debug.LogError("Invalid humanoid avatar");
 			}
 			animator.avatar = avatar;
-
 			resources.Add(avatar);
 
 			#if UNITY_EDITOR
