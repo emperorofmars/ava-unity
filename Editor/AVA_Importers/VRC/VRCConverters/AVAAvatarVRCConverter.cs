@@ -1,6 +1,7 @@
 
 #if VRCSDK3_FOUND
 
+using System.Collections.Generic;
 using ava.Components;
 using stf.serialisation;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace ava.Converters
 {
 	public class AVAAvatarVRCConverter : ISTFSecondStageConverter
 	{
-		public void convert(Component component, GameObject root)
+		public void convert(Component component, GameObject root, List<UnityEngine.Object> resources)
 		{
 			var avaAvatar = (AVAAvatar)component;
 

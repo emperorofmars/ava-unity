@@ -5,6 +5,7 @@ using stf;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
+using System.Linq;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -170,6 +171,85 @@ namespace ava.Components
 			return ret;
 		}
 	}
+	public class AVAHumanoidMappingConverter : ISTFSecondStageConverter
+	{
+		private class HumanoidTransformMapping
+		{
+			public HumanoidTransformMapping(string humanoidName, GameObject go)
+			{
+				this.humanoidName = humanoidName;
+				this.go = go;
+			}
+
+			public string humanoidName;
+			public GameObject go;
+		}
+
+		public void convert(Component component, GameObject root, List<UnityEngine.Object> resources)
+		{
+			var stfComponent = (AVAHumanoidMapping)component;
+			var animator = root.AddComponent<Animator>();
+			animator.applyRootMotion = true;
+			animator.updateMode = AnimatorUpdateMode.Normal;
+			animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
+			
+			var name_mappings = stfComponent.mappings.FindAll(mapping => mapping.bone != null && mapping.bone.Length > 0 && mapping.uuid != null && mapping.uuid.Length > 0);
+			var mappings = new List<HumanoidTransformMapping>();
+			foreach(var mapping in name_mappings)
+			{
+				var humanName = stfComponent.translateHumanoidAVAtoUnity(mapping.bone, stfComponent.locomotion_type);
+				var go = TreeUtils.findByBoneId(root, mapping.uuid);
+				if(humanName != null && humanName.Length > 0 && go != null) mappings.Add(new HumanoidTransformMapping(humanName, go));
+			}
+			
+			var hips = mappings.Find(m => m.humanoidName == "Hips");
+			var armature = stfComponent.armatureInstance.bones;
+
+			var humanDescription = new HumanDescription
+			{
+				skeleton = armature.Select(t =>
+				{
+					var sb = new SkeletonBone();
+					sb.name = t.name;
+					sb.position = t.transform.localPosition;
+					sb.rotation = t.transform.localRotation;
+					sb.scale = t.transform.localScale;
+					Debug.Log(sb.name);
+					return sb;
+				}).Append(new SkeletonBone
+				{
+					name = stfComponent.armatureInstance.name,
+					position = Vector3.zero,
+					rotation = Quaternion.identity,
+					scale = Vector3.one
+				}).ToArray(),
+				human = mappings.Select(mapping => 
+				{
+					var bone = new HumanBone {humanName = mapping.humanoidName, boneName = mapping.go.name};
+					//Debug.Log(bone.humanName + " : " + bone.boneName);
+					bone.limit.useDefaultValues = true;
+					return bone;
+				}).ToArray()
+				//not handling all the rest here as its unity specific for now
+			};
+
+			var avatar = AvatarBuilder.BuildHumanAvatar(root, humanDescription);
+			avatar.name = root.name;
+			if (!avatar.isValid)
+			{
+				Debug.LogError("Invalid humanoid avatar");
+			}
+			animator.avatar = avatar;
+
+			resources.Add(avatar);
+
+			#if UNITY_EDITOR
+            UnityEngine.Object.DestroyImmediate(component);
+			#else
+            UnityEngine.Object.Destroy(component);
+			#endif
+		}
+	}
 
 #if UNITY_EDITOR
 	[InitializeOnLoad]
@@ -179,6 +259,7 @@ namespace ava.Components
 		{
 			STFRegistry.RegisterComponentImporter(AVAHumanoidMapping._TYPE, new AVAHumanoidMappingImporter());
 			STFRegistry.RegisterComponentExporter(typeof(AVAHumanoidMapping), new AVAHumanoidMappingExporter());
+			AVASecondStage.RegisterPreStageConverter(typeof(AVAHumanoidMapping), new AVAHumanoidMappingConverter());
 		}
 	}
 #endif
