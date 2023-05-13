@@ -207,7 +207,7 @@ namespace ava.Components
 
 			var humanDescription = new HumanDescription
 			{
-				skeleton = armature.Select(t =>
+				/*skeleton = armature.Select(t =>
 				{
 					var sb = new SkeletonBone();
 					sb.name = t.name;
@@ -219,10 +219,10 @@ namespace ava.Components
 				}).Append(new SkeletonBone
 				{
 					name = stfComponent.armatureInstance.name,
-					position = Vector3.zero,
-					rotation = Quaternion.identity,
-					scale = Vector3.one
-				}).ToArray(),
+					position = stfComponent.armatureInstance.transform.localPosition,
+					rotation = stfComponent.armatureInstance.transform.localRotation,
+					scale = stfComponent.armatureInstance.transform.localScale
+				}).ToArray(),*/
 				human = mappings.Select(mapping => 
 				{
 					var bone = new HumanBone {humanName = mapping.humanoidName, boneName = mapping.go.name};
