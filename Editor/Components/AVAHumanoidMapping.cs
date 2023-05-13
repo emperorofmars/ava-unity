@@ -214,7 +214,7 @@ namespace ava.Components
 					sb.position = t.transform.localPosition;
 					sb.rotation = t.transform.localRotation;
 					sb.scale = t.transform.localScale;
-					Debug.Log(sb.name);
+					//Debug.Log(sb.name);
 					return sb;
 				}).Append(new SkeletonBone
 				{

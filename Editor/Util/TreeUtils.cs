@@ -1,9 +1,5 @@
 
-#if UNITY_EDITOR
-
-using System;
 using stf;
-using stf.Components;
 using UnityEngine;
 
 namespace ava
@@ -47,5 +43,3 @@ namespace ava
 		}
 	}
 }
-
-#endif
