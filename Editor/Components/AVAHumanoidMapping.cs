@@ -37,7 +37,7 @@ namespace ava.Components
 		public List<string> _targets;
 		public List<string> targets {get => _targets; set => _targets = value;}
 		
-		public static string _TYPE = "AVA.humanoid_mappings";
+		public static readonly string _TYPE = "AVA.humanoid_mappings";
 		
 		public static readonly Dictionary<string, string> translations = new Dictionary<string, string> {
 			{"Hip", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.Hips)},
@@ -97,6 +97,66 @@ namespace ava.Components
 			{"FingerLittle3Right", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.RightLittleDistal)},
 		};
 
+		public static readonly List<string> _MappingsLeftList = new List<string>{"left", "_l", ".l", "-l"};
+		public static readonly List<string> _MappingsRightList = new List<string>{"right", "_r", ".r", "-r"};
+		public static readonly Dictionary<string, List<List<string>>> NameMappings = new Dictionary<string, List<List<string>>> {
+			{"Hip", new List<List<string>>{new List<string>{"hip", "hips"}}},
+			{"Spine", new List<List<string>>{new List<string>{"spine"}}},
+			{"Chest", new List<List<string>>{new List<string>{"chest"}}},
+			{"UpperChest", new List<List<string>>{new List<string>{"upper"}, new List<string>{"chest"}}},
+			{"Neck", new List<List<string>>{new List<string>{"neck"}}},
+			{"Head", new List<List<string>>{new List<string>{"head"}}},
+			{"Jaw", new List<List<string>>{new List<string>{"jaw"}}},
+			{"EyeLeft", new List<List<string>>{new List<string>{"eye"}, _MappingsLeftList}},
+			{"EyeRight", new List<List<string>>{new List<string>{"eye"}, _MappingsRightList}},
+			{"ShoulderLeft", new List<List<string>>{new List<string>{"shoulder"}, _MappingsLeftList}},
+			{"UpperArmLeft", new List<List<string>>{new List<string>{"upper"}, new List<string>{"arm"}, _MappingsLeftList}},
+			{"LowerArmLeft", new List<List<string>>{new List<string>{"lower"}, new List<string>{"arm"}, _MappingsLeftList}},
+			{"HandLeft", new List<List<string>>{new List<string>{"hand"}, _MappingsLeftList}},
+			{"ShoulderRight", new List<List<string>>{new List<string>{"shoulder"}, _MappingsRightList}},
+			{"UpperArmRight", new List<List<string>>{new List<string>{"upper"}, new List<string>{"arm"}, _MappingsRightList}},
+			{"LowerArmRight", new List<List<string>>{new List<string>{"lower"}, new List<string>{"arm"}, _MappingsRightList}},
+			{"HandRight", new List<List<string>>{new List<string>{"hand"}, _MappingsRightList}},
+			{"UpperLegLeft", new List<List<string>>{new List<string>{"upper"}, new List<string>{"leg"}, _MappingsLeftList}},
+			{"LowerLegLeft", new List<List<string>>{new List<string>{"lower"}, new List<string>{"leg"}, _MappingsLeftList}},
+			{"FootLeft", new List<List<string>>{new List<string>{"foot"}, _MappingsLeftList}},
+			{"ToesLeft", new List<List<string>>{new List<string>{"toes"}, _MappingsLeftList}},
+			{"UpperLegRight", new List<List<string>>{new List<string>{"upper"}, new List<string>{"leg"}, _MappingsRightList}},
+			{"LowerLegRight", new List<List<string>>{new List<string>{"lower"}, new List<string>{"leg"}, _MappingsRightList}},
+			{"FootRight", new List<List<string>>{new List<string>{"foot"}, _MappingsRightList}},
+			{"ToesRight", new List<List<string>>{new List<string>{"toes"}, _MappingsRightList}},
+			{"FingerThumb1Left", new List<List<string>>{new List<string>{"thumb"}, new List<string>{"1", "proximal"}, _MappingsLeftList}},
+			{"FingerThumb2Left", new List<List<string>>{new List<string>{"thumb"}, new List<string>{"2", "intermediate"}, _MappingsLeftList}},
+			{"FingerThumb3Left", new List<List<string>>{new List<string>{"thumb"}, new List<string>{"3", "distal"}, _MappingsLeftList}},
+			{"FingerIndex1Left", new List<List<string>>{new List<string>{"index"}, new List<string>{"1", "proximal"}, _MappingsLeftList}},
+			{"FingerIndex2Left", new List<List<string>>{new List<string>{"index"}, new List<string>{"2", "intermediate"}, _MappingsLeftList}},
+			{"FingerIndex3Left", new List<List<string>>{new List<string>{"index"}, new List<string>{"3", "distal"}, _MappingsLeftList}},
+			{"FingerMiddle1Left", new List<List<string>>{new List<string>{"middle"}, new List<string>{"1", "proximal"}, _MappingsLeftList}},
+			{"FingerMiddle2Left", new List<List<string>>{new List<string>{"middle"}, new List<string>{"2", "intermediate"}, _MappingsLeftList}},
+			{"FingerMiddle3Left", new List<List<string>>{new List<string>{"middle"}, new List<string>{"3", "distal"}, _MappingsLeftList}},
+			{"FingerRing1Left", new List<List<string>>{new List<string>{"ring"}, new List<string>{"1", "proximal"}, _MappingsLeftList}},
+			{"FingerRing2Left", new List<List<string>>{new List<string>{"ring"}, new List<string>{"2", "intermediate"}, _MappingsLeftList}},
+			{"FingerRing3Left", new List<List<string>>{new List<string>{"ring"}, new List<string>{"3", "distal"}, _MappingsLeftList}},
+			{"FingerLittle1Left", new List<List<string>>{new List<string>{"little", "pinkie"}, new List<string>{"1", "proximal"}, _MappingsLeftList}},
+			{"FingerLittle2Left", new List<List<string>>{new List<string>{"little", "pinkie"}, new List<string>{"2", "intermediate"}, _MappingsLeftList}},
+			{"FingerLittle3Left", new List<List<string>>{new List<string>{"little", "pinkie"}, new List<string>{"3", "distal"}, _MappingsLeftList}},
+			{"FingerThumb1Right", new List<List<string>>{new List<string>{"thumb"}, new List<string>{"1", "proximal"}, _MappingsRightList}},
+			{"FingerThumb2Right", new List<List<string>>{new List<string>{"thumb"}, new List<string>{"2", "intermediate"}, _MappingsRightList}},
+			{"FingerThumb3Right", new List<List<string>>{new List<string>{"thumb"}, new List<string>{"3", "distal"}, _MappingsRightList}},
+			{"FingerIndex1Right", new List<List<string>>{new List<string>{"index"}, new List<string>{"1", "proximal"}, _MappingsRightList}},
+			{"FingerIndex2Right", new List<List<string>>{new List<string>{"index"}, new List<string>{"2", "intermediate"}, _MappingsRightList}},
+			{"FingerIndex3Right", new List<List<string>>{new List<string>{"index"}, new List<string>{"3", "distal"}, _MappingsRightList}},
+			{"FingerMiddle1Right", new List<List<string>>{new List<string>{"middle"}, new List<string>{"1", "proximal"}, _MappingsRightList}},
+			{"FingerMiddle2Right", new List<List<string>>{new List<string>{"middle"}, new List<string>{"2", "intermediate"}, _MappingsRightList}},
+			{"FingerMiddle3Right", new List<List<string>>{new List<string>{"middle"}, new List<string>{"3", "distal"}, _MappingsRightList}},
+			{"FingerRing1Right", new List<List<string>>{new List<string>{"ring"}, new List<string>{"1", "proximal"}, _MappingsRightList}},
+			{"FingerRing2Right", new List<List<string>>{new List<string>{"ring"}, new List<string>{"2", "intermediate"}, _MappingsRightList}},
+			{"FingerRing3Right", new List<List<string>>{new List<string>{"ring"}, new List<string>{"3", "distal"}, _MappingsRightList}},
+			{"FingerLittle1Right", new List<List<string>>{new List<string>{"little", "pinkie"}, new List<string>{"1", "proximal"}, _MappingsRightList}},
+			{"FingerLittle2Right", new List<List<string>>{new List<string>{"little", "pinkie"}, new List<string>{"2", "intermediate"}, _MappingsRightList}},
+			{"FingerLittle3Right", new List<List<string>>{new List<string>{"little", "pinkie"}, new List<string>{"3", "distal"}, _MappingsRightList}}
+		};
+
 		public STFArmatureInstance armatureInstance;
 		public string locomotion_type;
 		public List<BoneMappingPair> mappings = new List<BoneMappingPair>();
@@ -111,7 +171,7 @@ namespace ava.Components
 
 		public string translateHumanoidAVAtoUnity(string avaName, string locomotion_type)
 		{
-			if(locomotion_type == "1")
+			if(locomotion_type == "digitigrade")
 			{
 				switch(avaName)
 				{
