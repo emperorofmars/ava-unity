@@ -28,13 +28,13 @@ namespace ava.Components
 
 	public class AVAHumanoidMapping : MonoBehaviour, ISTFComponent
 	{
-		public string _id;
+		[HideInInspector] public string _id;
 		public string id {get => _id; set => _id = value;}
-		public List<string> _extends;
+		[HideInInspector] public List<string> _extends;
 		public List<string> extends {get => _extends; set => _extends = value;}
-		public List<string> _overrides;
+		[HideInInspector] public List<string> _overrides;
 		public List<string> overrides {get => _overrides; set => _overrides = value;}
-		public List<string> _targets;
+		[HideInInspector] public List<string> _targets;
 		public List<string> targets {get => _targets; set => _targets = value;}
 		
 		public static readonly string _TYPE = "AVA.humanoid_mappings";
@@ -157,17 +157,9 @@ namespace ava.Components
 			{"FingerLittle3Right", new List<List<string>>{new List<string>{"little", "pinkie"}, new List<string>{"3", "distal"}, _MappingsRightList}}
 		};
 
-		public STFArmatureInstance armatureInstance;
-		public string locomotion_type;
+		[HideInInspector] public STFArmatureInstance armatureInstance;
+		[HideInInspector] public string locomotion_type;
 		public List<BoneMappingPair> mappings = new List<BoneMappingPair>();
-
-		public AVAHumanoidMapping()
-		{
-			foreach(string avaBone in translations.Keys)
-			{
-				mappings.Add(new BoneMappingPair(avaBone, null));
-			}
-		}
 
 		public string translateHumanoidAVAtoUnity(string avaName, string locomotion_type)
 		{
@@ -371,15 +363,70 @@ namespace ava.Components
 	[CustomEditor(typeof(AVAHumanoidMapping))]
 	public class AVAHumanoidMappingInspector : Editor
 	{
+		private int locomotionSelection = 0;
+		private string[] locomotionOptions = new string[] { "plantigrade", "digitigrade" };
+		private string[] locomotionDisplayOptions = new string[] { "Plantigrade", "Digitigrade" };
+		private bool _foldoutMappings = true;
+
 		public override void OnInspectorGUI()
 		{
-			base.DrawDefaultInspector();
+			//base.DrawDefaultInspector();
 			var c = (AVAHumanoidMapping)target;
 
+			EditorGUILayout.BeginHorizontal();
+			EditorGUILayout.PrefixLabel("Id");
+			c.id = EditorGUILayout.TextField(c.id);
+			EditorGUILayout.EndHorizontal();
+
+			EditorGUILayout.BeginHorizontal();
+			EditorGUILayout.PrefixLabel("Armature Instance");
+			c.armatureInstance = (STFArmatureInstance)EditorGUILayout.ObjectField(c.armatureInstance, typeof(STFArmatureInstance), true);
+			EditorGUILayout.EndHorizontal();
+
+			EditorGUILayout.BeginHorizontal();
+			EditorGUILayout.PrefixLabel("Locomotion Type");
+			var locomotionSelectionNew = EditorGUILayout.Popup(locomotionSelection, locomotionDisplayOptions);
+			if(locomotionSelectionNew != locomotionSelection || c.locomotion_type == null || c.locomotion_type.Length == 0)
+			{
+				c.locomotion_type = locomotionOptions[locomotionSelectionNew];
+				locomotionSelection = locomotionSelectionNew;
+			}
+			EditorGUILayout.EndHorizontal();
+
+			GUILayout.Space(10f);
+			
+			EditorGUILayout.PrefixLabel("Mapped " + (c.mappings != null ? c.mappings.Count : 0) + " bones.");
 			if(c.armatureInstance != null)
 			{
-				if(GUILayout.Button("Map Humanoid Bones", GUILayout.ExpandWidth(true))) {
+				if(GUILayout.Button("Map Humanoid Bones", GUILayout.ExpandWidth(false))) {
 					c.Map();
+				}
+			}
+
+			GUILayout.Space(10f);
+
+			_foldoutMappings = EditorGUILayout.Foldout(_foldoutMappings, "Mappings", true, EditorStyles.foldoutHeader);
+			if(_foldoutMappings)
+			{
+				GUILayout.Space(5f);
+				//base.DrawDefaultInspector();
+
+				foreach(var mapping in AVAHumanoidMapping.NameMappings)
+				{
+					EditorGUILayout.BeginHorizontal();
+					EditorGUILayout.PrefixLabel(mapping.Key);
+					var bone = c.mappings.Find(m => m.bone == mapping.Key);
+					if(bone != null)
+					{
+						bone.uuid = EditorGUILayout.TextField(bone.uuid);
+					}
+					else
+					{
+						if(GUILayout.Button("Add Bone Mapping", GUILayout.ExpandWidth(false))) {
+							c.mappings.Add(new BoneMappingPair(mapping.Key, ""));
+						}
+					}
+					EditorGUILayout.EndHorizontal();
 				}
 			}
 		}
