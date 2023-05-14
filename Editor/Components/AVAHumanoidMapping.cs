@@ -188,6 +188,51 @@ namespace ava.Components
 			if(avaName == "Jaw") return null;
 			return translations[avaName];
 		}
+
+		public void Map()
+		{
+			var tmpMappings = new Dictionary<string, GameObject>();
+			if(armatureInstance == null) throw new Exception("Armature must be set");
+			foreach(var bone in armatureInstance.bones)
+			{
+				foreach(var mapping in NameMappings)
+				{
+					var and_list = mapping.Value;
+					var and_condition = true;
+					foreach(var or_list in and_list)
+					{
+						var or_condition = false;
+						foreach(var or_arg in or_list)
+						{
+							if(bone.name.ToLower().Contains(or_arg))
+							{
+								or_condition = true;
+								break;
+							}
+						}
+						if(!or_condition)
+						{
+							and_condition = false;
+						}
+					}
+					if(and_condition)
+					{
+						if(tmpMappings.ContainsKey(mapping.Key))
+						{
+							if(tmpMappings[mapping.Key].name.Length > bone.name.Length)
+							{
+								tmpMappings[mapping.Key] = bone;
+							}
+						}
+						else
+						{
+							tmpMappings.Add(mapping.Key, bone);
+						}
+					}
+				}
+			}
+			this.mappings = tmpMappings.Select(m => new BoneMappingPair(m.Key, m.Value.GetComponent<STFUUID>().boneId)).ToList();
+		}
 	}
 
 	public class AVAHumanoidMappingImporter : ASTFComponentImporter
@@ -320,6 +365,23 @@ namespace ava.Components
 			STFRegistry.RegisterComponentImporter(AVAHumanoidMapping._TYPE, new AVAHumanoidMappingImporter());
 			STFRegistry.RegisterComponentExporter(typeof(AVAHumanoidMapping), new AVAHumanoidMappingExporter());
 			AVASecondStage.RegisterPreStageConverter(typeof(AVAHumanoidMapping), new AVAHumanoidMappingConverter());
+		}
+	}
+
+	[CustomEditor(typeof(AVAHumanoidMapping))]
+	public class AVAHumanoidMappingInspector : Editor
+	{
+		public override void OnInspectorGUI()
+		{
+			base.DrawDefaultInspector();
+			var c = (AVAHumanoidMapping)target;
+
+			if(c.armatureInstance != null)
+			{
+				if(GUILayout.Button("Map Humanoid Bones", GUILayout.ExpandWidth(true))) {
+					c.Map();
+				}
+			}
 		}
 	}
 #endif
