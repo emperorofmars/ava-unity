@@ -368,10 +368,28 @@ namespace ava.Components
 		private string[] locomotionDisplayOptions = new string[] { "Plantigrade", "Digitigrade" };
 		private bool _foldoutMappings = true;
 
+		void OnEnable()
+		{
+			var c = (AVAHumanoidMapping)target;
+			if(c.locomotion_type != null)
+			{
+				for(int i = 0; i < locomotionOptions.Length; i++)
+				{
+					if(c.locomotion_type == locomotionOptions[i])
+					{
+						locomotionSelection = i;
+						break;
+					}
+				}
+			}
+		}
+
 		public override void OnInspectorGUI()
 		{
 			//base.DrawDefaultInspector();
 			var c = (AVAHumanoidMapping)target;
+
+			EditorGUI.BeginChangeCheck();
 
 			EditorGUILayout.BeginHorizontal();
 			EditorGUILayout.PrefixLabel("Id");
@@ -385,6 +403,7 @@ namespace ava.Components
 
 			EditorGUILayout.BeginHorizontal();
 			EditorGUILayout.PrefixLabel("Locomotion Type");
+
 			var locomotionSelectionNew = EditorGUILayout.Popup(locomotionSelection, locomotionDisplayOptions);
 			if(locomotionSelectionNew != locomotionSelection || c.locomotion_type == null || c.locomotion_type.Length == 0)
 			{
@@ -429,6 +448,12 @@ namespace ava.Components
 					EditorGUILayout.EndHorizontal();
 				}
 			}
+
+			if(EditorGUI.EndChangeCheck())
+			{
+				EditorUtility.SetDirty(c);
+			}
+			
 		}
 	}
 #endif
