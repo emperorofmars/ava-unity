@@ -325,18 +325,19 @@ namespace ava.Components
 						boneName = mapping.go.name,
 						limit = new HumanLimit()
 					};
-					//Debug.Log(bone.humanName + " : " + bone.boneName);
 					bone.limit.useDefaultValues = true;
+					//Debug.Log(bone.humanName + " : " + bone.boneName);
 					return bone;
 				}).ToArray()
 			};
 
 			var avatar = AvatarBuilder.BuildHumanAvatar(root, humanDescription);
-			avatar.name = root.name;
+			avatar.name = root.name + "Avatar";
 			if (!avatar.isValid)
 			{
 				Debug.LogError("Invalid humanoid avatar");
 			}
+
 			animator.avatar = avatar;
 			resources.Add(avatar);
 
