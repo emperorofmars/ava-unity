@@ -53,40 +53,40 @@ namespace ava.Components
 			{"UpperArmLeft", HumanBodyBones.LeftUpperArm.ToString()},
 			{"LowerArmLeft", HumanBodyBones.LeftLowerArm.ToString()},
 			{"HandLeft", HumanBodyBones.LeftHand.ToString()},
-			{"FingerThumb1Left", HumanBodyBones.LeftThumbProximal.ToString()},
-			{"FingerThumb2Left", HumanBodyBones.LeftThumbIntermediate.ToString()},
-			{"FingerThumb3Left", HumanBodyBones.LeftThumbDistal.ToString()},
-			{"FingerIndex1Left", HumanBodyBones.LeftIndexProximal.ToString()},
-			{"FingerIndex2Left", HumanBodyBones.LeftIndexIntermediate.ToString()},
-			{"FingerIndex3Left", HumanBodyBones.LeftIndexDistal.ToString()},
-			{"FingerMiddle1Left", HumanBodyBones.LeftMiddleProximal.ToString()},
-			{"FingerMiddle2Left", HumanBodyBones.LeftMiddleIntermediate.ToString()},
-			{"FingerMiddle3Left", HumanBodyBones.LeftMiddleDistal.ToString()},
-			{"FingerRing1Left", HumanBodyBones.LeftRingProximal.ToString()},
-			{"FingerRing2Left", HumanBodyBones.LeftRingIntermediate.ToString()},
-			{"FingerRing3Left", HumanBodyBones.LeftRingDistal.ToString()},
-			{"FingerLittle1Left", HumanBodyBones.LeftLittleProximal.ToString()},
-			{"FingerLittle2Left", HumanBodyBones.LeftLittleIntermediate.ToString()},
-			{"FingerLittle3Left", HumanBodyBones.LeftLittleDistal.ToString()},
+			{"FingerThumb1Left", "Left Thumb Proximal"},//HumanBodyBones.LeftThumbProximal.ToString()},
+			{"FingerThumb2Left", "Left Thumb Intermediate"},//, HumanBodyBones.LeftThumbIntermediate.ToString()},
+			{"FingerThumb3Left", "Left Thumb Distal"},//, HumanBodyBones.LeftThumbDistal.ToString()},
+			{"FingerIndex1Left", "Left Index Proximal"},//, HumanBodyBones.LeftIndexProximal.ToString()},
+			{"FingerIndex2Left", "Left Index Intermediate"},//, HumanBodyBones.LeftIndexIntermediate.ToString()},
+			{"FingerIndex3Left", "Left Index Distal"},//, HumanBodyBones.LeftIndexDistal.ToString()},
+			{"FingerMiddle1Left", "Left Middle Proximal"},//, HumanBodyBones.LeftMiddleProximal.ToString()},
+			{"FingerMiddle2Left", "Left Middle Intermediate"},//, HumanBodyBones.LeftMiddleIntermediate.ToString()},
+			{"FingerMiddle3Left", "Left Middle Distal"},//, HumanBodyBones.LeftMiddleDistal.ToString()},
+			{"FingerRing1Left", "Left Ring Proximal"},//, HumanBodyBones.LeftRingProximal.ToString()},
+			{"FingerRing2Left", "Left Ring Intermediate"},//, HumanBodyBones.LeftRingIntermediate.ToString()},
+			{"FingerRing3Left", "Left Ring Distal"},//, HumanBodyBones.LeftRingDistal.ToString()},
+			{"FingerLittle1Left", "Left Little Proximal"},//, HumanBodyBones.LeftLittleProximal.ToString()},
+			{"FingerLittle2Left", "Left Little Intermediate"},//, HumanBodyBones.LeftLittleIntermediate.ToString()},
+			{"FingerLittle3Left", "Left Little Distal"},//, HumanBodyBones.LeftLittleDistal.ToString()},
 			{"ShoulderRight", HumanBodyBones.RightShoulder.ToString()},
 			{"UpperArmRight", HumanBodyBones.RightUpperArm.ToString()},
 			{"LowerArmRight", HumanBodyBones.RightLowerArm.ToString()},
 			{"HandRight", HumanBodyBones.RightHand.ToString()},
-			{"FingerThumb1Right", HumanBodyBones.RightThumbProximal.ToString()},
-			{"FingerThumb2Right", HumanBodyBones.RightThumbIntermediate.ToString()},
-			{"FingerThumb3Right", HumanBodyBones.RightThumbDistal.ToString()},
-			{"FingerIndex1Right", HumanBodyBones.RightIndexProximal.ToString()},
-			{"FingerIndex2Right", HumanBodyBones.RightIndexIntermediate.ToString()},
-			{"FingerIndex3Right", HumanBodyBones.RightIndexDistal.ToString()},
-			{"FingerMiddle1Right", HumanBodyBones.RightMiddleProximal.ToString()},
-			{"FingerMiddle2Right", HumanBodyBones.RightMiddleIntermediate.ToString()},
-			{"FingerMiddle3Right", HumanBodyBones.RightMiddleDistal.ToString()},
-			{"FingerRing1Right", HumanBodyBones.RightRingProximal.ToString()},
-			{"FingerRing2Right", HumanBodyBones.RightRingIntermediate.ToString()},
-			{"FingerRing3Right", HumanBodyBones.RightRingDistal.ToString()},
-			{"FingerLittle1Right", HumanBodyBones.RightLittleProximal.ToString()},
-			{"FingerLittle2Right", HumanBodyBones.RightLittleIntermediate.ToString()},
-			{"FingerLittle3Right", HumanBodyBones.RightLittleDistal.ToString()},
+			{"FingerThumb1Right", "Right Thumb Proximal"},//, HumanBodyBones.RightThumbProximal.ToString()},
+			{"FingerThumb2Right", "Right Thumb Intermediate"},//, HumanBodyBones.RightThumbIntermediate.ToString()},
+			{"FingerThumb3Right", "Right Thumb Distal"},//, HumanBodyBones.RightThumbDistal.ToString()},
+			{"FingerIndex1Right", "Right Index Proximal"},//, HumanBodyBones.RightIndexProximal.ToString()},
+			{"FingerIndex2Right", "Right Index Intermediate"},//, HumanBodyBones.RightIndexIntermediate.ToString()},
+			{"FingerIndex3Right", "Right Index Distal"},//, HumanBodyBones.RightIndexDistal.ToString()},
+			{"FingerMiddle1Right", "Right Middle Proximal"},//, HumanBodyBones.RightMiddleProximal.ToString()},
+			{"FingerMiddle2Right", "Right Middle Intermediate"},//, HumanBodyBones.RightMiddleIntermediate.ToString()},
+			{"FingerMiddle3Right", "Right Middle Distal"},//, HumanBodyBones.RightMiddleDistal.ToString()},
+			{"FingerRing1Right", "Right Ring Proximal"},//, HumanBodyBones.RightRingProximal.ToString()},
+			{"FingerRing2Right", "Right Ring Intermediate"},//, HumanBodyBones.RightRingIntermediate.ToString()},
+			{"FingerRing3Right", "Right Ring Distal"},//, HumanBodyBones.RightRingDistal.ToString()},
+			{"FingerLittle1Right", "Right Little Proximal"},//, HumanBodyBones.RightLittleProximal.ToString()},
+			{"FingerLittle2Right", "Right Little Intermediate"},//, HumanBodyBones.RightLittleIntermediate.ToString()},
+			{"FingerLittle3Right", "Right Little Distal"},//, HumanBodyBones.RightLittleDistal.ToString()},
 			{"UpperLegLeft", HumanBodyBones.LeftUpperLeg.ToString()},
 			{"LowerLegLeft", HumanBodyBones.LeftLowerLeg.ToString()},
 			{"FootLeft", HumanBodyBones.LeftFoot.ToString()},
@@ -181,11 +181,11 @@ namespace ava.Components
 			return _Translations[avaName];
 		}
 
-		public void Map()
+		public void Map(GameObject[] bones)
 		{
 			var tmpMappings = new Dictionary<string, GameObject>();
-			if(armatureInstance == null) throw new Exception("Armature must be set");
-			foreach(var bone in armatureInstance.bones)
+			//if(armatureInstance == null) throw new Exception("Armature must be set");
+			foreach(var bone in bones)
 			{
 				foreach(var mapping in NameMappings)
 				{
@@ -270,16 +270,11 @@ namespace ava.Components
 			return ret;
 		}
 	}
-	public class AVAHumanoidMappingConverter : ISTFSecondStageConverter
+
+	public static class HumanoidMappingConverter
 	{
-		public void convert(Component component, GameObject root, List<UnityEngine.Object> resources)
+		public static Avatar convert(AVAHumanoidMapping stfComponent, GameObject root)
 		{
-			var stfComponent = (AVAHumanoidMapping)component;
-			var animator = root.AddComponent<Animator>();
-			animator.applyRootMotion = true;
-			animator.updateMode = AnimatorUpdateMode.Normal;
-			animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
-			
 			var mappings = stfComponent.mappings
 					.FindAll(mapping => !String.IsNullOrWhiteSpace(mapping.humanoidName) && mapping.bone != null)
 					.Select(mapping => new KeyValuePair<string, GameObject>(stfComponent.translateHumanoidAVAtoUnity(mapping.humanoidName, stfComponent.locomotion_type), mapping.bone))
@@ -296,6 +291,7 @@ namespace ava.Components
 				upperArmTwist = 0.5f,
 				upperLegTwist = 0.5f,
 				skeleton = (new List<Transform>(root.GetComponentsInChildren<Transform>())).Select(t => {
+					//Debug.Log(t.name);
 					return new SkeletonBone()
 					{
 						name = t.name,
@@ -318,13 +314,27 @@ namespace ava.Components
 
 			var avatar = AvatarBuilder.BuildHumanAvatar(root, humanDescription);
 			avatar.name = root.name + "Avatar";
+
 			if (!avatar.isValid)
 			{
 				throw new Exception("Invalid humanoid avatar");
 			}
-
 			//foreach(var h in avatar.humanDescription.human) Debug.Log(h.humanName + " : " + h.boneName);
+			return avatar;
+		}
+	}
 
+	public class AVAHumanoidMappingConverter : ISTFSecondStageConverter
+	{
+		public void convert(Component component, GameObject root, List<UnityEngine.Object> resources)
+		{
+			var stfComponent = (AVAHumanoidMapping)component;
+			var animator = root.AddComponent<Animator>();
+			animator.applyRootMotion = true;
+			animator.updateMode = AnimatorUpdateMode.Normal;
+			animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
+
+			var avatar = HumanoidMappingConverter.convert(stfComponent, root);
 			animator.avatar = avatar;
 			resources.Add(avatar);
 
@@ -406,7 +416,25 @@ namespace ava.Components
 			if(c.armatureInstance != null)
 			{
 				if(GUILayout.Button("Map Humanoid Bones", GUILayout.ExpandWidth(false))) {
-					c.Map();
+					c.Map(c.armatureInstance.bones);
+				}
+			}
+			else
+			{
+				if(GUILayout.Button("Map Humanoid Bones From Root", GUILayout.ExpandWidth(false))) {
+					c.Map(Utils.getRoot(c.transform).GetComponentsInChildren<Transform>().Select(t => t.gameObject).ToArray());
+				}
+			}
+
+			if(c.mappings != null && c.mappings.Count > 0)
+			{
+				if(GUILayout.Button("Create Avatar", GUILayout.ExpandWidth(false))) {
+					var path = EditorUtility.SaveFilePanel("Save Avatar", "Assets", "avatar", "asset");
+					var avatar = HumanoidMappingConverter.convert(c, Utils.getRoot(c.transform).gameObject);
+					if (path.StartsWith(Application.dataPath)) {
+						path = "Assets" + path.Substring(Application.dataPath.Length);
+					}
+					AssetDatabase.CreateAsset(avatar, path);
 				}
 			}
 
