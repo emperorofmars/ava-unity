@@ -39,7 +39,7 @@ namespace ava.Components
 		
 		public static readonly string _TYPE = "AVA.humanoid_mappings";
 		
-		public static readonly Dictionary<string, string> translations = new Dictionary<string, string> {
+		public static readonly Dictionary<string, string> _Translations = new Dictionary<string, string> {
 			{"Hip", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.Hips)},
 			{"Spine", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.Spine)},
 			{"Chest", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.Chest)},
@@ -112,7 +112,7 @@ namespace ava.Components
 			{"ShoulderLeft", new List<List<string>>{new List<string>{"shoulder"}, _MappingsLeftList}},
 			{"UpperArmLeft", new List<List<string>>{new List<string>{"upper"}, new List<string>{"arm"}, _MappingsLeftList}},
 			{"LowerArmLeft", new List<List<string>>{new List<string>{"lower"}, new List<string>{"arm"}, _MappingsLeftList}},
-			{"HandLeft", new List<List<string>>{new List<string>{"hand"}, _MappingsLeftList}},
+			{"HandLeft", new List<List<string>>{new List<string>{"hand", "wrist"}, _MappingsLeftList}},
 			{"FingerThumb1Left", new List<List<string>>{new List<string>{"thumb"}, new List<string>{"1", "proximal"}, _MappingsLeftList}},
 			{"FingerThumb2Left", new List<List<string>>{new List<string>{"thumb"}, new List<string>{"2", "intermediate"}, _MappingsLeftList}},
 			{"FingerThumb3Left", new List<List<string>>{new List<string>{"thumb"}, new List<string>{"3", "distal"}, _MappingsLeftList}},
@@ -131,7 +131,7 @@ namespace ava.Components
 			{"ShoulderRight", new List<List<string>>{new List<string>{"shoulder"}, _MappingsRightList}},
 			{"UpperArmRight", new List<List<string>>{new List<string>{"upper"}, new List<string>{"arm"}, _MappingsRightList}},
 			{"LowerArmRight", new List<List<string>>{new List<string>{"lower"}, new List<string>{"arm"}, _MappingsRightList}},
-			{"HandRight", new List<List<string>>{new List<string>{"hand"}, _MappingsRightList}},
+			{"HandRight", new List<List<string>>{new List<string>{"hand", "wrist"}, _MappingsRightList}},
 			{"FingerThumb1Right", new List<List<string>>{new List<string>{"thumb"}, new List<string>{"1", "proximal"}, _MappingsRightList}},
 			{"FingerThumb2Right", new List<List<string>>{new List<string>{"thumb"}, new List<string>{"2", "intermediate"}, _MappingsRightList}},
 			{"FingerThumb3Right", new List<List<string>>{new List<string>{"thumb"}, new List<string>{"3", "distal"}, _MappingsRightList}},
@@ -168,9 +168,9 @@ namespace ava.Components
 				switch(avaName)
 				{
 					case "ToesLeft":
-						return translations["FootLeft"];
+						return _Translations["FootLeft"];
 					case "ToesRight":
-						return translations["FootRight"];
+						return _Translations["FootRight"];
 					case "FootLeft":
 						return null;
 					case "FootRight":
@@ -178,7 +178,7 @@ namespace ava.Components
 				}
 			}
 			if(avaName == "Jaw") return null;
-			return translations[avaName];
+			return _Translations[avaName];
 		}
 
 		public void Map()
@@ -232,11 +232,12 @@ namespace ava.Components
 		public override void parseFromJson(ISTFImporter state, JToken json, string id, GameObject go)
 		{
 			var c = go.AddComponent<AVAHumanoidMapping>();
+			c.id = id;
 			c.locomotion_type = (string)json["locomotion_type"];
 			state.AddTask(new Task(() => {
 				c.armatureInstance = state.GetNode((string)json["target_armature_instance"]).GetComponent<STFArmatureInstance>();
 				c.mappings = new List<BoneMappingPair>();
-				foreach(var t in AVAHumanoidMapping.translations)
+				foreach(var t in AVAHumanoidMapping._Translations)
 				{
 					if((string)json[t.Key] != null) c.mappings.Add(new BoneMappingPair(t.Key, c.armatureInstance.bones.First(b => b.GetComponent<STFUUID>().boneId == (string)json[t.Key])));
 				}
@@ -280,10 +281,10 @@ namespace ava.Components
 			animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
 			
 			var mappings = stfComponent.mappings
-					.FindAll(mapping => mapping.humanoidName != null && mapping.humanoidName.Length > 0 && mapping.bone != null)
+					.FindAll(mapping => !String.IsNullOrWhiteSpace(mapping.humanoidName) && mapping.bone != null)
 					.Select(mapping => new KeyValuePair<string, GameObject>(stfComponent.translateHumanoidAVAtoUnity(mapping.humanoidName, stfComponent.locomotion_type), mapping.bone))
-					.Where(mapping => mapping.Key != null && mapping.Key.Length > 0).ToList();
-
+					.Where(mapping => !String.IsNullOrWhiteSpace(mapping.Key)).ToList();
+			
 			var humanDescription = new HumanDescription
 			{
 				armStretch = 0.05f,
@@ -310,7 +311,7 @@ namespace ava.Components
 						boneName = mapping.Value.name,
 						limit = new HumanLimit {useDefaultValues = true}
 					};
-					//Debug.Log(bone.humanName + " : " + bone.boneName);
+					Debug.Log(bone.humanName + " : " + bone.boneName);
 					return bone;
 				}).ToArray()
 			};
