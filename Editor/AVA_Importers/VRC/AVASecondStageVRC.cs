@@ -39,7 +39,7 @@ namespace ava
 			var convertedResources = new List<UnityEngine.Object>();
 
 			GameObject convertedRoot = UnityEngine.Object.Instantiate(originalRoot);
-			convertedRoot.name = originalRoot.name;
+			convertedRoot.name = originalRoot.name + "_VRC";
 
 			convertTree(convertedRoot, convertedResources);
 

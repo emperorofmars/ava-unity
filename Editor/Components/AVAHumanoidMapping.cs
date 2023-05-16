@@ -16,14 +16,14 @@ namespace ava.Components
 	[Serializable]
 	public class BoneMappingPair
 	{
-		public BoneMappingPair(string bone, string uuid)
+		public BoneMappingPair(string humanoidName, GameObject bone)
 		{
+			this.humanoidName = humanoidName;
 			this.bone = bone;
-			this.uuid = uuid;
 		}
 
-		public string bone;
-		public string uuid;
+		public string humanoidName;
+		public GameObject bone;
 	}
 
 	public class AVAHumanoidMapping : MonoBehaviour, ISTFComponent
@@ -53,18 +53,6 @@ namespace ava.Components
 			{"UpperArmLeft", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.LeftUpperArm)},
 			{"LowerArmLeft", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.LeftLowerArm)},
 			{"HandLeft", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.LeftHand)},
-			{"ShoulderRight", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.RightShoulder)},
-			{"UpperArmRight", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.RightUpperArm)},
-			{"LowerArmRight", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.RightLowerArm)},
-			{"HandRight", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.RightHand)},
-			{"UpperLegLeft", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.LeftUpperLeg)},
-			{"LowerLegLeft", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.LeftLowerLeg)},
-			{"FootLeft", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.LeftFoot)},
-			{"ToesLeft", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.LeftToes)},
-			{"UpperLegRight", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.RightUpperLeg)},
-			{"LowerLegRight", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.RightLowerLeg)},
-			{"FootRight", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.RightFoot)},
-			{"ToesRight", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.RightToes)},
 			{"FingerThumb1Left", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.LeftThumbProximal)},
 			{"FingerThumb2Left", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.LeftThumbIntermediate)},
 			{"FingerThumb3Left", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.LeftThumbDistal)},
@@ -80,6 +68,10 @@ namespace ava.Components
 			{"FingerLittle1Left", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.LeftLittleProximal)},
 			{"FingerLittle2Left", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.LeftLittleIntermediate)},
 			{"FingerLittle3Left", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.LeftLittleDistal)},
+			{"ShoulderRight", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.RightShoulder)},
+			{"UpperArmRight", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.RightUpperArm)},
+			{"LowerArmRight", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.RightLowerArm)},
+			{"HandRight", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.RightHand)},
 			{"FingerThumb1Right", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.RightThumbProximal)},
 			{"FingerThumb2Right", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.RightThumbIntermediate)},
 			{"FingerThumb3Right", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.RightThumbDistal)},
@@ -95,6 +87,14 @@ namespace ava.Components
 			{"FingerLittle1Right", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.RightLittleProximal)},
 			{"FingerLittle2Right", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.RightLittleIntermediate)},
 			{"FingerLittle3Right", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.RightLittleDistal)},
+			{"UpperLegLeft", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.LeftUpperLeg)},
+			{"LowerLegLeft", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.LeftLowerLeg)},
+			{"FootLeft", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.LeftFoot)},
+			{"ToesLeft", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.LeftToes)},
+			{"UpperLegRight", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.RightUpperLeg)},
+			{"LowerLegRight", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.RightLowerLeg)},
+			{"FootRight", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.RightFoot)},
+			{"ToesRight", Enum.GetName(typeof(HumanBodyBones), HumanBodyBones.RightToes)}
 		};
 
 		public static readonly List<string> _MappingsLeftList = new List<string>{"left", "_l", ".l", "-l"};
@@ -113,18 +113,6 @@ namespace ava.Components
 			{"UpperArmLeft", new List<List<string>>{new List<string>{"upper"}, new List<string>{"arm"}, _MappingsLeftList}},
 			{"LowerArmLeft", new List<List<string>>{new List<string>{"lower"}, new List<string>{"arm"}, _MappingsLeftList}},
 			{"HandLeft", new List<List<string>>{new List<string>{"hand"}, _MappingsLeftList}},
-			{"ShoulderRight", new List<List<string>>{new List<string>{"shoulder"}, _MappingsRightList}},
-			{"UpperArmRight", new List<List<string>>{new List<string>{"upper"}, new List<string>{"arm"}, _MappingsRightList}},
-			{"LowerArmRight", new List<List<string>>{new List<string>{"lower"}, new List<string>{"arm"}, _MappingsRightList}},
-			{"HandRight", new List<List<string>>{new List<string>{"hand"}, _MappingsRightList}},
-			{"UpperLegLeft", new List<List<string>>{new List<string>{"upper"}, new List<string>{"leg"}, _MappingsLeftList}},
-			{"LowerLegLeft", new List<List<string>>{new List<string>{"lower"}, new List<string>{"leg"}, _MappingsLeftList}},
-			{"FootLeft", new List<List<string>>{new List<string>{"foot"}, _MappingsLeftList}},
-			{"ToesLeft", new List<List<string>>{new List<string>{"toes"}, _MappingsLeftList}},
-			{"UpperLegRight", new List<List<string>>{new List<string>{"upper"}, new List<string>{"leg"}, _MappingsRightList}},
-			{"LowerLegRight", new List<List<string>>{new List<string>{"lower"}, new List<string>{"leg"}, _MappingsRightList}},
-			{"FootRight", new List<List<string>>{new List<string>{"foot"}, _MappingsRightList}},
-			{"ToesRight", new List<List<string>>{new List<string>{"toes"}, _MappingsRightList}},
 			{"FingerThumb1Left", new List<List<string>>{new List<string>{"thumb"}, new List<string>{"1", "proximal"}, _MappingsLeftList}},
 			{"FingerThumb2Left", new List<List<string>>{new List<string>{"thumb"}, new List<string>{"2", "intermediate"}, _MappingsLeftList}},
 			{"FingerThumb3Left", new List<List<string>>{new List<string>{"thumb"}, new List<string>{"3", "distal"}, _MappingsLeftList}},
@@ -140,6 +128,10 @@ namespace ava.Components
 			{"FingerLittle1Left", new List<List<string>>{new List<string>{"little", "pinkie"}, new List<string>{"1", "proximal"}, _MappingsLeftList}},
 			{"FingerLittle2Left", new List<List<string>>{new List<string>{"little", "pinkie"}, new List<string>{"2", "intermediate"}, _MappingsLeftList}},
 			{"FingerLittle3Left", new List<List<string>>{new List<string>{"little", "pinkie"}, new List<string>{"3", "distal"}, _MappingsLeftList}},
+			{"ShoulderRight", new List<List<string>>{new List<string>{"shoulder"}, _MappingsRightList}},
+			{"UpperArmRight", new List<List<string>>{new List<string>{"upper"}, new List<string>{"arm"}, _MappingsRightList}},
+			{"LowerArmRight", new List<List<string>>{new List<string>{"lower"}, new List<string>{"arm"}, _MappingsRightList}},
+			{"HandRight", new List<List<string>>{new List<string>{"hand"}, _MappingsRightList}},
 			{"FingerThumb1Right", new List<List<string>>{new List<string>{"thumb"}, new List<string>{"1", "proximal"}, _MappingsRightList}},
 			{"FingerThumb2Right", new List<List<string>>{new List<string>{"thumb"}, new List<string>{"2", "intermediate"}, _MappingsRightList}},
 			{"FingerThumb3Right", new List<List<string>>{new List<string>{"thumb"}, new List<string>{"3", "distal"}, _MappingsRightList}},
@@ -154,7 +146,15 @@ namespace ava.Components
 			{"FingerRing3Right", new List<List<string>>{new List<string>{"ring"}, new List<string>{"3", "distal"}, _MappingsRightList}},
 			{"FingerLittle1Right", new List<List<string>>{new List<string>{"little", "pinkie"}, new List<string>{"1", "proximal"}, _MappingsRightList}},
 			{"FingerLittle2Right", new List<List<string>>{new List<string>{"little", "pinkie"}, new List<string>{"2", "intermediate"}, _MappingsRightList}},
-			{"FingerLittle3Right", new List<List<string>>{new List<string>{"little", "pinkie"}, new List<string>{"3", "distal"}, _MappingsRightList}}
+			{"FingerLittle3Right", new List<List<string>>{new List<string>{"little", "pinkie"}, new List<string>{"3", "distal"}, _MappingsRightList}},
+			{"UpperLegLeft", new List<List<string>>{new List<string>{"upper"}, new List<string>{"leg"}, _MappingsLeftList}},
+			{"LowerLegLeft", new List<List<string>>{new List<string>{"lower"}, new List<string>{"leg"}, _MappingsLeftList}},
+			{"FootLeft", new List<List<string>>{new List<string>{"foot"}, _MappingsLeftList}},
+			{"ToesLeft", new List<List<string>>{new List<string>{"toes"}, _MappingsLeftList}},
+			{"UpperLegRight", new List<List<string>>{new List<string>{"upper"}, new List<string>{"leg"}, _MappingsRightList}},
+			{"LowerLegRight", new List<List<string>>{new List<string>{"lower"}, new List<string>{"leg"}, _MappingsRightList}},
+			{"FootRight", new List<List<string>>{new List<string>{"foot"}, _MappingsRightList}},
+			{"ToesRight", new List<List<string>>{new List<string>{"toes"}, _MappingsRightList}}
 		};
 
 		[HideInInspector] public STFArmatureInstance armatureInstance;
@@ -223,7 +223,7 @@ namespace ava.Components
 					}
 				}
 			}
-			this.mappings = tmpMappings.Select(m => new BoneMappingPair(m.Key, m.Value.GetComponent<STFUUID>().boneId)).ToList();
+			this.mappings = tmpMappings.Select(m => new BoneMappingPair(m.Key, m.Value)).ToList();
 		}
 	}
 
@@ -235,12 +235,12 @@ namespace ava.Components
 			c.locomotion_type = (string)json["locomotion_type"];
 			state.AddTask(new Task(() => {
 				c.armatureInstance = state.GetNode((string)json["target_armature_instance"]).GetComponent<STFArmatureInstance>();
+				c.mappings = new List<BoneMappingPair>();
+				foreach(var t in AVAHumanoidMapping.translations)
+				{
+					if((string)json[t.Key] != null) c.mappings.Add(new BoneMappingPair(t.Key, c.armatureInstance.bones.First(b => b.GetComponent<STFUUID>().boneId == (string)json[t.Key])));
+				}
 			}));
-			c.mappings = new List<BoneMappingPair>();
-			foreach(var t in AVAHumanoidMapping.translations)
-			{
-				c.mappings.Add(new BoneMappingPair(t.Key, (string)json[t.Key]));
-			}
 		}
 	}
 
@@ -263,25 +263,14 @@ namespace ava.Components
 			ret.Add("target_armature_instance", state.GetNodeId(c.armatureInstance.gameObject));
 			foreach(var mapping in c.mappings)
 			{
-				ret.Add(mapping.bone, mapping.uuid);
+				// handle armatures not yet being set up, maybe just use normal id
+				ret.Add(mapping.humanoidName, mapping.bone?.GetComponent<STFUUID>().boneId);
 			}
 			return ret;
 		}
 	}
 	public class AVAHumanoidMappingConverter : ISTFSecondStageConverter
 	{
-		private class HumanoidTransformMapping
-		{
-			public HumanoidTransformMapping(string humanoidName, GameObject go)
-			{
-				this.humanoidName = humanoidName;
-				this.go = go;
-			}
-
-			public string humanoidName;
-			public GameObject go;
-		}
-
 		public void convert(Component component, GameObject root, List<UnityEngine.Object> resources)
 		{
 			var stfComponent = (AVAHumanoidMapping)component;
@@ -290,14 +279,10 @@ namespace ava.Components
 			animator.updateMode = AnimatorUpdateMode.Normal;
 			animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
 			
-			var name_mappings = stfComponent.mappings.FindAll(mapping => mapping.bone != null && mapping.bone.Length > 0 && mapping.uuid != null && mapping.uuid.Length > 0);
-			var mappings = new List<HumanoidTransformMapping>();
-			foreach(var mapping in name_mappings)
-			{
-				var humanName = stfComponent.translateHumanoidAVAtoUnity(mapping.bone, stfComponent.locomotion_type);
-				var go = TreeUtils.findByBoneId(root, mapping.uuid);
-				if(humanName != null && humanName.Length > 0 && go != null) mappings.Add(new HumanoidTransformMapping(humanName, go));
-			}
+			var mappings = stfComponent.mappings
+					.FindAll(mapping => mapping.humanoidName != null && mapping.humanoidName.Length > 0 && mapping.bone != null)
+					.Select(mapping => new KeyValuePair<string, GameObject>(stfComponent.translateHumanoidAVAtoUnity(mapping.humanoidName, stfComponent.locomotion_type), mapping.bone))
+					.Where(mapping => mapping.Key != null && mapping.Key.Length > 0).ToList();
 
 			var humanDescription = new HumanDescription
 			{
@@ -321,11 +306,10 @@ namespace ava.Components
 				human = mappings.Select(mapping => 
 				{
 					var bone = new HumanBone {
-						humanName = mapping.humanoidName,
-						boneName = mapping.go.name,
-						limit = new HumanLimit()
+						humanName = mapping.Key,
+						boneName = mapping.Value.name,
+						limit = new HumanLimit {useDefaultValues = true}
 					};
-					bone.limit.useDefaultValues = true;
 					//Debug.Log(bone.humanName + " : " + bone.boneName);
 					return bone;
 				}).ToArray()
@@ -335,7 +319,7 @@ namespace ava.Components
 			avatar.name = root.name + "Avatar";
 			if (!avatar.isValid)
 			{
-				Debug.LogError("Invalid humanoid avatar");
+				throw new Exception("Invalid humanoid avatar");
 			}
 
 			animator.avatar = avatar;
@@ -435,15 +419,15 @@ namespace ava.Components
 				{
 					EditorGUILayout.BeginHorizontal();
 					EditorGUILayout.PrefixLabel(mapping.Key);
-					var bone = c.mappings.Find(m => m.bone == mapping.Key);
+					var bone = c.mappings.Find(m => m.humanoidName == mapping.Key);
 					if(bone != null)
 					{
-						bone.uuid = EditorGUILayout.TextField(bone.uuid);
+						bone.bone = (GameObject)EditorGUILayout.ObjectField(bone.bone, typeof(GameObject), true);
 					}
 					else
 					{
 						if(GUILayout.Button("Add Bone Mapping", GUILayout.ExpandWidth(false))) {
-							c.mappings.Add(new BoneMappingPair(mapping.Key, ""));
+							c.mappings.Add(new BoneMappingPair(mapping.Key, null));
 						}
 					}
 					EditorGUILayout.EndHorizontal();
