@@ -76,7 +76,6 @@ namespace ava.Components
 		{
 			var c = (AVAAvatar)component;
 			var ret = new JObject();
-			string viewport_parent_node = state.GetNodeId(c.viewport_parent);
 			ret.Add("type", AVAAvatar._TYPE);
 			ret.Add("avatar_name", c.avatar_name);
 			ret.Add("avatar_version", c.avatar_version);
@@ -85,7 +84,7 @@ namespace ava.Components
 			ret.Add("author", c.author);
 			ret.Add("license", c.license);
 			ret.Add("license_link", c.license_link);
-			ret.Add("viewport_parent", viewport_parent_node);
+			ret.Add("viewport_parent", state.GetNodeId(c.viewport_parent));
 			ret.Add("viewport_position", new JArray() {c.viewport_position.x, c.viewport_position.y, c.viewport_position.z});
 			return ret;
 		}

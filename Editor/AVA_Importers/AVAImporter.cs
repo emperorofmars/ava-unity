@@ -22,6 +22,7 @@ namespace ava
 		}
 		private static Dictionary<Type, ISTFSecondStageConverter> PreStageConverters = new Dictionary<Type, ISTFSecondStageConverter>() {
 			{typeof(STFTwistConstraintBack), new STFTwistConstraintBackConverter()},
+			{typeof(STFTwistConstraintForward), new STFTwistConstraintForwardConverter()}
 		};
 		public static void RegisterPreStageConverter(Type type, ISTFSecondStageConverter converter)
 		{
