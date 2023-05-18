@@ -19,25 +19,6 @@ namespace ava.Converters
 			if(avaAvatar.viewport_parent != null && avaAvatar.viewport_position != null) vrcAvatar.ViewPosition = avaAvatar.viewport_parent.transform.position - root.transform.position + avaAvatar.viewport_position;
 
 			context.RelMat.STFToConverted.Add(component, vrcAvatar);
-
-			/*if(relMat.ExtendedBys.ContainsKey(component))
-			{
-				foreach(var extend in relMat.Extends[component])
-				{
-					if(!relMat.IsOverridden.Contains(extend))
-					{
-
-					}
-				}
-			}*/
-
-			// get all extending components and handle and remove these
-			
-			/*#if UNITY_EDITOR
-            UnityEngine.Object.DestroyImmediate(component);
-			#else
-            UnityEngine.Object.Destroy(component);
-			#endif*/
 		}
 	}
 }

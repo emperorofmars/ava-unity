@@ -39,6 +39,8 @@ namespace ava.Converters
 				avatar.customEyeLookSettings.eyesLookingDown = new VRCAvatarDescriptor.CustomEyeLookSettings.EyeRotations {left = Quaternion.Euler(c.limitLeft[1], 0f, 0f), right = Quaternion.Euler(c.limitRight[1], 0f, 0f)};
 				avatar.customEyeLookSettings.eyesLookingLeft = new VRCAvatarDescriptor.CustomEyeLookSettings.EyeRotations {left = Quaternion.Euler(0f, -c.limitLeft[2], 0f), right = Quaternion.Euler(0f, -c.limitRight[2], 0f)};
 				avatar.customEyeLookSettings.eyesLookingRight = new VRCAvatarDescriptor.CustomEyeLookSettings.EyeRotations {left = Quaternion.Euler(0f, c.limitLeft[3], 0f), right = Quaternion.Euler(0f, c.limitRight[3], 0f)};
+				
+				context.RelMat.STFToConverted.Add(component, avatar);
 			}));
 		}
 	}
