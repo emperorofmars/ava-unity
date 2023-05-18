@@ -37,7 +37,18 @@ namespace ava
 					ret.SetFloat("_MochieBRDF", 1);
 					ret.SetFloat("_MochieMetallicMultiplier", 1);
 				}
+				else if(property.Name == "transparency_mode")
+				{
+					int mode = 0;
+					switch(property.Value) {
+						case "opaque": mode = 0; break;
+						case "cutout": mode = 1; break;
+						case "transparent": mode = 3; break;
+					}
+					ret.SetFloat("_Mode", mode);
+				}
 			}
+
 			return ret;
 		}
 
@@ -55,7 +66,18 @@ namespace ava
 			ret.Properties.Add(new STFMaterial.ShaderProperty {
 				Name = "lighting_hint",
 				Type = "string",
-				Value = material.GetFloat("_LightingAdditiveType") == 0 ? "realistic" : "toon"
+				Value = material.GetFloat("_LightingAdditiveType") == 0 ? "realistic" : "toony"
+			});
+			string mode = "";
+			switch(material.GetFloat("_Mode")) {
+				case 0: mode = "opaque"; break;
+				case 1: mode = "cutout"; break;
+				case 3: mode = "transparent"; break;
+			}
+			ret.Properties.Add(new STFMaterial.ShaderProperty {
+				Name = "transparency_mode",
+				Type = "string",
+				Value = mode
 			});
 			return ret;
 		}
