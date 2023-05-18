@@ -4,12 +4,13 @@ using Newtonsoft.Json.Linq;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using stf.serialisation;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace stf.serialisation
+namespace ava
 {
 
 	public class STFShaderTranslatorPoiyomi8 : ISTFShaderTranslator
@@ -19,16 +20,22 @@ namespace stf.serialisation
 		public Material TranslateSTFToUnity(ISTFImporter state, STFMaterial stfMaterial)
 		{
 			var ret = new Material(Shader.Find(_SHADER_NAME));
+			STFShaderTranslatorHelpers.ImportTexture(state, ret, stfMaterial, "_MainTex", "albedo");
+			STFShaderTranslatorHelpers.ImportTexture(state, ret, stfMaterial, "_BumpMap", "normal");
+			STFShaderTranslatorHelpers.ImportTexture(state, ret, stfMaterial, "_ClippingMask", "alpha");
 			foreach(var property in stfMaterial.Properties)
 			{
-				if(property.Name == "Albedo")
+				if(property.Name == "lighting_hint" && property.Type == "string")
 				{
-					if(property.Type == "Texture")
-					{
-						state.AddTask(new Task(() => {
-							ret.SetTexture("_MainTex", state.GetResource(property.Value));
-						}));
-					}
+					ret.SetFloat("_ShadingEnabled", 1);
+					ret.SetFloat("_LightingAdditiveType", property.Value == "realistic" ? 0 : 1);
+					ret.SetFloat("_LightingMode", property.Value == "realistic" ? 6 : 0);
+				}
+				else if(property.Name == "MochieMetallicMaps")
+				{
+					STFShaderTranslatorHelpers.ImportTexture(state, ret, stfMaterial, "_MochieMetallicMaps", "MochieMetallicMaps");
+					ret.SetFloat("_MochieBRDF", 1);
+					ret.SetFloat("_MochieMetallicMultiplier", 1);
 				}
 			}
 			return ret;
@@ -39,32 +46,17 @@ namespace stf.serialisation
 			var ret = ScriptableObject.CreateInstance<STFMaterial>();
 			ret.name = material.name;
 			ret.ShaderTargets.Add(new STFMaterial.ShaderTarget {target = "Unity", shaders = new List<string> {_SHADER_NAME}});
-			
-			/*for(int i = 0; i < material.shader.GetPropertyCount(); i++)
-			{
-				foreach(var attribute in material.shader.GetPropertyAttributes(i))
-				{
-					Debug.Log($"Property Index: {i}, Attribute: {attribute}");
-				}
-			}
-			foreach(var name in material.GetTexturePropertyNames())
-			{
-				Debug.Log($"GetTexturePropertyNames: {name}");
-			}*/
 
+			STFShaderTranslatorHelpers.ExportTexture(state, material, ret, "_MainTex", "albedo");
+			STFShaderTranslatorHelpers.ExportTexture(state, material, ret, "_BumpMap", "normal");
+			STFShaderTranslatorHelpers.ExportTexture(state, material, ret, "_ClippingMask", "alpha");
+			STFShaderTranslatorHelpers.ExportTexture(state, material, ret, "_MochieMetallicMaps", "MochieMetallicMaps");
 
-
-			if(material.GetTexture("_MainTex") != null)
-			{
-				Texture mainTex = material.GetTexture("_MainTex");
-				Debug.Log($"Main Tex Type: {mainTex.GetType()}");
-				state.RegisterResource(mainTex);
-				ret.Properties.Add(new STFMaterial.ShaderProperty {
-					Name = "Albedo",
-					Type = "Texture",
-					Value = state.GetResourceId(mainTex)
-				});
-			}
+			ret.Properties.Add(new STFMaterial.ShaderProperty {
+				Name = "lighting_hint",
+				Type = "string",
+				Value = material.GetFloat("_LightingAdditiveType") == 0 ? "realistic" : "toon"
+			});
 			return ret;
 		}
 	}
