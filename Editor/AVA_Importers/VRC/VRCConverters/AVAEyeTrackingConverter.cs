@@ -25,20 +25,20 @@ namespace ava.Converters
 						case AVAAvatar a: avaAvatar = a; break;
 						case AVAHumanoidMapping a: humanoid = a; break;
 					}
-
-					//if(extend.GetType() == typeof(AVAAvatar)) avaAvatar = (AVAAvatar)extend;
-					//else if(extend.GetType() == typeof(AVAHumanoidMapping)) humanoid = (AVAHumanoidMapping)extend;
 				}
 				var avatar = (VRCAvatarDescriptor)context.RelMat.STFToConverted[avaAvatar];
 
 				avatar.enableEyeLook = true;
-				avatar.customEyeLookSettings.eyelidType = VRCAvatarDescriptor.EyelidType.Bones;
 				avatar.customEyeLookSettings.leftEye = humanoid.mappings.Find(m => m.humanoidName == "EyeLeft")?.bone.transform;
 				avatar.customEyeLookSettings.rightEye = humanoid.mappings.Find(m => m.humanoidName == "EyeRight")?.bone.transform;
-				avatar.customEyeLookSettings.eyesLookingUp = new VRCAvatarDescriptor.CustomEyeLookSettings.EyeRotations {left = Quaternion.Euler(-c.limitLeft[0], 0f, 0f), right = Quaternion.Euler(-c.limitRight[0], 0f, 0f)};
-				avatar.customEyeLookSettings.eyesLookingDown = new VRCAvatarDescriptor.CustomEyeLookSettings.EyeRotations {left = Quaternion.Euler(c.limitLeft[1], 0f, 0f), right = Quaternion.Euler(c.limitRight[1], 0f, 0f)};
-				avatar.customEyeLookSettings.eyesLookingLeft = new VRCAvatarDescriptor.CustomEyeLookSettings.EyeRotations {left = Quaternion.Euler(0f, -c.limitLeft[2], 0f), right = Quaternion.Euler(0f, -c.limitRight[2], 0f)};
-				avatar.customEyeLookSettings.eyesLookingRight = new VRCAvatarDescriptor.CustomEyeLookSettings.EyeRotations {left = Quaternion.Euler(0f, c.limitLeft[3], 0f), right = Quaternion.Euler(0f, c.limitRight[3], 0f)};
+				avatar.customEyeLookSettings.eyesLookingUp = new VRCAvatarDescriptor.CustomEyeLookSettings.EyeRotations
+						{left = Quaternion.Euler(-c.limitLeft[0], 0f, 0f), right = Quaternion.Euler(-c.limitRight[0], 0f, 0f), linked = (Mathf.Abs(c.limitLeft[0] - c.limitRight[0]) < 0.0001)};
+				avatar.customEyeLookSettings.eyesLookingDown = new VRCAvatarDescriptor.CustomEyeLookSettings.EyeRotations
+						{left = Quaternion.Euler(c.limitLeft[1], 0f, 0f), right = Quaternion.Euler(c.limitRight[1], 0f, 0f), linked = (Mathf.Abs(c.limitLeft[1] - c.limitRight[1]) < 0.0001)};
+				avatar.customEyeLookSettings.eyesLookingLeft = new VRCAvatarDescriptor.CustomEyeLookSettings.EyeRotations
+						{left = Quaternion.Euler(0f, -c.limitLeft[2], 0f), right = Quaternion.Euler(0f, -c.limitRight[2], 0f), linked = (Mathf.Abs(c.limitLeft[2] - c.limitRight[2]) < 0.0001)};
+				avatar.customEyeLookSettings.eyesLookingRight = new VRCAvatarDescriptor.CustomEyeLookSettings.EyeRotations
+						{left = Quaternion.Euler(0f, c.limitLeft[3], 0f), right = Quaternion.Euler(0f, c.limitRight[3], 0f), linked = (Mathf.Abs(c.limitLeft[3] - c.limitRight[3]) < 0.0001)};
 				
 				context.RelMat.STFToConverted.Add(component, avatar);
 			}));
