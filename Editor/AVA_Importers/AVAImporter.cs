@@ -43,32 +43,43 @@ namespace ava
 			GameObject tmpRoot = UnityEngine.Object.Instantiate(originalRoot);
 			tmpRoot.name = originalRoot.name;
 
-			convertTree(tmpRoot, convertedResources);
-			var intermediaryAsset = new STFSecondStageAsset(tmpRoot, asset.getId(), asset.GetSTFAssetName());
-
-			foreach(var appStage in RegisteredApplicationStages)
+			try
 			{
-				var result = appStage.Convert(intermediaryAsset);
-				convertedAssets.AddRange(result.assets);
-				convertedResources.AddRange(result.resources);
+				var context = new STFSecondStageContext {RelMat = new STFRelationshipMatrix(tmpRoot, "")};
+				convertTree(tmpRoot, convertedResources, context);
+				var intermediaryAsset = new STFSecondStageAsset(tmpRoot, asset.getId(), asset.GetSTFAssetName());
+
+				foreach(var appStage in RegisteredApplicationStages)
+				{
+					var result = appStage.Convert(intermediaryAsset);
+					convertedAssets.AddRange(result.assets);
+					convertedResources.AddRange(result.resources);
+				}
+			}
+			catch(Exception e)
+			{
+				throw new Exception("Error during AVA Loader import: ", e);
+			}
+			finally
+			{
+				#if UNITY_EDITOR
+					UnityEngine.Object.DestroyImmediate(tmpRoot);
+				#else
+					UnityEngine.Object.Destroy(tmpRoot);
+				#endif
 			}
 			
-			#if UNITY_EDITOR
-				UnityEngine.Object.DestroyImmediate(tmpRoot);
-			#else
-				UnityEngine.Object.Destroy(tmpRoot);
-			#endif
 			return new SecondStageResult {assets = convertedAssets, resources = convertedResources};
 		}
 
-		private void convertTree(GameObject root, List<UnityEngine.Object> resources)
+		private void convertTree(GameObject root, List<UnityEngine.Object> resources, STFSecondStageContext context)
 		{
 			foreach(var converter in PreStageConverters)
 			{
 				var components = root.GetComponentsInChildren(converter.Key);
 				foreach(var component in components)
 				{
-					converter.Value.convert(component, root, resources);
+					converter.Value.convert(component, root, resources, context);
 				}
 			}
 		}

@@ -11,6 +11,7 @@ using ava.Components;
 using ava.Converters;
 using VRC.SDK3.Avatars.Components;
 using UnityEngine.Animations;
+using System.Threading.Tasks;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -21,7 +22,8 @@ namespace ava
 	public class AVASecondStageVRC : ISTFSecondStage
 	{
 		private Dictionary<Type, ISTFSecondStageConverter> converters = new Dictionary<Type, ISTFSecondStageConverter>() {
-			{typeof(AVAAvatar), new AVAAvatarVRCConverter()}
+			{typeof(AVAAvatar), new AVAAvatarVRCConverter()},
+			{typeof(AVAEyeTracking), new AVAEyeTrackingVRCConverter()}
 		};
 
 		private static List<Type> WhitelistedComponentsVRC = new List<Type> {
@@ -40,23 +42,46 @@ namespace ava
 
 			GameObject convertedRoot = UnityEngine.Object.Instantiate(originalRoot);
 			convertedRoot.name = originalRoot.name + "_VRC";
-
-			convertTree(convertedRoot, convertedResources);
-
-			cleanup(convertedRoot);
+			try
+			{
+				var context = new STFSecondStageContext {RelMat = new STFRelationshipMatrix(convertedRoot, "VRChat")};
+				convertTree(convertedRoot, convertedResources, context);
+				do
+				{
+					var currentTasks = context.Tasks;
+					context.Tasks = new List<Task>();
+					foreach(var task in currentTasks)
+					{
+						task.RunSynchronously();
+						if(task.Exception != null) throw task.Exception;
+					}
+				}
+				while(context.Tasks.Count > 0);
+				cleanup(convertedRoot);
+			}
+			catch(Exception e)
+			{
+				#if UNITY_EDITOR
+					UnityEngine.Object.DestroyImmediate(convertedRoot);
+				#else
+					UnityEngine.Object.Destroy(convertedRoot);
+				#endif
+				throw new Exception("Error during AVA VRChat Loader import: ", e);
+			}
 
 			var secondStageAsset = new STFSecondStageAsset(convertedRoot, asset.getId() + "_VRC", asset.GetSTFAssetName(), "VRChat Avatar");
 			return new SecondStageResult {assets = new List<ISTFAsset>{secondStageAsset}, resources = convertedResources};
 		}
 
-		private void convertTree(GameObject root, List<UnityEngine.Object> resources)
+		private void convertTree(GameObject root, List<UnityEngine.Object> resources, STFSecondStageContext context)
 		{
 			foreach(var converter in converters)
 			{
 				var components = root.GetComponentsInChildren(converter.Key);
 				foreach(var component in components)
 				{
-					converter.Value.convert(component, root, resources);
+					if(!context.RelMat.IsOverridden.Contains(component))
+						converter.Value.convert(component, root, resources, context);
 				}
 			}
 		}
