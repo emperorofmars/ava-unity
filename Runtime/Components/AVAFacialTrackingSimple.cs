@@ -25,7 +25,7 @@ namespace ava.Components
 	{
 
 		public static string _TYPE = "AVA.facial_tracking_simple";
-		public string _id;
+		public string _id = Guid.NewGuid().ToString();
 		public string id {get => _id; set => _id = value;}
 		public List<string> _extends;
 		public List<string> extends {get => _extends; set => _extends = value;}
@@ -53,7 +53,7 @@ namespace ava.Components
 			c.targets = json["targets"]?.ToObject<List<string>>();
 
 			state.AddTask(new Task(() => {
-				c.TargetMeshInstance = state.GetNode((string)json["target_mesh_instance"]).GetComponent<SkinnedMeshRenderer>();
+				c.TargetMeshInstance = state.GetNode((string)json["target_mesh_instance_node"]).GetComponent<SkinnedMeshRenderer>(); // actually retrieve renderer component by id
 			}));
 			foreach(var vis in AVAFacialTrackingSimple.VoiceVisemes15)
 			{
@@ -73,7 +73,7 @@ namespace ava.Components
 			ret.Add("overrides", new JArray(c.overrides));
 			ret.Add("targets", new JArray(c.targets));
 
-			ret.Add("target_mesh_instance", c.TargetMeshInstance?.GetComponent<STFUUID>().id); // actually retrieve mesh renderer component id
+			ret.Add("target_mesh_instance_node", c.TargetMeshInstance?.GetComponent<STFUUID>().id); // actually retrieve mesh renderer component id
 			foreach(var m in c.Mappings)
 			{
 				ret.Add(m.VisemeName, m.BlendshapeName);

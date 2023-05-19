@@ -16,7 +16,7 @@ namespace ava.Components
 	public class AVAAvatar : MonoBehaviour, ISTFComponent
 	{
 		public static string _TYPE = "AVA.avatar";
-		public string _id;
+		public string _id = Guid.NewGuid().ToString();
 		public string id {get => _id; set => _id = value;}
 		public List<string> _extends;
 		public List<string> extends {get => _extends; set => _extends = value;}

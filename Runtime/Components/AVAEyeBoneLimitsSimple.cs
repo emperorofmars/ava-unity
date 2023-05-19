@@ -16,7 +16,7 @@ namespace ava.Components
 	public class AVAEyeBoneLimitsSimple : MonoBehaviour, ISTFComponent
 	{
 		public static string _TYPE = "AVA.eye_bone_limits_simple";
-		public string _id;
+		public string _id = Guid.NewGuid().ToString();
 		public string id {get => _id; set => _id = value;}
 		public List<string> _extends;
 		public List<string> extends {get => _extends; set => _extends = value;}

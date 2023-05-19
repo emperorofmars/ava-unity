@@ -24,7 +24,7 @@ namespace ava.Components
 
 	public class AVAHumanoidMapping : MonoBehaviour, ISTFComponent
 	{
-		[HideInInspector] public string _id;
+		[HideInInspector] public string _id = Guid.NewGuid().ToString();
 		public string id {get => _id; set => _id = value;}
 		[HideInInspector] public List<string> _extends;
 		public List<string> extends {get => _extends; set => _extends = value;}
