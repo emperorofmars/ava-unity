@@ -61,6 +61,10 @@ namespace ava
 			STFShaderTranslatorHelpers.ExportTexture(state, material, ret, "_MainTex", "albedo");
 			STFShaderTranslatorHelpers.ExportTexture(state, material, ret, "_BumpMap", "normal");
 			STFShaderTranslatorHelpers.ExportTexture(state, material, ret, "_ClippingMask", "alpha");
+			STFShaderTranslatorHelpers.ExportTextureChannel(state, material, ret, "_MochieMetallicMaps", 0, "metallic");
+			STFShaderTranslatorHelpers.ExportTextureChannel(state, material, ret, "_MochieMetallicMaps", 1, "roughness", true);
+			STFShaderTranslatorHelpers.ExportTextureChannel(state, material, ret, "_MochieMetallicMaps", 3, "specular", true);
+
 			STFShaderTranslatorHelpers.ExportTexture(state, material, ret, "_MochieMetallicMaps", "MochieMetallicMaps");
 
 			ret.Properties.Add(new STFMaterial.ShaderProperty {
