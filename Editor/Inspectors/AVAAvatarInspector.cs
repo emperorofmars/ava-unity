@@ -16,7 +16,7 @@ namespace ava.Components
 	[CustomEditor(typeof(AVAAvatar))]
 	public class AVAAvatarInspector : Editor
 	{
-		private bool editViewport = false;
+		private bool editPosition = false;
 
 		public override void OnInspectorGUI()
 		{
@@ -50,8 +50,8 @@ namespace ava.Components
 				}
 				
 				GUILayout.Space(10f);
-				if(!editViewport && GUILayout.Button("Edit viewport", GUILayout.ExpandWidth(false))) editViewport = true;
-				else if(editViewport && GUILayout.Button("Stop editing viewport", GUILayout.ExpandWidth(false))) editViewport = false;
+				if(!editPosition && GUILayout.Button("Edit viewport", GUILayout.ExpandWidth(false))) editPosition = true;
+				else if(editPosition && GUILayout.Button("Stop editing viewport", GUILayout.ExpandWidth(false))) editPosition = false;
 			}
 			else
 			{
@@ -68,14 +68,14 @@ namespace ava.Components
 		{
 			var c = (AVAAvatar)target;
 			
-			if(c.viewport_parent && editViewport)
+			if(c.viewport_parent && editPosition)
 			{
 				Handles.Label(c.viewport_parent.transform.position + c.viewport_position, "Viewport");
 				c.viewport_position = Handles.DoPositionHandle(c.viewport_parent.transform.position + c.viewport_position, Quaternion.identity) - c.viewport_parent.transform.position;
 			}
 		}
 		
-		[DrawGizmo(GizmoType.NonSelected | GizmoType.Selected)]
+		[DrawGizmo(GizmoType.Selected)]
 		public static void OnDrawGizmo(AVAAvatar target, GizmoType gizmoType)
 		{
 			var c = (AVAAvatar)target;
