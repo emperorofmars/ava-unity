@@ -47,13 +47,14 @@ namespace ava.Components
 		override public void parseFromJson(ISTFImporter state, JToken json, string id, GameObject go)
 		{
 			var c = go.AddComponent<AVAFacialTrackingSimple>();
+			state.AddComponent(id, c);
 			c.id = id;
 			c.extends = json["extends"]?.ToObject<List<string>>();
 			c.overrides = json["overrides"]?.ToObject<List<string>>();
 			c.targets = json["targets"]?.ToObject<List<string>>();
 
 			state.AddTask(new Task(() => {
-				c.TargetMeshInstance = state.GetNode((string)json["target_mesh_instance_node"]).GetComponent<SkinnedMeshRenderer>(); // actually retrieve renderer component by id
+				c.TargetMeshInstance = (SkinnedMeshRenderer)state.GetComponent((string)json["target_mesh_instance"]);
 			}));
 			foreach(var vis in AVAFacialTrackingSimple.VoiceVisemes15)
 			{
@@ -73,7 +74,7 @@ namespace ava.Components
 			ret.Add("overrides", new JArray(c.overrides));
 			ret.Add("targets", new JArray(c.targets));
 
-			ret.Add("target_mesh_instance_node", c.TargetMeshInstance?.GetComponent<STFUUID>().id); // actually retrieve mesh renderer component id
+			ret.Add("target_mesh_instance", c.TargetMeshInstance?.GetComponent<STFUUID>().GetIdByComponent(c.TargetMeshInstance));
 			foreach(var m in c.Mappings)
 			{
 				ret.Add(m.VisemeName, m.BlendshapeName);

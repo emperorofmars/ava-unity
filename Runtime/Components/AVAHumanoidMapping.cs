@@ -228,6 +228,7 @@ namespace ava.Components
 		public override void parseFromJson(ISTFImporter state, JToken json, string id, GameObject go)
 		{
 			var c = go.AddComponent<AVAHumanoidMapping>();
+			state.AddComponent(id, c);
 			c.id = id;
 			c.locomotion_type = (string)json["locomotion_type"];
 			state.AddTask(new Task(() => {

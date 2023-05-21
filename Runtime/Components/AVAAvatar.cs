@@ -39,18 +39,19 @@ namespace ava.Components
 	{
 		override public void parseFromJson(ISTFImporter state, JToken json, string id, GameObject go)
 		{
-			var component = go.AddComponent<AVAAvatar>();
-			component.id = id;
-			component.avatar_name = (string)json["avatar_name"];
-			component.avatar_version = (string)json["avatar_version"];
+			var c = go.AddComponent<AVAAvatar>();
+			state.AddComponent(id, c);
+			c.id = id;
+			c.avatar_name = (string)json["avatar_name"];
+			c.avatar_version = (string)json["avatar_version"];
 			if((string)json["icon"] != null && ((string)json["icon"]).Length > 0)
-				component.icon = (Texture2D)state.GetResource((string)json["icon"]);
-			component.author = (string)json["author"];
-			component.license = (string)json["license"];
-			component.license_link = (string)json["license_link"];
-			component.viewport_parent = state.GetNode((string)json["viewport_parent"]);
+				c.icon = (Texture2D)state.GetResource((string)json["icon"]);
+			c.author = (string)json["author"];
+			c.license = (string)json["license"];
+			c.license_link = (string)json["license_link"];
+			c.viewport_parent = state.GetNode((string)json["viewport_parent"]);
 			var viewport_position_array = (JArray)json["viewport_position"];
-			component.viewport_position = new Vector3((float)viewport_position_array[0], (float)viewport_position_array[1], (float)viewport_position_array[2]);
+			c.viewport_position = new Vector3((float)viewport_position_array[0], (float)viewport_position_array[1], (float)viewport_position_array[2]);
 		}
 	}
 

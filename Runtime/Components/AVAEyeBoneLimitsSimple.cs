@@ -35,16 +35,17 @@ namespace ava.Components
 	{
 		override public void parseFromJson(ISTFImporter state, JToken json, string id, GameObject go)
 		{
-			var component = go.AddComponent<AVAEyeBoneLimitsSimple>();
-			component.id = id;
-			component.extends = json["extends"]?.ToObject<List<string>>();
-			component.overrides = json["overrides"]?.ToObject<List<string>>();
-			component.targets = json["targets"]?.ToObject<List<string>>();
+			var c = go.AddComponent<AVAEyeBoneLimitsSimple>();
+			state.AddComponent(id, c);
+			c.id = id;
+			c.extends = json["extends"]?.ToObject<List<string>>();
+			c.overrides = json["overrides"]?.ToObject<List<string>>();
+			c.targets = json["targets"]?.ToObject<List<string>>();
 
-			component.up = (float)json["up"];
-			component.down = (float)json["down"];
-			component.inner = (float)json["inner"];
-			component.outer = (float)json["outer"];
+			c.up = (float)json["up"];
+			c.down = (float)json["down"];
+			c.inner = (float)json["inner"];
+			c.outer = (float)json["outer"];
 		}
 	}
 
