@@ -1,5 +1,5 @@
 
-#if VRCSDK3_FOUND
+//#if CCK3_FOUND
 
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,6 @@ using stf.serialisation;
 using UnityEngine;
 using ava.Components;
 using ava.Converters;
-using VRC.SDK3.Avatars.Components;
 using UnityEngine.Animations;
 using System.Threading.Tasks;
 
@@ -19,15 +18,15 @@ using UnityEditor;
 
 namespace ava
 {
-	public class AVASecondStageVRC : ISTFSecondStage
+	public class AVASecondStageCVR : ISTFSecondStage
 	{
 		private Dictionary<Type, ISTFSecondStageConverter> converters = new Dictionary<Type, ISTFSecondStageConverter>() {
-			{typeof(AVAAvatar), new AVAAvatarVRCConverter()},
-			{typeof(AVAEyeBoneLimitsSimple), new AVAEyeBoneLimitsSimpleVRCConverter()}
+			//{typeof(AVAAvatar), new AVAAvatarVRCConverter()},
+			//{typeof(AVAEyeBoneLimitsSimple), new AVAEyeBoneLimitsSimpleVRCConverter()}
 		};
 
-		private static List<Type> WhitelistedComponentsVRC = new List<Type> {
-			typeof(Transform), typeof(Animator), typeof(RotationConstraint), typeof(SkinnedMeshRenderer), typeof(VRCAvatarDescriptor), typeof(VRCPipelineManagerEditor)
+		private static List<Type> WhitelistedComponentsCVR = new List<Type> {
+			typeof(Transform), typeof(Animator), typeof(RotationConstraint), typeof(SkinnedMeshRenderer)//, typeof(VRCAvatarDescriptor), typeof(VRCPipelineManagerEditor)
 		};
 		
 		public bool CanHandle(ISTFAsset asset)
@@ -41,10 +40,10 @@ namespace ava
 			var convertedResources = new List<UnityEngine.Object>();
 
 			GameObject convertedRoot = UnityEngine.Object.Instantiate(originalRoot);
-			convertedRoot.name = originalRoot.name + "_VRC";
+			convertedRoot.name = originalRoot.name + "_CVR";
 			try
 			{
-				var context = new STFSecondStageContext {RelMat = new STFRelationshipMatrix(convertedRoot, "VRChat")};
+				var context = new STFSecondStageContext {RelMat = new STFRelationshipMatrix(convertedRoot, "ChilloutVR")};
 				convertTree(convertedRoot, convertedResources, context);
 				do
 				{
@@ -66,10 +65,10 @@ namespace ava
 				#else
 					UnityEngine.Object.Destroy(convertedRoot);
 				#endif
-				throw new Exception("Error during AVA VRChat Loader import: ", e);
+				throw new Exception("Error during AVA ChilloutVR Loader import: ", e);
 			}
 
-			var secondStageAsset = new STFSecondStageAsset(convertedRoot, asset.getId() + "_VRC", asset.GetSTFAssetName(), "VRChat Avatar");
+			var secondStageAsset = new STFSecondStageAsset(convertedRoot, asset.getId() + "_CVR", asset.GetSTFAssetName(), "ChilloutVR Avatar");
 			return new SecondStageResult {assets = new List<ISTFAsset>{secondStageAsset}, resources = convertedResources};
 		}
 
@@ -90,7 +89,7 @@ namespace ava
 		{
 			foreach(var component in root.GetComponentsInChildren<Component>())
 			{
-				if(!WhitelistedComponentsVRC.Contains(component.GetType()))
+				if(!WhitelistedComponentsCVR.Contains(component.GetType()))
 				{
 					#if UNITY_EDITOR
 						UnityEngine.Object.DestroyImmediate(component);
@@ -104,15 +103,15 @@ namespace ava
 
 #if UNITY_EDITOR
 	[InitializeOnLoad]
-	public class Register_AVASecondStageVRC
+	public class Register_AVASecondStageCVR
 	{
-		static Register_AVASecondStageVRC()
+		static Register_AVASecondStageCVR()
 		{
-			AVASecondStage.RegisterStage(new AVASecondStageVRC());
-			Debug.Log("Registered AVA VRChat Loader");
+			AVASecondStage.RegisterStage(new AVASecondStageCVR());
+			Debug.Log("Registered AVA ChilloutVR Loader");
 		}
 	}
 #endif
 
 }
-#endif
+//#endif
