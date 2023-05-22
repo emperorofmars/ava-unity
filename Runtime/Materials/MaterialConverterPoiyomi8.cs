@@ -17,6 +17,11 @@ namespace ava
 	{
 		public static readonly string _SHADER_NAME = ".poiyomi/Poiyomi 8.1/Poiyomi Toon";
 
+		public bool IsShaderPresent()
+		{
+			return Shader.Find(_SHADER_NAME) != null;
+		}
+		
 		public Material TranslateSTFToUnity(ISTFImporter state, STFMaterial stfMaterial)
 		{
 			var ret = new Material(Shader.Find(_SHADER_NAME));
