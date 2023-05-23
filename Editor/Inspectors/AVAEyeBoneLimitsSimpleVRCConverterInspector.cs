@@ -66,7 +66,7 @@ namespace ava.Components
 				else
 				{
 					EditorGUILayout.LabelField("Extends set up correctly");
-					EditorGUILayout.LabelField($"Aavatar: {avatar.id}");
+					EditorGUILayout.LabelField($"Avatar: {avatar.id}");
 					EditorGUILayout.LabelField($"Humanoid: {humanoid.id}");
 				}
 			}

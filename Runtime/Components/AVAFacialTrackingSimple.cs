@@ -14,15 +14,14 @@ using UnityEditor;
 
 namespace ava.Components
 {
-	[Serializable]
-	public class BlendshapeMapping
-	{
-		public string VisemeName;
-		public string BlendshapeName;
-	}
-	
 	public class AVAFacialTrackingSimple : MonoBehaviour, ISTFComponent
 	{
+		[Serializable]
+		public class BlendshapeMapping
+		{
+			public string VisemeName;
+			public string BlendshapeName;
+		}
 
 		public static string _TYPE = "AVA.facial_tracking_simple";
 		public string _id = Guid.NewGuid().ToString();
@@ -34,12 +33,31 @@ namespace ava.Components
 		public List<string> _targets;
 		public List<string> targets {get => _targets; set => _targets = value;}
 
-		public static List<String> VoiceVisemes15 = new List<string> {
+		public static readonly List<string> VoiceVisemes15 = new List<string> {
 			"sil", "aa", "ch", "dd", "e", "ff", "ih", "kk", "nn", "oh", "ou", "pp", "rr", "ss", "th"
 		};
 
 		public SkinnedMeshRenderer TargetMeshInstance;
 		public List<BlendshapeMapping> Mappings = new List<BlendshapeMapping>();
+
+		public void Map()
+		{
+			if(TargetMeshInstance == null ||TargetMeshInstance.sharedMesh == null) throw new Exception("Meshinstance must be mapped!");
+			Mappings = new List<BlendshapeMapping>();
+			foreach(var v in VoiceVisemes15)
+			{
+				string match = null;
+				for(int i = 0; i < TargetMeshInstance.sharedMesh.blendShapeCount; i++)
+				{
+					var bName = TargetMeshInstance.sharedMesh.GetBlendShapeName(i);
+					if(bName.ToLower().Contains("vrc." + v)) { match = bName; break; }
+					else if(bName.ToLower().Contains("vrc.v_" + v)) { match = bName; break; }
+					else if(bName.ToLower().Contains("vis." + v)) { match = bName; break; }
+					else if(bName.ToLower().Contains("vis_" + v)) { match = bName; break; }
+				}
+				Mappings.Add(new BlendshapeMapping{VisemeName = v, BlendshapeName = match});
+			}
+		}
 	}
 
 	public class AVAFacialTrackingSimpleImporter : ASTFComponentImporter
@@ -58,7 +76,7 @@ namespace ava.Components
 			}));
 			foreach(var vis in AVAFacialTrackingSimple.VoiceVisemes15)
 			{
-				c.Mappings.Add(new BlendshapeMapping {VisemeName = vis, BlendshapeName = (string)json[vis]});
+				c.Mappings.Add(new AVAFacialTrackingSimple.BlendshapeMapping {VisemeName = vis, BlendshapeName = (string)json[vis]});
 			}
 		}
 	}
