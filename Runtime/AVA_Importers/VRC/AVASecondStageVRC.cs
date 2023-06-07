@@ -23,7 +23,8 @@ namespace ava
 	{
 		private Dictionary<Type, ISTFSecondStageConverter> converters = new Dictionary<Type, ISTFSecondStageConverter>() {
 			{typeof(AVAAvatar), new AVAAvatarVRCConverter()},
-			{typeof(AVAEyeBoneLimitsSimple), new AVAEyeBoneLimitsSimpleVRCConverter()}
+			{typeof(AVAEyeBoneLimitsSimple), new AVAEyeBoneLimitsSimpleVRCConverter()},
+			{typeof(AVAFacialTrackingSimple), new AVAFacialTrackingSimpleVRCConverter()}
 		};
 
 		private static List<Type> WhitelistedComponentsVRC = new List<Type> {
