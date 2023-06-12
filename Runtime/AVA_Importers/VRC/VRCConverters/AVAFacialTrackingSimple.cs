@@ -46,19 +46,6 @@ namespace ava.Converters
 				avatar.VisemeBlendShapes[13] = c.Mappings.Find(m => m.VisemeName == "oh")?.BlendshapeName;
 				avatar.VisemeBlendShapes[14] = c.Mappings.Find(m => m.VisemeName == "ou")?.BlendshapeName;
 
-				/*avatar.enableEyeLook = true;
-				avatar.customEyeLookSettings.leftEye = humanoid.mappings.Find(m => m.humanoidName == "EyeLeft")?.bone.transform;
-				avatar.customEyeLookSettings.rightEye = humanoid.mappings.Find(m => m.humanoidName == "EyeRight")?.bone.transform;
-
-				avatar.customEyeLookSettings.eyesLookingUp = new VRCAvatarDescriptor.CustomEyeLookSettings.EyeRotations
-						{left = Quaternion.Euler(-c.up, 0f, 0f), right = Quaternion.Euler(-c.up, 0f, 0f), linked = true};
-				avatar.customEyeLookSettings.eyesLookingDown = new VRCAvatarDescriptor.CustomEyeLookSettings.EyeRotations
-						{left = Quaternion.Euler(c.down, 0f, 0f), right = Quaternion.Euler(c.down, 0f, 0f), linked = true};
-				avatar.customEyeLookSettings.eyesLookingLeft = new VRCAvatarDescriptor.CustomEyeLookSettings.EyeRotations
-						{left = Quaternion.Euler(0f, -c.outer, 0f), right = Quaternion.Euler(0f, -c.inner, 0f), linked = false};
-				avatar.customEyeLookSettings.eyesLookingRight = new VRCAvatarDescriptor.CustomEyeLookSettings.EyeRotations
-						{left = Quaternion.Euler(0f, c.inner, 0f), right = Quaternion.Euler(0f, c.outer, 0f), linked = false};*/
-				
 				context.RelMat.STFToConverted.Add(component, avatar);
 			}));
 		}
