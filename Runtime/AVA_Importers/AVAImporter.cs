@@ -29,14 +29,14 @@ namespace ava
 			PreStageConverters.Add(type, converter);
 		}
 		
-		public bool CanHandle(ISTFAsset asset)
+		public bool CanHandle(ISTFAsset asset, UnityEngine.Object adaptedUnityAsset)
 		{
 			return asset.GetSTFAssetType() == "asset" && asset.GetAsset().GetType() == typeof(GameObject) && ((GameObject)asset.GetAsset()).GetComponent<AVAAvatar>() != null;
 		}
 
-		public SecondStageResult Convert(ISTFAsset asset)
+		public SecondStageResult Convert(ISTFAsset asset, UnityEngine.Object adaptedUnityAsset)
 		{
-			var originalRoot = (GameObject)asset.GetAsset();
+			var originalRoot = (GameObject)adaptedUnityAsset;
 			var convertedAssets = new List<ISTFAsset>();
 			var convertedResources = new List<UnityEngine.Object>();
 
@@ -51,7 +51,7 @@ namespace ava
 
 				foreach(var appStage in RegisteredApplicationStages)
 				{
-					var result = appStage.Convert(intermediaryAsset);
+					var result = appStage.Convert(intermediaryAsset, intermediaryAsset.GetAsset());
 					convertedAssets.AddRange(result.assets);
 					convertedResources.AddRange(result.resources);
 				}
