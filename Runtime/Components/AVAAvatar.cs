@@ -37,7 +37,7 @@ namespace ava.Components
 
 	public class AVAAvatarImporter : ASTFComponentImporter
 	{
-		override public void parseFromJson(ISTFImporter state, JToken json, string id, GameObject go)
+		override public void parseFromJson(ISTFImporter state, ISTFAsset asset, JToken json, string id, GameObject go)
 		{
 			var c = go.AddComponent<AVAAvatar>();
 			state.AddComponent(id, c);

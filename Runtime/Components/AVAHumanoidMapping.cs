@@ -225,7 +225,7 @@ namespace ava.Components
 
 	public class AVAHumanoidMappingImporter : ASTFComponentImporter
 	{
-		public override void parseFromJson(ISTFImporter state, JToken json, string id, GameObject go)
+		public override void parseFromJson(ISTFImporter state, ISTFAsset asset, JToken json, string id, GameObject go)
 		{
 			var c = go.AddComponent<AVAHumanoidMapping>();
 			state.AddComponent(id, c);
