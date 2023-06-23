@@ -1,5 +1,5 @@
 
-//#if CCK3_FOUND
+#if CVRCCK3_FOUND
 
 using System;
 using System.Collections.Generic;
@@ -21,7 +21,7 @@ namespace ava
 	public class AVASecondStageCVR : ISTFSecondStage
 	{
 		private Dictionary<Type, ISTFSecondStageConverter> converters = new Dictionary<Type, ISTFSecondStageConverter>() {
-			//{typeof(AVAAvatar), new AVAAvatarVRCConverter()},
+			{typeof(AVAAvatar), new AVAAvatarCVRConverter()},
 			//{typeof(AVAEyeBoneLimitsSimple), new AVAEyeBoneLimitsSimpleVRCConverter()}
 		};
 
@@ -114,4 +114,4 @@ namespace ava
 #endif
 
 }
-//#endif
+#endif

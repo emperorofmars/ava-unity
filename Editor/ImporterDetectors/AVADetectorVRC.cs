@@ -1,6 +1,7 @@
 
 #if UNITY_EDITOR
 
+using System;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace ava
 		static AVADetectorVRC()
 		{
 			if(Directory.GetFiles(Path.GetDirectoryName(Application.dataPath), "VRCAvatarDescriptorEditor3.cs", SearchOption.AllDirectories).Length > 0)
+			//if(Type.GetType("VRCAvatarDescriptorEditor3") != null)
 			{
 				Debug.Log("Found VRC SDK 3");
 				ScriptDefinesManager.AddDefinesIfMissing(BuildTargetGroup.Standalone, VRCSDK3_FOUND);
