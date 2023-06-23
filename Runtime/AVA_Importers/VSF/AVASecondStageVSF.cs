@@ -42,7 +42,7 @@ namespace ava
 			convertedRoot.name = originalRoot.name + "_VSF";
 			try
 			{
-				var context = new STFSecondStageContext {RelMat = new STFRelationshipMatrix(convertedRoot, "VSeeFace")};
+				var context = new STFSecondStageContext {RelMat = new STFRelationshipMatrix(convertedRoot, new List<string> {"unity", "vrm", "vseeface"})};
 				convertTree(convertedRoot, convertedResources, context);
 				do
 				{

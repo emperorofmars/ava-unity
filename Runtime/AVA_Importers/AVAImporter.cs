@@ -45,7 +45,7 @@ namespace ava
 
 			try
 			{
-				var context = new STFSecondStageContext {RelMat = new STFRelationshipMatrix(tmpRoot, "")};
+				var context = new STFSecondStageContext {RelMat = new STFRelationshipMatrix(tmpRoot, new List<string> {"unity"})};
 				convertTree(tmpRoot, convertedResources, context);
 				var intermediaryAsset = new STFSecondStageAsset(tmpRoot, asset.getId(), asset.GetSTFAssetName());
 

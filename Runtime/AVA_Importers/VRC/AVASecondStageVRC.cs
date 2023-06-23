@@ -19,87 +19,26 @@ using UnityEditor;
 
 namespace ava
 {
-	public class AVASecondStageVRC : ISTFSecondStage
+	public class AVASecondStageVRC : ASTFSecondStageDefault
 	{
-		private Dictionary<Type, ISTFSecondStageConverter> converters = new Dictionary<Type, ISTFSecondStageConverter>() {
+		protected override Dictionary<Type, ISTFSecondStageConverter> Converters => new Dictionary<Type, ISTFSecondStageConverter>() {
 			{typeof(AVAAvatar), new AVAAvatarVRCConverter()},
 			{typeof(AVAEyeBoneLimitsSimple), new AVAEyeBoneLimitsSimpleVRCConverter()},
 			{typeof(AVAFacialTrackingSimple), new AVAFacialTrackingSimpleVRCConverter()}
 		};
 
-		private static List<Type> WhitelistedComponentsVRC = new List<Type> {
+		protected override List<Type> WhitelistedComponents => new List<Type> {
 			typeof(Transform), typeof(Animator), typeof(RotationConstraint), typeof(SkinnedMeshRenderer), typeof(VRCAvatarDescriptor), typeof(VRCPipelineManagerEditor)
 		};
-		
-		public bool CanHandle(ISTFAsset asset, UnityEngine.Object adaptedUnityAsset)
+
+		protected override string GameObjectSuffix => "VRC";
+		protected override string StageName => "VRChat";
+		protected override string AssetTypeName => "VRChat Avatar";
+		protected override List<string> Targets => new List<string> {"unity", "vrchat"};
+
+		public override bool CanHandle(ISTFAsset asset, UnityEngine.Object adaptedUnityAsset)
 		{
 			return asset.GetSTFAssetType() == "asset" && asset.GetAsset().GetType() == typeof(GameObject) && ((GameObject)asset.GetAsset()).GetComponent<AVAAvatar>() != null;
-		}
-
-		public SecondStageResult Convert(ISTFAsset asset, UnityEngine.Object adaptedUnityAsset)
-		{
-			var originalRoot = (GameObject)adaptedUnityAsset;
-			var convertedResources = new List<UnityEngine.Object>();
-
-			GameObject convertedRoot = UnityEngine.Object.Instantiate(originalRoot);
-			convertedRoot.name = originalRoot.name + "_VRC";
-			try
-			{
-				var context = new STFSecondStageContext {RelMat = new STFRelationshipMatrix(convertedRoot, "VRChat")};
-				convertTree(convertedRoot, convertedResources, context);
-				do
-				{
-					var currentTasks = context.Tasks;
-					context.Tasks = new List<Task>();
-					foreach(var task in currentTasks)
-					{
-						task.RunSynchronously();
-						if(task.Exception != null) throw task.Exception;
-					}
-				}
-				while(context.Tasks.Count > 0);
-				cleanup(convertedRoot);
-			}
-			catch(Exception e)
-			{
-				#if UNITY_EDITOR
-					UnityEngine.Object.DestroyImmediate(convertedRoot);
-				#else
-					UnityEngine.Object.Destroy(convertedRoot);
-				#endif
-				throw new Exception("Error during AVA VRChat Loader import: ", e);
-			}
-
-			var secondStageAsset = new STFSecondStageAsset(convertedRoot, asset.getId() + "_VRC", asset.GetSTFAssetName(), "VRChat Avatar");
-			return new SecondStageResult {assets = new List<ISTFAsset>{secondStageAsset}, resources = convertedResources};
-		}
-
-		private void convertTree(GameObject root, List<UnityEngine.Object> resources, STFSecondStageContext context)
-		{
-			foreach(var converter in converters)
-			{
-				var components = root.GetComponentsInChildren(converter.Key);
-				foreach(var component in components)
-				{
-					if(!context.RelMat.IsOverridden.Contains(component))
-						converter.Value.convert(component, root, resources, context);
-				}
-			}
-		}
-
-		private void cleanup(GameObject root)
-		{
-			foreach(var component in root.GetComponentsInChildren<Component>())
-			{
-				if(!WhitelistedComponentsVRC.Contains(component.GetType()))
-				{
-					#if UNITY_EDITOR
-						UnityEngine.Object.DestroyImmediate(component);
-					#else
-						UnityEngine.Object.Destroy(component);
-					#endif
-				}
-			}
 		}
 	}
 
