@@ -18,7 +18,7 @@ namespace ava.Converters
 			var avatar = component.gameObject.AddComponent<CVRAvatar>();
 			if(avaAvatar.viewport_parent != null && avaAvatar.viewport_position != null) avatar.viewPosition = avaAvatar.viewport_parent.transform.position - root.transform.position + avaAvatar.viewport_position;
 			
-			context.RelMat.STFToConverted.Add(component, avatar);
+			context.RelMat.AddConverted(component, avatar);
 		}
 	}
 }

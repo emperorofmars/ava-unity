@@ -18,14 +18,14 @@ namespace ava.Converters
 			var c = (AVAFacialTrackingSimple)component;
 			context.Tasks.Add(new Task(() => {
 				AVAAvatar avaAvatar = null;
-				foreach(var extend in context.RelMat.Extends[component])
+				foreach(var extend in context.RelMat.GetExtended(component))
 				{
 					if(extend is AVAAvatar)
 					{
 						avaAvatar = (AVAAvatar)extend; break;
 					}
 				}
-				var avatar = (VRCAvatarDescriptor)context.RelMat.STFToConverted[avaAvatar];
+				var avatar = (VRCAvatarDescriptor)context.RelMat.GetConverted(avaAvatar);
 
 				avatar.VisemeSkinnedMesh = c.TargetMeshInstance;
 				avatar.lipSync = VRC.SDKBase.VRC_AvatarDescriptor.LipSyncStyle.VisemeBlendShape;
@@ -46,7 +46,7 @@ namespace ava.Converters
 				avatar.VisemeBlendShapes[13] = c.Mappings.Find(m => m.VisemeName == "oh")?.BlendshapeName;
 				avatar.VisemeBlendShapes[14] = c.Mappings.Find(m => m.VisemeName == "ou")?.BlendshapeName;
 
-				context.RelMat.STFToConverted.Add(component, avatar);
+				context.RelMat.AddConverted(component, avatar);
 			}));
 		}
 	}

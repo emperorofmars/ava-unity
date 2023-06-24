@@ -18,7 +18,7 @@ namespace ava.Converters
 			context.Tasks.Add(new Task(() => {
 				AVAAvatar avaAvatar = null;
 				AVAHumanoidMapping humanoid = null;
-				foreach(var extend in context.RelMat.Extends[component])
+				foreach(var extend in context.RelMat.GetExtended(component))
 				{
 					switch(extend)
 					{
@@ -26,7 +26,7 @@ namespace ava.Converters
 						case AVAHumanoidMapping a: humanoid = a; break;
 					}
 				}
-				var avatar = (VRCAvatarDescriptor)context.RelMat.STFToConverted[avaAvatar];
+				var avatar = (VRCAvatarDescriptor)context.RelMat.GetConverted(avaAvatar);
 
 				avatar.enableEyeLook = true;
 				avatar.customEyeLookSettings.leftEye = humanoid.mappings.Find(m => m.humanoidName == "EyeLeft")?.bone.transform;
@@ -41,7 +41,7 @@ namespace ava.Converters
 				avatar.customEyeLookSettings.eyesLookingRight = new VRCAvatarDescriptor.CustomEyeLookSettings.EyeRotations
 						{left = Quaternion.Euler(0f, c.inner, 0f), right = Quaternion.Euler(0f, c.outer, 0f), linked = false};
 				
-				context.RelMat.STFToConverted.Add(component, avatar);
+				context.RelMat.AddConverted(component, avatar);
 			}));
 		}
 	}
