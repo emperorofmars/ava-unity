@@ -21,18 +21,9 @@ namespace ava
 {
 	public class AVASecondStageCVR : ASTFSecondStageDefault
 	{
-		private Dictionary<Type, ISTFSecondStageConverter> converters = new Dictionary<Type, ISTFSecondStageConverter>() {
-			{typeof(AVAAvatar), new AVAAvatarCVRConverter()},
-			//{typeof(AVAEyeBoneLimitsSimple), new AVAEyeBoneLimitsSimpleVRCConverter()}
-		};
-
-		private static List<Type> WhitelistedComponentsCVR = new List<Type> {
-			typeof(Transform), typeof(Animator), typeof(RotationConstraint), typeof(SkinnedMeshRenderer), typeof(CVRAvatar), typeof(CVRAssetInfo)
-		};
-
 		protected override Dictionary<Type, ISTFSecondStageConverter> Converters => new Dictionary<Type, ISTFSecondStageConverter>() {
 			{typeof(AVAAvatar), new AVAAvatarCVRConverter()},
-			//{typeof(AVAEyeBoneLimitsSimple), new AVAEyeBoneLimitsSimpleVRCConverter()}
+			{typeof(AVAEyeBoneLimitsSimple), new AVAFacialTrackingSimpleCVRConverter()}
 		};
 
 		protected override List<Type> WhitelistedComponents => new List<Type> {
