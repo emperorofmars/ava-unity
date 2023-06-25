@@ -17,14 +17,8 @@ namespace ava.Converters
 		{
 			var c = (AVAFacialTrackingSimple)component;
 			context.Tasks.Add(new Task(() => {
-				AVAAvatar avaAvatar = null;
-				foreach(var extend in context.RelMat.GetExtended(component))
-				{
-					if(extend is AVAAvatar)
-					{
-						avaAvatar = (AVAAvatar)extend; break;
-					}
-				}
+				AVAAvatar avaAvatar = context.RelMat.GetExtended<AVAAvatar>(component);
+
 				var avatar = (VRCAvatarDescriptor)context.RelMat.GetConverted(avaAvatar);
 
 				avatar.VisemeSkinnedMesh = c.TargetMeshInstance;
@@ -46,8 +40,29 @@ namespace ava.Converters
 				avatar.VisemeBlendShapes[13] = c.Mappings.Find(m => m.VisemeName == "oh")?.BlendshapeName;
 				avatar.VisemeBlendShapes[14] = c.Mappings.Find(m => m.VisemeName == "ou")?.BlendshapeName;
 
+				if(c.Mappings.Find(m => m.VisemeName == "blink") != null)
+				{
+					avatar.customEyeLookSettings.eyelidType = VRCAvatarDescriptor.EyelidType.Blendshapes;
+					avatar.customEyeLookSettings.eyelidsSkinnedMesh = c.TargetMeshInstance;
+					avatar.customEyeLookSettings.eyelidsBlendshapes = new int[3];
+					avatar.customEyeLookSettings.eyelidsBlendshapes[0] = GetBlendshapeIndex(c.TargetMeshInstance.sharedMesh, c.Mappings.Find(m => m.VisemeName == "blink")?.BlendshapeName);
+					avatar.customEyeLookSettings.eyelidsBlendshapes[1] = GetBlendshapeIndex(c.TargetMeshInstance.sharedMesh, c.Mappings.Find(m => m.VisemeName == "look_up")?.BlendshapeName);
+					avatar.customEyeLookSettings.eyelidsBlendshapes[2] = GetBlendshapeIndex(c.TargetMeshInstance.sharedMesh, c.Mappings.Find(m => m.VisemeName == "look_down")?.BlendshapeName);
+				}
+
 				context.RelMat.AddConverted(component, avatar);
 			}));
+		}
+
+		public int GetBlendshapeIndex(Mesh mesh, string name)
+		{
+		
+			for(int i = 0; i < mesh.blendShapeCount; i++)
+			{
+				var bName = mesh.GetBlendShapeName(i);
+				if(bName == name) return i;
+			}
+			return -1;
 		}
 	}
 }

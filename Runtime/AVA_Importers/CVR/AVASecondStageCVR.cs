@@ -23,7 +23,8 @@ namespace ava
 	{
 		protected override Dictionary<Type, ISTFSecondStageConverter> Converters => new Dictionary<Type, ISTFSecondStageConverter>() {
 			{typeof(AVAAvatar), new AVAAvatarCVRConverter()},
-			{typeof(AVAFacialTrackingSimple), new AVAFacialTrackingSimpleCVRConverter()}
+			{typeof(AVAFacialTrackingSimple), new AVAFacialTrackingSimpleCVRConverter()},
+			{typeof(AVAAvatarVoice), new AVAAvatarVoiceCVRConverter()}
 		};
 
 		protected override List<Type> WhitelistedComponents => new List<Type> {

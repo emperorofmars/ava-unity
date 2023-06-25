@@ -16,16 +16,9 @@ namespace ava.Converters
 		{
 			var c = (AVAEyeBoneLimitsSimple)component;
 			context.Tasks.Add(new Task(() => {
-				AVAAvatar avaAvatar = null;
-				AVAHumanoidMapping humanoid = null;
-				foreach(var extend in context.RelMat.GetExtended(component))
-				{
-					switch(extend)
-					{
-						case AVAAvatar a: avaAvatar = a; break;
-						case AVAHumanoidMapping a: humanoid = a; break;
-					}
-				}
+				AVAAvatar avaAvatar = context.RelMat.GetExtended<AVAAvatar>(component);
+				AVAHumanoidMapping humanoid = context.RelMat.GetExtended<AVAHumanoidMapping>(component);
+				
 				var avatar = (VRCAvatarDescriptor)context.RelMat.GetConverted(avaAvatar);
 
 				avatar.enableEyeLook = true;

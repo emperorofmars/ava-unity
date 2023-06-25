@@ -48,13 +48,13 @@ namespace ava.Components
 			GUILayout.Space(10f);
 			if(c.TargetMeshInstance != null && c.extends.Count == 1)
 			{
-				if(GUILayout.Button("Map Visemes", GUILayout.ExpandWidth(false))) {
+				if(GUILayout.Button("Map Visemes & Expressions", GUILayout.ExpandWidth(false))) {
 					c.Map();
 				}
 			}
 
 			GUILayout.Space(10f);
-			EditorGUILayout.LabelField("Mapped Visemes");
+			EditorGUILayout.LabelField("Mapped Visemes & Expressions");
 			foreach(var m in c.Mappings)
 			{
 				EditorGUILayout.BeginHorizontal();

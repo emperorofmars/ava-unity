@@ -37,6 +37,10 @@ namespace ava.Components
 			"sil", "aa", "ch", "dd", "e", "ff", "ih", "kk", "nn", "oh", "ou", "pp", "rr", "ss", "th"
 		};
 
+		public static readonly List<string> FacialExpressions = new List<string> {
+			"blink", "look_up", "look_down" // add all the facial tracking ones
+		};
+
 		public SkinnedMeshRenderer TargetMeshInstance;
 		public List<BlendshapeMapping> Mappings = new List<BlendshapeMapping>();
 
@@ -54,6 +58,22 @@ namespace ava.Components
 					else if(bName.ToLower().Contains("vrc.v_" + v)) { match = bName; break; }
 					else if(bName.ToLower().Contains("vis." + v)) { match = bName; break; }
 					else if(bName.ToLower().Contains("vis_" + v)) { match = bName; break; }
+				}
+				Mappings.Add(new BlendshapeMapping{VisemeName = v, BlendshapeName = match});
+			}
+			foreach(var v in FacialExpressions)
+			{
+				var compare = v.Split('_');
+				string match = null;
+				for(int i = 0; i < TargetMeshInstance.sharedMesh.blendShapeCount; i++)
+				{
+					var bName = TargetMeshInstance.sharedMesh.GetBlendShapeName(i);
+					bool matchedAll = true;
+					foreach(var c in compare)
+					{
+						if(!bName.ToLower().Contains(c)) { matchedAll = false; break; }
+					}
+					if(matchedAll && (match == null || bName.Length < match.Length)) match = bName;
 				}
 				Mappings.Add(new BlendshapeMapping{VisemeName = v, BlendshapeName = match});
 			}
@@ -75,6 +95,10 @@ namespace ava.Components
 				c.TargetMeshInstance = (SkinnedMeshRenderer)state.GetComponent((string)json["target_mesh_instance"]);
 			}));
 			foreach(var vis in AVAFacialTrackingSimple.VoiceVisemes15)
+			{
+				c.Mappings.Add(new AVAFacialTrackingSimple.BlendshapeMapping {VisemeName = vis, BlendshapeName = (string)json[vis]});
+			}
+			foreach(var vis in AVAFacialTrackingSimple.FacialExpressions)
 			{
 				c.Mappings.Add(new AVAFacialTrackingSimple.BlendshapeMapping {VisemeName = vis, BlendshapeName = (string)json[vis]});
 			}
