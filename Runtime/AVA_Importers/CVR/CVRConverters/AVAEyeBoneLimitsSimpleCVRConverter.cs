@@ -2,7 +2,6 @@
 #if CVRCCK3_FOUND
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using ABI.CCK.Components;
 using ava.Components;
@@ -11,18 +10,20 @@ using UnityEngine;
 
 namespace ava.Converters
 {
-	public class AVAAvatarVoiceCVRConverter : ISTFSecondStageConverter
+	public class AVAEyeBoneLimitsSimpleCVRConverter : ISTFSecondStageConverter
 	{
 		public void convert(Component component, GameObject root, List<UnityEngine.Object> resources, STFSecondStageContext context)
 		{
-			var c = (AVAAvatarVoice)component;
+			var c = (AVAEyeBoneLimitsSimple)component;
 			context.Tasks.Add(new Task(() => {
 				AVAAvatar avaAvatar = context.RelMat.GetExtended<AVAAvatar>(component);
+				AVAHumanoidMapping humanoid = context.RelMat.GetExtended<AVAHumanoidMapping>(component);
+				
 				var avatar = (CVRAvatar)context.RelMat.GetConverted(avaAvatar);
 
-				avatar.voiceParent = CVRAvatar.CVRAvatarVoiceParent.Head;
-				avatar.voicePosition = c.voice_parent.transform.position - root.transform.position + c.voice_position;
-
+				avatar.useEyeMovement = true;
+				// handle rotation limits and whatever when the cvr sdk supports that
+				
 				context.RelMat.AddConverted(component, avatar);
 			}));
 		}

@@ -1,5 +1,5 @@
 
-#if VRCSDK3_FOUND
+#if CVRCCK3_FOUND
 
 using System.Collections.Generic;
 using System.Linq;
