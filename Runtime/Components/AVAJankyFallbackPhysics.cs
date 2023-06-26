@@ -26,9 +26,9 @@ namespace ava.Components
 		public List<string> targets {get => _targets; set => _targets = value;}
 
 		public GameObject target;
-		public float pull;
-		public float spring;
-		public float stiffness;
+		public float pull = 0.2f;
+		public float spring = 0.2f;
+		public float stiffness = 0.2f;
 	}
 
 	public class AVAJankyFallbackPhysicsImporter : ASTFComponentImporter

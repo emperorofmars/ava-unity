@@ -13,7 +13,7 @@ using UnityEditor;
 
 namespace ava.Components
 {
-	public class AVAVRCPhysbones : MonoBehaviour, ISTFComponent
+	public class AVAVRCPhysbones : MonoBehaviour, ISTFComponent // partial implementation, to be completed whenever
 	{
 		public static string _TYPE = "AVA.VRC.physbones";
 		public string _id = Guid.NewGuid().ToString();
@@ -22,13 +22,20 @@ namespace ava.Components
 		public List<string> extends {get => _extends; set => _extends = value;}
 		public List<string> _overrides;
 		public List<string> overrides {get => _overrides; set => _overrides = value;}
-		public List<string> _targets;
+		public List<string> _targets = new List<string> {"vrchat"};
 		public List<string> targets {get => _targets; set => _targets = value;}
 
 		public GameObject target;
-		public float pull;
-		public float spring;
-		public float stiffness;
+		public string version = "1.1";
+		public string integration_type = "simplified";
+		public float pull = 0.2f; // support curves for each appropriate parameter
+		public float momentum = 0.2f;
+		public float stiffness = 0.2f;
+		public float spring = 0.2f;
+		public float gravity;
+		public float gravity_falloff;
+		public string immobile_type = "all_motion";
+		public float immobile;
 	}
 
 	public class AVAVRCPhysbonesImporter : ASTFComponentImporter
@@ -41,9 +48,16 @@ namespace ava.Components
 			this.ParseRelationships(json, c);
 			c.extends = json["extends"]?.ToObject<List<string>>();
 			c.target = state.GetNode((string)json["target"]);
+			c.version = (string)json["version"];
+			c.integration_type = (string)json["integration_type"];
 			c.pull = (float)json["pull"];
-			c.spring = (float)json["spring"];
+			c.momentum = (float)json["momentum"];
 			c.stiffness = (float)json["stiffness"];
+			c.spring = (float)json["spring"];
+			c.gravity = (float)json["gravity"];
+			c.gravity_falloff = (float)json["gravity_falloff"];
+			c.immobile_type = (string)json["immobile_type"];
+			c.immobile = (float)json["immobile"];
 		}
 	}
 
@@ -65,9 +79,16 @@ namespace ava.Components
 			string voice_parent_node = state.GetNodeId(c.target);
 			ret.Add("type", AVAVRCPhysbones._TYPE);
 			ret.Add("target", state.GetNodeId(c.target));
+			ret.Add("version", c.version);
+			ret.Add("integration_type", c.integration_type);
 			ret.Add("pull", c.pull);
-			ret.Add("spring", c.spring);
+			ret.Add("momentum", c.momentum);
 			ret.Add("stiffness", c.stiffness);
+			ret.Add("spring", c.spring);
+			ret.Add("gravity", c.gravity);
+			ret.Add("gravity_falloff", c.gravity_falloff);
+			ret.Add("immobile_type", c.immobile_type);
+			ret.Add("immobile", c.immobile);
 			return ret;
 		}
 	}
