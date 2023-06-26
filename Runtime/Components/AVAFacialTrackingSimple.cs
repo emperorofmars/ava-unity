@@ -87,9 +87,7 @@ namespace ava.Components
 			var c = go.AddComponent<AVAFacialTrackingSimple>();
 			state.AddComponent(id, c);
 			c.id = id;
-			c.extends = json["extends"]?.ToObject<List<string>>();
-			c.overrides = json["overrides"]?.ToObject<List<string>>();
-			c.targets = json["targets"]?.ToObject<List<string>>();
+			this.ParseRelationships(json, c);
 
 			state.AddTask(new Task(() => {
 				c.TargetMeshInstance = (SkinnedMeshRenderer)state.GetComponent((string)json["target_mesh_instance"]);
@@ -112,9 +110,7 @@ namespace ava.Components
 			var c = (AVAFacialTrackingSimple)component;
 			var ret = new JObject();
 			ret.Add("type", AVAFacialTrackingSimple._TYPE);
-			ret.Add("extends", new JArray(c.extends));
-			ret.Add("overrides", new JArray(c.overrides));
-			ret.Add("targets", new JArray(c.targets));
+			this.SerializeRelationships(c, ret);
 
 			ret.Add("target_mesh_instance", c.TargetMeshInstance?.GetComponent<STFUUID>().GetIdByComponent(c.TargetMeshInstance));
 			foreach(var m in c.Mappings)

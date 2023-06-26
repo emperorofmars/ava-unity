@@ -38,6 +38,7 @@ namespace ava.Components
 			var c = go.AddComponent<AVAJankyFallbackPhysics>();
 			state.AddComponent(id, c);
 			c.id = id;
+			this.ParseRelationships(json, c);
 			c.extends = json["extends"]?.ToObject<List<string>>();
 			c.target = state.GetNode((string)json["target"]);
 			c.pull = (float)json["pull"];
@@ -60,6 +61,7 @@ namespace ava.Components
 		{
 			var c = (AVAJankyFallbackPhysics)component;
 			var ret = new JObject();
+			this.SerializeRelationships(c, ret);
 			string voice_parent_node = state.GetNodeId(c.target);
 			ret.Add("type", AVAJankyFallbackPhysics._TYPE);
 			ret.Add("target", state.GetNodeId(c.target));

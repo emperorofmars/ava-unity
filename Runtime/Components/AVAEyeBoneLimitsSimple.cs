@@ -38,9 +38,7 @@ namespace ava.Components
 			var c = go.AddComponent<AVAEyeBoneLimitsSimple>();
 			state.AddComponent(id, c);
 			c.id = id;
-			c.extends = json["extends"].ToObject<List<string>>();
-			if(json["overrides"] != null) c.overrides = json["overrides"].ToObject<List<string>>();
-			if(json["targets"] != null) c.targets = json["targets"].ToObject<List<string>>();
+			this.ParseRelationships(json, c);
 
 			c.up = (float)json["up"];
 			c.down = (float)json["down"];
@@ -56,9 +54,7 @@ namespace ava.Components
 			var c = (AVAEyeBoneLimitsSimple)component;
 			var ret = new JObject();
 			ret.Add("type", AVAEyeBoneLimitsSimple._TYPE);
-			ret.Add("extends", new JArray(c.extends));
-			ret.Add("overrides", new JArray(c.overrides));
-			ret.Add("targets", new JArray(c.targets));
+			this.SerializeRelationships(c, ret);
 
 			ret.Add("up", c.up);
 			ret.Add("down", c.down);

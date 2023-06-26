@@ -13,9 +13,9 @@ using UnityEditor;
 
 namespace ava.Components
 {
-	public class AVAAvatarVoice : MonoBehaviour, ISTFComponent
+	public class AVAVRCPhysbones : MonoBehaviour, ISTFComponent
 	{
-		public static string _TYPE = "AVA.avatar_voice";
+		public static string _TYPE = "AVA.VRC.physbones";
 		public string _id = Guid.NewGuid().ToString();
 		public string id {get => _id; set => _id = value;}
 		public List<string> _extends;
@@ -25,55 +25,61 @@ namespace ava.Components
 		public List<string> _targets;
 		public List<string> targets {get => _targets; set => _targets = value;}
 
-		public GameObject voice_parent;
-		public Vector3 voice_position;
+		public GameObject target;
+		public float pull;
+		public float spring;
+		public float stiffness;
 	}
 
-	public class AVAAvatarVoiceImporter : ASTFComponentImporter
+	public class AVAVRCPhysbonesImporter : ASTFComponentImporter
 	{
 		override public void parseFromJson(ISTFImporter state, ISTFAsset asset, JToken json, string id, GameObject go)
 		{
-			var c = go.AddComponent<AVAAvatarVoice>();
+			var c = go.AddComponent<AVAVRCPhysbones>();
 			state.AddComponent(id, c);
 			c.id = id;
 			this.ParseRelationships(json, c);
-			c.voice_parent = state.GetNode((string)json["voice_parent"]);
-			var voice_position_array = (JArray)json["voice_position"];
-			c.voice_position = new Vector3((float)voice_position_array[0], (float)voice_position_array[1], (float)voice_position_array[2]);
+			c.extends = json["extends"]?.ToObject<List<string>>();
+			c.target = state.GetNode((string)json["target"]);
+			c.pull = (float)json["pull"];
+			c.spring = (float)json["spring"];
+			c.stiffness = (float)json["stiffness"];
 		}
 	}
 
-	public class AVAAvatarVoiceExporter : ASTFComponentExporter
+	public class AVAVRCPhysbonesExporter : ASTFComponentExporter
 	{
 		override public List<GameObject> gatherNodes(Component component)
 		{
-			var c = (AVAAvatarVoice)component;
+			var c = (AVAVRCPhysbones)component;
 			var ret = new List<GameObject>();
-			if(c.voice_parent) ret.Add(c.voice_parent);
+			if(c.target) ret.Add(c.target);
 			return ret;
 		}
 
 		override public JToken serializeToJson(ISTFExporter state, Component component)
 		{
-			var c = (AVAAvatarVoice)component;
+			var c = (AVAVRCPhysbones)component;
 			var ret = new JObject();
-			string voice_parent_node = state.GetNodeId(c.voice_parent);
-			ret.Add("type", AVAAvatarVoice._TYPE);
 			this.SerializeRelationships(c, ret);
-			ret.Add("voice_parent", voice_parent_node);
-			ret.Add("voice_position", new JArray() {c.voice_position.x, c.voice_position.y, c.voice_position.z});
+			string voice_parent_node = state.GetNodeId(c.target);
+			ret.Add("type", AVAVRCPhysbones._TYPE);
+			ret.Add("target", state.GetNodeId(c.target));
+			ret.Add("pull", c.pull);
+			ret.Add("spring", c.spring);
+			ret.Add("stiffness", c.stiffness);
 			return ret;
 		}
 	}
 
 #if UNITY_EDITOR
 	[InitializeOnLoad]
-	public class Register_AVAAvatarVoice
+	public class Register_AVAVRCPhysbones
 	{
-		static Register_AVAAvatarVoice()
+		static Register_AVAVRCPhysbones()
 		{
-			STFRegistry.RegisterComponentImporter(AVAAvatarVoice._TYPE, new AVAAvatarVoiceImporter());
-			STFRegistry.RegisterComponentExporter(typeof(AVAAvatarVoice), new AVAAvatarVoiceExporter());
+			STFRegistry.RegisterComponentImporter(AVAVRCPhysbones._TYPE, new AVAVRCPhysbonesImporter());
+			STFRegistry.RegisterComponentExporter(typeof(AVAVRCPhysbones), new AVAVRCPhysbonesExporter());
 		}
 	}
 #endif

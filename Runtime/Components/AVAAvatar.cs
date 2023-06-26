@@ -41,6 +41,7 @@ namespace ava.Components
 		{
 			var c = go.AddComponent<AVAAvatar>();
 			state.AddComponent(id, c);
+			this.ParseRelationships(json, c);
 			c.id = id;
 			c.avatar_name = (string)json["avatar_name"];
 			c.avatar_version = (string)json["avatar_version"];
@@ -78,6 +79,7 @@ namespace ava.Components
 			var c = (AVAAvatar)component;
 			var ret = new JObject();
 			ret.Add("type", AVAAvatar._TYPE);
+			this.SerializeRelationships(c, ret);
 			ret.Add("avatar_name", c.avatar_name);
 			ret.Add("avatar_version", c.avatar_version);
 			if(c.icon != null)

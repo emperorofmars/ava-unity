@@ -228,6 +228,7 @@ namespace ava.Components
 		public override void parseFromJson(ISTFImporter state, ISTFAsset asset, JToken json, string id, GameObject go)
 		{
 			var c = go.AddComponent<AVAHumanoidMapping>();
+			this.ParseRelationships(json, c);
 			state.AddComponent(id, c);
 			c.id = id;
 			c.locomotion_type = (string)json["locomotion_type"];
@@ -257,6 +258,7 @@ namespace ava.Components
 			var c = (AVAHumanoidMapping)component;
 			var ret = new JObject();
 			ret.Add("type", AVAHumanoidMapping._TYPE);
+			this.SerializeRelationships(c, ret);
 			ret.Add("locomotion_type", c.locomotion_type);
 			ret.Add("target_armature_instance", state.GetNodeId(c.armatureInstance.gameObject));
 			foreach(var mapping in c.mappings)
