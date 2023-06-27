@@ -26,7 +26,8 @@ namespace ava
 			{typeof(AVAAvatar), new AVAAvatarVRCConverter()},
 			{typeof(AVAEyeBoneLimitsSimple), new AVAEyeBoneLimitsSimpleVRCConverter()},
 			{typeof(AVAFacialTrackingSimple), new AVAFacialTrackingSimpleVRCConverter()},
-			{typeof(AVAJankyFallbackPhysics), new AVAJankyFallbackPhysicsVRCConverter()}
+			{typeof(AVAJankyFallbackPhysics), new AVAJankyFallbackPhysicsVRCConverter()},
+			{typeof(AVAVRCPhysbones), new AVAPhysboneVRCConverter()}
 		};
 
 		protected override List<Type> WhitelistedComponents => new List<Type> {

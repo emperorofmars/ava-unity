@@ -29,7 +29,6 @@ namespace ava.Components
 		public string version = "1.1";
 		public string integration_type = "simplified";
 		public float pull = 0.2f; // support curves for each appropriate parameter
-		public float momentum = 0.2f;
 		public float stiffness = 0.2f;
 		public float spring = 0.2f;
 		public float gravity;
@@ -51,7 +50,6 @@ namespace ava.Components
 			c.version = (string)json["version"];
 			c.integration_type = (string)json["integration_type"];
 			c.pull = (float)json["pull"];
-			c.momentum = (float)json["momentum"];
 			c.stiffness = (float)json["stiffness"];
 			c.spring = (float)json["spring"];
 			c.gravity = (float)json["gravity"];
@@ -82,7 +80,6 @@ namespace ava.Components
 			ret.Add("version", c.version);
 			ret.Add("integration_type", c.integration_type);
 			ret.Add("pull", c.pull);
-			ret.Add("momentum", c.momentum);
 			ret.Add("stiffness", c.stiffness);
 			ret.Add("spring", c.spring);
 			ret.Add("gravity", c.gravity);
