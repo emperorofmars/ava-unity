@@ -12,6 +12,7 @@ using ava.Converters;
 using VRC.SDK3.Avatars.Components;
 using UnityEngine.Animations;
 using System.Threading.Tasks;
+using VRC.SDK3.Dynamics.PhysBone.Components;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -24,11 +25,12 @@ namespace ava
 		protected override Dictionary<Type, ISTFSecondStageConverter> Converters => new Dictionary<Type, ISTFSecondStageConverter>() {
 			{typeof(AVAAvatar), new AVAAvatarVRCConverter()},
 			{typeof(AVAEyeBoneLimitsSimple), new AVAEyeBoneLimitsSimpleVRCConverter()},
-			{typeof(AVAFacialTrackingSimple), new AVAFacialTrackingSimpleVRCConverter()}
+			{typeof(AVAFacialTrackingSimple), new AVAFacialTrackingSimpleVRCConverter()},
+			{typeof(AVAJankyFallbackPhysics), new AVAJankyFallbackPhysicsVRCConverter()}
 		};
 
 		protected override List<Type> WhitelistedComponents => new List<Type> {
-			typeof(Transform), typeof(Animator), typeof(RotationConstraint), typeof(SkinnedMeshRenderer), typeof(VRCAvatarDescriptor), typeof(VRCPipelineManagerEditor)
+			typeof(Transform), typeof(Animator), typeof(RotationConstraint), typeof(SkinnedMeshRenderer), typeof(VRCAvatarDescriptor), typeof(VRCPipelineManagerEditor), typeof(VRCPhysBone)
 		};
 
 		protected override string GameObjectSuffix => "VRC";
