@@ -25,17 +25,29 @@ namespace ava
 			{typeof(AVAAvatar), new AVAAvatarCVRConverter()},
 			{typeof(AVAFacialTrackingSimple), new AVAFacialTrackingSimpleCVRConverter()},
 			{typeof(AVAAvatarVoice), new AVAAvatarVoiceCVRConverter()},
-			{typeof(AVAEyeBoneLimitsSimple), new AVAEyeBoneLimitsSimpleCVRConverter()}
+			{typeof(AVAEyeBoneLimitsSimple), new AVAEyeBoneLimitsSimpleCVRConverter()},
+#if DynamicBones_FOUND
+			{typeof(AVAJankyFallbackPhysics), new AVAJankyFallbackPhysicsCVRConverter()},
+#endif
 		};
 
 		protected override List<Type> WhitelistedComponents => new List<Type> {
-			typeof(Transform), typeof(Animator), typeof(RotationConstraint), typeof(SkinnedMeshRenderer), typeof(CVRAvatar), typeof(CVRAssetInfo)
+			typeof(Transform), typeof(Animator), typeof(RotationConstraint), typeof(SkinnedMeshRenderer), typeof(CVRAvatar), typeof(CVRAssetInfo),
+#if DynamicBones_FOUND
+			typeof(DynamicBone),
+#endif
 		};
 
 		protected override string GameObjectSuffix => "CVR";
 		protected override string StageName => "ChilloutVR";
 		protected override string AssetTypeName => "ChilloutVR Avatar";
-		protected override List<string> Targets => new List<string> {"unity", "chilloutvr", "dynamic_bones"};
+		protected override List<string> Targets => new List<string> {
+			"unity",
+			"chilloutvr",
+#if DynamicBones_FOUND
+			"dynamic_bones"
+#endif
+		};
 
 		public override bool CanHandle(ISTFAsset asset, UnityEngine.Object adaptedUnityAsset)
 		{
