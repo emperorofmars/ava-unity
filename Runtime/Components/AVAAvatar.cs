@@ -66,11 +66,11 @@ namespace ava.Components
 			return ret;
 		}
 
-		override public List<UnityEngine.Object> gatherResources(Component component)
+		override public List<KeyValuePair<UnityEngine.Object, Dictionary<string, System.Object>>> gatherResources(Component component)
 		{
 			var c = (AVAAvatar)component;
-			var ret = new List<UnityEngine.Object>();
-			if(c.icon != null) ret.Add(c.icon);
+			var ret = new List<KeyValuePair<UnityEngine.Object, Dictionary<string, System.Object>>>();
+			if(c.icon != null) ret.Add(new KeyValuePair<UnityEngine.Object, Dictionary<string, System.Object>> (c.icon, null));
 			return ret;
 		}
 
