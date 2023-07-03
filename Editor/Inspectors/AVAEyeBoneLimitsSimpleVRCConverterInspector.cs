@@ -16,8 +16,6 @@ namespace ava.Components
 	[CustomEditor(typeof(AVAEyeBoneLimitsSimple))]
 	public class AVAEyeBoneLimitsSimpleInspector : Editor
 	{
-		private bool editPosition = false;
-
 		public override void OnInspectorGUI()
 		{
 			//base.DrawDefaultInspector();

@@ -16,8 +16,6 @@ namespace ava.Components
 	[CustomEditor(typeof(AVAFacialTrackingSimple))]
 	public class AVAFacialTrackingSimpleInspector : Editor
 	{
-		private bool editPosition = false;
-
 		public override void OnInspectorGUI()
 		{
 			//base.DrawDefaultInspector();

@@ -33,8 +33,8 @@ namespace ava
 				if(property.Name == "lighting_hint" && property.Type == "string")
 				{
 					ret.SetFloat("_ShadingEnabled", 1);
-					ret.SetFloat("_LightingAdditiveType", property.Value == "realistic" ? 0 : 1);
-					ret.SetFloat("_LightingMode", property.Value == "realistic" ? 6 : 0);
+					ret.SetFloat("_LightingAdditiveType", (string)property.Value == "realistic" ? 0 : 1);
+					ret.SetFloat("_LightingMode", (string)property.Value == "realistic" ? 6 : 0);
 				}
 				else if(property.Name == "MochieMetallicMaps")
 				{
