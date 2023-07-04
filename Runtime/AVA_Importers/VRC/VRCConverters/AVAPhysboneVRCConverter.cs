@@ -13,7 +13,7 @@ namespace ava.Converters
 {
 	public class AVAPhysboneVRCConverter : ISTFSecondStageConverter
 	{
-		public void convert(Component component, GameObject root, List<UnityEngine.Object> resources, STFSecondStageContext context)
+		public void convert(Component component, GameObject root, List<UnityEngine.Object> resources, ISTFSecondStageContext context)
 		{
 			var c = (AVAVRCPhysbones)component;
 			var physbone = component.gameObject.AddComponent<VRCPhysBone>();

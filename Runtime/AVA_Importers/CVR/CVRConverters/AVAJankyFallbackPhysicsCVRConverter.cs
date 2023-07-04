@@ -11,7 +11,7 @@ namespace ava.Converters
 {
 	public class AVAJankyFallbackPhysicsCVRConverter : ISTFSecondStageConverter
 	{
-		public void convert(Component component, GameObject root, List<UnityEngine.Object> resources, STFSecondStageContext context)
+		public void convert(Component component, GameObject root, List<UnityEngine.Object> resources, ISTFSecondStageContext context)
 		{
 			var c = (AVAJankyFallbackPhysics)component;
 			var dybone = component.gameObject.AddComponent<DynamicBone>();

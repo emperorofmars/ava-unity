@@ -11,7 +11,7 @@ namespace ava.Converters
 {
 	public class AVAAvatarVRCConverter : ISTFSecondStageConverter
 	{
-		public void convert(Component component, GameObject root, List<UnityEngine.Object> resources, STFSecondStageContext context)
+		public void convert(Component component, GameObject root, List<UnityEngine.Object> resources, ISTFSecondStageContext context)
 		{
 			var avaAvatar = (AVAAvatar)component;
 

@@ -13,10 +13,10 @@ namespace ava.Converters
 {
 	public class AVAAvatarVoiceCVRConverter : ISTFSecondStageConverter
 	{
-		public void convert(Component component, GameObject root, List<UnityEngine.Object> resources, STFSecondStageContext context)
+		public void convert(Component component, GameObject root, List<UnityEngine.Object> resources, ISTFSecondStageContext context)
 		{
 			var c = (AVAAvatarVoice)component;
-			context.Tasks.Add(new Task(() => {
+			context.AddTask(new Task(() => {
 				AVAAvatar avaAvatar = context.RelMat.GetExtended<AVAAvatar>(component);
 				var avatar = (CVRAvatar)context.RelMat.GetConverted(avaAvatar);
 
