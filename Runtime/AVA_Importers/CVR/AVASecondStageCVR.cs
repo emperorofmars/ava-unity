@@ -21,6 +21,10 @@ namespace ava
 {
 	public class AVASecondStageCVR : ASTFSecondStageDefault
 	{
+		protected override Dictionary<Type, ISTFSecondStageResourceProcessor> ResourceProcessors => new Dictionary<Type, ISTFSecondStageResourceProcessor> {
+			{typeof(AnimationClip), new STFAnimationSecondStageProcessor()}
+		};
+
 		protected override Dictionary<Type, ISTFSecondStageConverter> Converters => new Dictionary<Type, ISTFSecondStageConverter>() {
 			{typeof(AVAAvatar), new AVAAvatarCVRConverter()},
 			{typeof(AVAFacialTrackingSimple), new AVAFacialTrackingSimpleCVRConverter()},
