@@ -40,11 +40,11 @@ namespace ava.Components
 
 			EditorGUILayout.BeginHorizontal();
 			EditorGUILayout.PrefixLabel("Extends");
-			EditorGUILayout.LabelField(c.extends.Count == 1 ? c.extends[0] : "-");
+			EditorGUILayout.LabelField(c.extends?.Count == 1 ? c.extends[0] : "-");
 			EditorGUILayout.EndHorizontal();
 
 			GUILayout.Space(10f);
-			if(c.TargetMeshInstance != null && c.extends.Count == 1)
+			if(c.TargetMeshInstance != null && c.extends?.Count == 1)
 			{
 				if(GUILayout.Button("Map Visemes & Expressions", GUILayout.ExpandWidth(false))) {
 					c.Map();
