@@ -31,7 +31,7 @@ namespace ava.Components
 
 	public class AVAAvatarVoiceImporter : ASTFComponentImporter
 	{
-		override public void parseFromJson(ISTFImporter state, ISTFAsset asset, JToken json, string id, GameObject go)
+		override public void ParseFromJson(ISTFImporter state, ISTFAsset asset, JToken json, string id, GameObject go)
 		{
 			var c = go.AddComponent<AVAAvatarVoice>();
 			state.AddComponent(id, c);
@@ -45,7 +45,7 @@ namespace ava.Components
 
 	public class AVAAvatarVoiceExporter : ASTFComponentExporter
 	{
-		override public List<GameObject> gatherNodes(Component component)
+		override public List<GameObject> GatherNodes(Component component)
 		{
 			var c = (AVAAvatarVoice)component;
 			var ret = new List<GameObject>();
@@ -53,7 +53,7 @@ namespace ava.Components
 			return ret;
 		}
 
-		override public JToken serializeToJson(ISTFExporter state, Component component)
+		override public JToken SerializeToJson(ISTFExporter state, Component component)
 		{
 			var c = (AVAAvatarVoice)component;
 			var ret = new JObject();

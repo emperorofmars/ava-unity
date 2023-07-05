@@ -33,7 +33,7 @@ namespace ava.Components
 
 	public class AVAJankyFallbackPhysicsImporter : ASTFComponentImporter
 	{
-		override public void parseFromJson(ISTFImporter state, ISTFAsset asset, JToken json, string id, GameObject go)
+		override public void ParseFromJson(ISTFImporter state, ISTFAsset asset, JToken json, string id, GameObject go)
 		{
 			var c = go.AddComponent<AVAJankyFallbackPhysics>();
 			state.AddComponent(id, c);
@@ -49,7 +49,7 @@ namespace ava.Components
 
 	public class AVAJankyFallbackPhysicsExporter : ASTFComponentExporter
 	{
-		override public List<GameObject> gatherNodes(Component component)
+		override public List<GameObject> GatherNodes(Component component)
 		{
 			var c = (AVAJankyFallbackPhysics)component;
 			var ret = new List<GameObject>();
@@ -57,7 +57,7 @@ namespace ava.Components
 			return ret;
 		}
 
-		override public JToken serializeToJson(ISTFExporter state, Component component)
+		override public JToken SerializeToJson(ISTFExporter state, Component component)
 		{
 			var c = (AVAJankyFallbackPhysics)component;
 			var ret = new JObject();

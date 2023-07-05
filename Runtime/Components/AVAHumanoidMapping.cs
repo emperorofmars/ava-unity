@@ -225,7 +225,7 @@ namespace ava.Components
 
 	public class AVAHumanoidMappingImporter : ASTFComponentImporter
 	{
-		public override void parseFromJson(ISTFImporter state, ISTFAsset asset, JToken json, string id, GameObject go)
+		public override void ParseFromJson(ISTFImporter state, ISTFAsset asset, JToken json, string id, GameObject go)
 		{
 			var c = go.AddComponent<AVAHumanoidMapping>();
 			this.ParseRelationships(json, c);
@@ -245,7 +245,7 @@ namespace ava.Components
 
 	public class AVAHumanoidMappingExporter : ASTFComponentExporter
 	{
-		override public List<GameObject> gatherNodes(Component component)
+		override public List<GameObject> GatherNodes(Component component)
 		{
 			var c = (AVAHumanoidMapping)component;
 			var ret = new List<GameObject>();
@@ -253,7 +253,7 @@ namespace ava.Components
 			return ret;
 		}
 
-		public override JToken serializeToJson(ISTFExporter state, Component component)
+		public override JToken SerializeToJson(ISTFExporter state, Component component)
 		{
 			var c = (AVAHumanoidMapping)component;
 			var ret = new JObject();
@@ -322,7 +322,7 @@ namespace ava.Components
 
 	public class AVAHumanoidMappingConverter : ISTFSecondStageConverter
 	{
-		public void convert(Component component, GameObject root, List<UnityEngine.Object> resources, ISTFSecondStageContext context)
+		public void Convert(Component component, GameObject root, List<UnityEngine.Object> resources, ISTFSecondStageContext context)
 		{
 			var stfComponent = (AVAHumanoidMapping)component;
 			var animator = root.AddComponent<Animator>();

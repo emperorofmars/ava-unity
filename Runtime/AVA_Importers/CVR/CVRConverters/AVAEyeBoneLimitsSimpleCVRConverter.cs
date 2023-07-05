@@ -12,7 +12,7 @@ namespace ava.Converters
 {
 	public class AVAEyeBoneLimitsSimpleCVRConverter : ISTFSecondStageConverter
 	{
-		public void convert(Component component, GameObject root, List<UnityEngine.Object> resources, ISTFSecondStageContext context)
+		public void Convert(Component component, GameObject root, List<UnityEngine.Object> resources, ISTFSecondStageContext context)
 		{
 			var c = (AVAEyeBoneLimitsSimple)component;
 			context.AddTask(new Task(() => {

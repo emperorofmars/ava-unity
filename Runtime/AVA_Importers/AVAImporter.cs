@@ -79,7 +79,7 @@ namespace ava
 				var components = root.GetComponentsInChildren(converter.Key);
 				foreach(var component in components)
 				{
-					converter.Value.convert(component, root, resources, context);
+					converter.Value.Convert(component, root, resources, context);
 				}
 			}
 		}
