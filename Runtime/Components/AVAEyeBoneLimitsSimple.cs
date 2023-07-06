@@ -13,18 +13,9 @@ using UnityEditor;
 
 namespace ava.Components
 {
-	public class AVAEyeBoneLimitsSimple : MonoBehaviour, ISTFComponent
+	public class AVAEyeBoneLimitsSimple : ASTFComponent
 	{
 		public static string _TYPE = "AVA.eye_bone_limits_simple";
-		public string _id = Guid.NewGuid().ToString();
-		public string id {get => _id; set => _id = value;}
-		public List<string> _extends;
-		public List<string> extends {get => _extends; set => _extends = value;}
-		public List<string> _overrides;
-		public List<string> overrides {get => _overrides; set => _overrides = value;}
-		public List<string> _targets;
-		public List<string> targets {get => _targets; set => _targets = value;}
-
 		public float up = 15;
 		public float down = 12;
 		public float inner = 15;

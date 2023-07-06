@@ -22,17 +22,8 @@ namespace ava.Components
 		public GameObject bone;
 	}
 
-	public class AVAHumanoidMapping : MonoBehaviour, ISTFComponent
+	public class AVAHumanoidMapping : ASTFComponent
 	{
-		[HideInInspector] public string _id = Guid.NewGuid().ToString();
-		public string id {get => _id; set => _id = value;}
-		[HideInInspector] public List<string> _extends;
-		public List<string> extends {get => _extends; set => _extends = value;}
-		[HideInInspector] public List<string> _overrides;
-		public List<string> overrides {get => _overrides; set => _overrides = value;}
-		[HideInInspector] public List<string> _targets;
-		public List<string> targets {get => _targets; set => _targets = value;}
-		
 		public static readonly string _TYPE = "AVA.humanoid_mappings";
 		
 		public static readonly Dictionary<string, string> _Translations = new Dictionary<string, string> {

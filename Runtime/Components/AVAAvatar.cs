@@ -13,18 +13,9 @@ using UnityEditor;
 
 namespace ava.Components
 {
-	public class AVAAvatar : MonoBehaviour, ISTFComponent
+	public class AVAAvatar : ASTFComponent
 	{
 		public static string _TYPE = "AVA.avatar";
-		public string _id = Guid.NewGuid().ToString();
-		public string id {get => _id; set => _id = value;}
-		public List<string> _extends;
-		public List<string> extends {get => _extends; set => _extends = value;}
-		public List<string> _overrides;
-		public List<string> overrides {get => _overrides; set => _overrides = value;}
-		public List<string> _targets;
-		public List<string> targets {get => _targets; set => _targets = value;}
-		
 		public string avatar_name;
 		public string avatar_version;
 		public Texture2D icon;

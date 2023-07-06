@@ -13,23 +13,16 @@ using UnityEditor;
 
 namespace ava.Components
 {
-	public class AVAExpressionsSimple : MonoBehaviour, ISTFComponent
+	public class AVAExpressionsSimple : ASTFComponent
 	{
+		public static string _TYPE = "AVA.expressions_simple";
+		
+		[Serializable]
 		public class SimpleExpression
 		{
 			public string mapping;
 			public AnimationClip animation;
 		}
-
-		public static string _TYPE = "AVA.expressions_simple";
-		public string _id = Guid.NewGuid().ToString();
-		public string id {get => _id; set => _id = value;}
-		public List<string> _extends;
-		public List<string> extends {get => _extends; set => _extends = value;}
-		public List<string> _overrides;
-		public List<string> overrides {get => _overrides; set => _overrides = value;}
-		public List<string> _targets;
-		public List<string> targets {get => _targets; set => _targets = value;}
 
 		public List<SimpleExpression> expressions = new List<SimpleExpression>();
 	}
