@@ -19,7 +19,7 @@ namespace ava.Components
 		public GameObject target;
 		public string version = "1.1";
 		public string integration_type = "simplified";
-		public float pull = 0.2f; // support curves for each appropriate parameter
+		public float pull = 0.2f; // TODO: support curves for each appropriate parameter
 		public float stiffness = 0.2f;
 		public float spring = 0.2f;
 		public float gravity;

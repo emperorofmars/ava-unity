@@ -51,7 +51,7 @@ namespace ava.Components
 			var ret = new List<KeyValuePair<UnityEngine.Object, Dictionary<string, System.Object>>>();
 			foreach(var expression in c.expressions)
 			{
-				ret.Add(new KeyValuePair<UnityEngine.Object, Dictionary<string, object>>(expression.animation, null));
+				ret.Add(new KeyValuePair<UnityEngine.Object, Dictionary<string, object>>(expression.animation, new Dictionary<string, System.Object> {{"root", component.gameObject}}));
 			}
 			return ret;
 		}
