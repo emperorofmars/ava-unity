@@ -13,7 +13,7 @@ namespace ava.Converters
 {
 	public class AVAFacialTrackingSimpleVRCConverter : ISTFSecondStageConverter
 	{
-		public void Convert(Component component, GameObject root, List<UnityEngine.Object> resources, ISTFSecondStageContext context)
+		public void Convert(Component component, GameObject root, ISTFSecondStageContext context)
 		{
 			var c = (AVAFacialTrackingSimple)component;
 			context.AddTask(new Task(() => {

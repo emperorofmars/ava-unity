@@ -13,6 +13,7 @@ using VRC.SDK3.Avatars.Components;
 using UnityEngine.Animations;
 using System.Threading.Tasks;
 using VRC.SDK3.Dynamics.PhysBone.Components;
+using System.IO;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -32,12 +33,15 @@ namespace ava
 			{typeof(AVAFacialTrackingSimple), new AVAFacialTrackingSimpleVRCConverter()},
 			{typeof(AVAJankyFallbackPhysics), new AVAJankyFallbackPhysicsVRCConverter()},
 			{typeof(AVAVRCPhysbones), new AVAPhysboneVRCConverter()},
+#if UNITY_EDITOR
 			{typeof(AVAExpressionsSimple), new AVAExpressionsSimpleVRCConverter()}
+#endif
 		};
 
 		protected override List<Type> WhitelistedComponents => new List<Type> {
 			typeof(Transform), typeof(Animator), typeof(RotationConstraint), typeof(SkinnedMeshRenderer), typeof(VRCAvatarDescriptor), typeof(VRCPipelineManagerEditor), typeof(VRCPhysBone)
 		};
+
 
 		protected override string GameObjectSuffix => "VRC";
 		protected override string StageName => "VRChat";
@@ -48,6 +52,15 @@ namespace ava
 		{
 			return asset.GetSTFAssetType() == "asset" && asset.GetAsset().GetType() == typeof(GameObject) && ((GameObject)asset.GetAsset()).GetComponent<AVAAvatar>() != null;
 		}
+
+#if UNITY_EDITOR
+		override public string GetPathForResourcesThatMustExistInFS(ISTFAsset asset, UnityEngine.Object adaptedUnityAsset)
+		{
+			AssetDatabase.CreateFolder(AVASecondStage.PathForResourcesThatMustExistInFS + "/" + asset.getId(), StageName);
+			AssetDatabase.Refresh();
+			return AVASecondStage.PathForResourcesThatMustExistInFS + "/" + asset.getId() + "/" + StageName;
+		}
+#endif
 	}
 
 #if UNITY_EDITOR

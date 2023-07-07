@@ -57,6 +57,14 @@ namespace ava
 		{
 			return asset.GetSTFAssetType() == "asset" && asset.GetAsset().GetType() == typeof(GameObject) && ((GameObject)asset.GetAsset()).GetComponent<AVAAvatar>() != null;
 		}
+
+#if UNITY_EDITOR
+		override public string GetPathForResourcesThatMustExistInFS(ISTFAsset asset, UnityEngine.Object adaptedUnityAsset)
+		{
+			AssetDatabase.CreateFolder(AVASecondStage.PathForResourcesThatMustExistInFS + "/" + asset.getId(), GameObjectSuffix);
+			return AVASecondStage.PathForResourcesThatMustExistInFS + "/" + asset.getId() + "/" + GameObjectSuffix;
+		}
+#endif
 	}
 
 #if UNITY_EDITOR

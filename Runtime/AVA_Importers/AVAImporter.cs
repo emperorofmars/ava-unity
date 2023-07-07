@@ -6,6 +6,7 @@ using stf.Components;
 using stf.serialisation;
 using UnityEngine;
 using ava.Components;
+using System.IO;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -15,6 +16,8 @@ namespace ava
 {
 	public class AVASecondStage : ISTFSecondStage
 	{
+		private static string AssetFolderForResourcesThatMustExistInFS = "ava-unity-imported-resources";
+		public static string PathForResourcesThatMustExistInFS = "Assets/ava-unity-imported-resources";
 		private static List<ISTFSecondStage> RegisteredApplicationStages = new List<ISTFSecondStage>();
 		public static void RegisterStage(ISTFSecondStage stage)
 		{
@@ -43,8 +46,23 @@ namespace ava
 			GameObject tmpRoot = UnityEngine.Object.Instantiate(originalRoot);
 			tmpRoot.name = originalRoot.name;
 
+#if UNITY_EDITOR
+			if(!Directory.Exists(PathForResourcesThatMustExistInFS))
+			{
+				AssetDatabase.CreateFolder("Assets", AssetFolderForResourcesThatMustExistInFS);
+				AssetDatabase.Refresh();
+			}
+			if(Directory.Exists(PathForResourcesThatMustExistInFS + "/" + asset.getId()))
+			{
+				AssetDatabase.DeleteAsset(PathForResourcesThatMustExistInFS + "/" + asset.getId());
+				AssetDatabase.Refresh();
+			}
+			AssetDatabase.CreateFolder(PathForResourcesThatMustExistInFS, asset.getId());
+			AssetDatabase.Refresh();
+#endif
 			try
 			{
+				// handle path
 				var context = new STFSecondStageContext(tmpRoot, new List<string> {"unity"}, new List<Type>(), new Dictionary<Type, ISTFSecondStageResourceProcessor>());
 				convertTree(tmpRoot, convertedResources, context);
 				var intermediaryAsset = new STFSecondStageAsset(tmpRoot, asset.getId(), asset.GetSTFAssetName());
@@ -69,6 +87,11 @@ namespace ava
 				#endif
 			}
 			
+#if UNITY_EDITOR
+			AssetDatabase.SaveAssets();
+			AssetDatabase.Refresh();
+#endif
+			
 			return new SecondStageResult {assets = convertedAssets, resources = convertedResources};
 		}
 
@@ -79,7 +102,7 @@ namespace ava
 				var components = root.GetComponentsInChildren(converter.Key);
 				foreach(var component in components)
 				{
-					converter.Value.Convert(component, root, resources, context);
+					converter.Value.Convert(component, root, context);
 				}
 			}
 		}

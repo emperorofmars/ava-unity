@@ -313,7 +313,7 @@ namespace ava.Components
 
 	public class AVAHumanoidMappingConverter : ISTFSecondStageConverter
 	{
-		public void Convert(Component component, GameObject root, List<UnityEngine.Object> resources, ISTFSecondStageContext context)
+		public void Convert(Component component, GameObject root, ISTFSecondStageContext context)
 		{
 			var stfComponent = (AVAHumanoidMapping)component;
 			var animator = root.AddComponent<Animator>();
@@ -323,7 +323,7 @@ namespace ava.Components
 
 			var avatar = HumanoidMappingConverter.convert(stfComponent, root);
 			animator.avatar = avatar;
-			resources.Add(avatar);
+			context.AddResource(avatar);
 		}
 	}
 }
