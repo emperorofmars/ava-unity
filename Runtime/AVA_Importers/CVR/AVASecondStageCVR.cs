@@ -22,7 +22,9 @@ namespace ava
 	public class AVASecondStageCVR : ASTFSecondStageDefault
 	{
 		protected override Dictionary<Type, ISTFSecondStageResourceProcessor> ResourceProcessors => new Dictionary<Type, ISTFSecondStageResourceProcessor> {
+#if UNITY_EDITOR
 			{typeof(AnimationClip), new STFAnimationSecondStageProcessor()}
+#endif
 		};
 
 		protected override Dictionary<Type, ISTFSecondStageConverter> Converters => new Dictionary<Type, ISTFSecondStageConverter>() {
