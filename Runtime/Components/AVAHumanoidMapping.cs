@@ -324,6 +324,7 @@ namespace ava.Components
 			var avatar = HumanoidMappingConverter.convert(stfComponent, root);
 			animator.avatar = avatar;
 			context.AddResource(avatar);
+			context.RelMat.AddConverted(component, animator);
 		}
 	}
 }

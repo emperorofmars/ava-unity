@@ -66,7 +66,8 @@ namespace ava
 				var context = new STFSecondStageContext(tmpRoot, new List<string> {"unity"}, new List<Type>(), new Dictionary<Type, ISTFSecondStageResourceProcessor>());
 				convertTree(tmpRoot, convertedResources, context);
 				var intermediaryAsset = new STFSecondStageAsset(tmpRoot, asset.getId(), asset.GetSTFAssetName());
-
+				if(context.ResourceConversions.Count > 0) convertedResources.AddRange(context.ResourceConversions.Values);
+				if(context.Resources.Count > 0) convertedResources.AddRange(context.Resources);
 				foreach(var appStage in RegisteredApplicationStages)
 				{
 					var result = appStage.Convert(intermediaryAsset, intermediaryAsset.GetAsset());
