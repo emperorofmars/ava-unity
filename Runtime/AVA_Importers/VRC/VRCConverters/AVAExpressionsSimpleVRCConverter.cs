@@ -3,6 +3,7 @@
 #if UNITY_EDITOR
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ava.Components;
 using stf.serialisation;
@@ -29,12 +30,55 @@ namespace ava.Converters
 				var controller = AnimatorController.CreateAnimatorControllerAtPath(context.GetPathForResourcesThatMustExistInFS() + "/" + component.name + "-animator-controller.controller");
 				controller.AddParameter(new AnimatorControllerParameter {name = "_BlendWeight", type = AnimatorControllerParameterType.Float, defaultFloat = 1.0f});
 
-				// generate animator controller here
+				var layers = new AnimatorControllerLayer[3];
+				layers[0] = controller.layers[0];
+
+				{
+					controller.AddLayer("_vrc_test");
+					var layer = controller.layers.First(l => l.name == "_vrc_test");
+					layer.defaultWeight = 1;
+					layer.name = "REEEEE";
+
+					var state = layer.stateMachine.AddState("eeeee");
+					layer.stateMachine.AddAnyStateTransition(state);
+
+					layers[controller.layers.Length - 1] = layer;
+				}
+				{
+					//var layer = new AnimatorControllerLayer();
+					//layer.name = "_vrc_hands";
+					//layer.defaultWeight = 1;
+					//layer.blendingMode = AnimatorLayerBlendingMode.Override;
+					
+					var stateMachine = new AnimatorStateMachine();
+					stateMachine.anyStatePosition = Vector3.up;
+					stateMachine.entryPosition = Vector3.left;
+					stateMachine.exitPosition = Vector3.right;
+					var state = stateMachine.AddState("aaaaaaa");
+					stateMachine.AddAnyStateTransition(state);
+					
+					var layer = new AnimatorControllerLayer {
+						name = "_vrc_hands",
+						defaultWeight = 1,
+						blendingMode = AnimatorLayerBlendingMode.Override,
+						stateMachine = stateMachine,
+					};
+					
+					//layer.stateMachine = stateMachine;
+					controller.AddLayer(layer);
+					layers[controller.layers.Length - 1] = layer;
+				}
+
+				controller.layers = layers;
 
 				var animator = avatar.GetComponent<Animator>();
 				animator.runtimeAnimatorController = controller;
-				context.AddResource(controller);
 				
+				AssetDatabase.Refresh();
+				EditorUtility.SetDirty(controller);
+				AssetDatabase.SaveAssets();
+
+				context.AddResource(controller);
 				context.RelMat.AddConverted(component, avatar);
 			}));
 		}
