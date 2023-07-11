@@ -54,16 +54,17 @@ namespace ava.Converters
 					var layer = controller.layers.First(l => l.name == "_vrc_hand_left");
 					layer.defaultWeight = 1;
 
-					var idle = addHandGesture(c, root, context, layer, 'l', "idle", 0);
+					var layerIdx = controller.layers.Length - 1;
+					var idle = addHandGesture(controller, c, root, context, layer, layerIdx, 'l', "idle", 0);
 					layer.stateMachine.AddEntryTransition(idle);
 
-					addHandGesture(c, root, context, layer, 'l', "open", 2);
-					addHandGesture(c, root, context, layer, 'l', "fist", 1);
-					addHandGesture(c, root, context, layer, 'l', "point", 3);
-					addHandGesture(c, root, context, layer, 'l', "peace", 4);
-					addHandGesture(c, root, context, layer, 'l', "rocknroll", 5);
-					addHandGesture(c, root, context, layer, 'l', "pistol", 6);
-					addHandGesture(c, root, context, layer, 'l', "thumbsup", 7);
+					addHandGesture(controller, c, root, context, layer, layerIdx, 'l', "open", 2);
+					addHandGesture(controller, c, root, context, layer, layerIdx, 'l', "fist", 1);
+					addHandGesture(controller, c, root, context, layer, layerIdx, 'l', "point", 3);
+					addHandGesture(controller, c, root, context, layer, layerIdx, 'l', "peace", 4);
+					addHandGesture(controller, c, root, context, layer, layerIdx, 'l', "rocknroll", 5);
+					addHandGesture(controller, c, root, context, layer, layerIdx, 'l', "pistol", 6);
+					addHandGesture(controller, c, root, context, layer, layerIdx, 'l', "thumbsup", 7);
 
 					layers[controller.layers.Length - 1] = layer;
 				}
@@ -72,16 +73,17 @@ namespace ava.Converters
 					var layer = controller.layers.First(l => l.name == "_vrc_hand_right");
 					layer.defaultWeight = 1;
 
-					var idle = addHandGesture(c, root, context, layer, 'r', "idle", 0);
+					var layerIdx = controller.layers.Length - 1;
+					var idle = addHandGesture(controller, c, root, context, layer, layerIdx, 'r', "idle", 0);
 					layer.stateMachine.AddEntryTransition(idle);
 
-					addHandGesture(c, root, context, layer, 'r', "open", 2);
-					addHandGesture(c, root, context, layer, 'r', "fist", 1);
-					addHandGesture(c, root, context, layer, 'r', "point", 3);
-					addHandGesture(c, root, context, layer, 'r', "peace", 4);
-					addHandGesture(c, root, context, layer, 'r', "rocknroll", 5);
-					addHandGesture(c, root, context, layer, 'r', "pistol", 6);
-					addHandGesture(c, root, context, layer, 'r', "thumbsup", 7);
+					addHandGesture(controller, c, root, context, layer, layerIdx, 'r', "open", 2);
+					addHandGesture(controller, c, root, context, layer, layerIdx, 'r', "fist", 1);
+					addHandGesture(controller, c, root, context, layer, layerIdx, 'r', "point", 3);
+					addHandGesture(controller, c, root, context, layer, layerIdx, 'r', "peace", 4);
+					addHandGesture(controller, c, root, context, layer, layerIdx, 'r', "rocknroll", 5);
+					addHandGesture(controller, c, root, context, layer, layerIdx, 'r', "pistol", 6);
+					addHandGesture(controller, c, root, context, layer, layerIdx, 'r', "thumbsup", 7);
 
 					layers[controller.layers.Length - 1] = layer;
 				}
@@ -100,21 +102,31 @@ namespace ava.Converters
 			}));
 		}
 
-		private AnimatorState addHandGesture(AVAExpressionsSimple c, GameObject root, ISTFSecondStageContext context, AnimatorControllerLayer layer, char hand, string gestureName, int conditionValue)
+		private AnimatorState addHandGesture(AnimatorController controller, AVAExpressionsSimple c, GameObject root, ISTFSecondStageContext context, AnimatorControllerLayer layer, int layerIdx, char hand, string gestureName, int conditionValue)
 		{
-			var state = layer.stateMachine.AddState(gestureName);
-			state.writeDefaultValues = true;
+			AnimatorState state = null;
 			var animation = c.expressions.Find(e => e.mapping == (hand + ":" + gestureName))?.animation;
 			if(animation != null)
 			{
 				Debug.Log($"EXPRESSION: {hand}:{gestureName} - {animation}");
-				
+
 				animation = (AnimationClip)context.GetConvertedResource(root, animation);
+
+				// Why Unity, WHYYYY
+				AssetDatabase.CreateAsset(animation, context.GetPathForResourcesThatMustExistInFS() + "/" + c.name + "-" + animation.name + "-animator-motion.anim");
 
 				Debug.Log($"ANIMATION CONVERTED: {animation}");
 
-				state.motion = animation;
+				//state = controller.AddMotion(animation, layerIdx);
+				state = layer.stateMachine.AddState(gestureName); // AAAAAAAAAAAAA
+				controller.SetStateEffectiveMotion(state, animation, layerIdx);
 			}
+			else
+			{
+				state = layer.stateMachine.AddState(gestureName);
+			}
+			state.writeDefaultValues = true;
+
 			var transition = layer.stateMachine.AddAnyStateTransition(state);
 			transition.AddCondition(AnimatorConditionMode.Equals, conditionValue, hand == 'l' ? "GestureLeft" : "GestureRight");
 			transition.hasExitTime = false;
