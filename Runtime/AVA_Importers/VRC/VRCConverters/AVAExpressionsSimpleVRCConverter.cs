@@ -107,7 +107,12 @@ namespace ava.Converters
 			var animation = c.expressions.Find(e => e.mapping == (hand + ":" + gestureName))?.animation;
 			if(animation != null)
 			{
+				Debug.Log($"EXPRESSION: {hand}:{gestureName} - {animation}");
+				
 				animation = (AnimationClip)context.GetConvertedResource(root, animation);
+
+				Debug.Log($"ANIMATION CONVERTED: {animation}");
+
 				state.motion = animation;
 			}
 			var transition = layer.stateMachine.AddAnyStateTransition(state);
