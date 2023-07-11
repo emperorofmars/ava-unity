@@ -12,6 +12,8 @@ namespace ava.Converters
 {
 	public class AVAEyeBoneLimitsSimpleVRCConverter : ISTFSecondStageConverter
 	{
+		public Dictionary<string, UnityEngine.Object> CollectOriginalResources(Component component, GameObject root, ISTFSecondStageContext context) { return null; }
+		
 		public void Convert(Component component, GameObject root, ISTFSecondStageContext context)
 		{
 			var c = (AVAEyeBoneLimitsSimple)component;

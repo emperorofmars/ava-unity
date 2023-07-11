@@ -11,6 +11,12 @@ namespace ava.Converters
 {
 	public class AVAAvatarVRCConverter : ISTFSecondStageConverter
 	{
+		public Dictionary<string, UnityEngine.Object> CollectOriginalResources(Component component, GameObject root, ISTFSecondStageContext context)
+		{
+			// actually return the icon resource for correctness sake, even if its not needed (unless for some reason some future target application allows you to animate that)
+			return null;
+		}
+
 		public void Convert(Component component, GameObject root, ISTFSecondStageContext context)
 		{
 			var avaAvatar = (AVAAvatar)component;

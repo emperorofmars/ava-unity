@@ -313,6 +313,8 @@ namespace ava.Components
 
 	public class AVAHumanoidMappingConverter : ISTFSecondStageConverter
 	{
+		public Dictionary<string, UnityEngine.Object> CollectOriginalResources(Component component, GameObject root, ISTFSecondStageContext context) { return null; }
+
 		public void Convert(Component component, GameObject root, ISTFSecondStageContext context)
 		{
 			var stfComponent = (AVAHumanoidMapping)component;

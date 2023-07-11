@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ava.Components;
+using stf;
 using stf.serialisation;
 using UnityEditor;
 using UnityEditor.Animations;
@@ -16,6 +17,20 @@ namespace ava.Converters
 {
 	public class AVAExpressionsSimpleVRCConverter : ISTFSecondStageConverter
 	{
+		public Dictionary<string, UnityEngine.Object> CollectOriginalResources(Component component, GameObject root, ISTFSecondStageContext context)
+		{
+			var c = (AVAExpressionsSimple)component;
+			var ret = new Dictionary<string, UnityEngine.Object>();
+			var assetInfo = root.GetComponent<STFAssetInfo>();
+			foreach(var e in c.expressions)
+			{
+				var meta = assetInfo.originalMetaInformation?.resourceInfo?.Find(r => r.originalResource == e.animation);
+				if(meta == null) meta = assetInfo.addonMetaInformation?.Find(a => a.resourceInfo?.Find(r => r.originalResource == e.animation) != null)?.resourceInfo?.Find(r => r.originalResource == e.animation); // this is stupid
+				if(meta != null) ret.Add(meta.id, e.animation);
+			}
+			return ret;
+		}
+
 		public void Convert(Component component, GameObject root, ISTFSecondStageContext context)
 		{
 			var c = (AVAExpressionsSimple)component;
