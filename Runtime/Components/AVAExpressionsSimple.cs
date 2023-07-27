@@ -18,13 +18,30 @@ namespace ava.Components
 		public static string _TYPE = "AVA.expressions_simple";
 		
 		[Serializable]
-		public class SimpleExpression
+		public class SimpleExpression // for handgestures and such
 		{
 			public string mapping;
 			public AnimationClip animation;
 		}
+		
+		[Serializable]
+		public class Toggle
+		{
+			public string name;
+			public AnimationClip animation;
+			// target object for gameobject toggle, or blendshape, or material switch, ...
+		}
+		
+		[Serializable]
+		public class Puppet
+		{
+			public string name;
+			public AnimationClip animation; // use blendtree resource
+		}
 
 		public List<SimpleExpression> expressions = new List<SimpleExpression>();
+		public List<Toggle> toggles = new List<Toggle>();
+		public List<Puppet> puppets = new List<Puppet>();
 	}
 
 	public class AVAExpressionsSimpleImporter : ASTFComponentImporter
