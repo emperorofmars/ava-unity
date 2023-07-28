@@ -31,7 +31,14 @@ namespace ava.Converters
 			vrmMeta.OtherLicenseUrl = avaAvatar.license_link;
 			vrmMeta.Thumbnail = avaAvatar.icon;
 
+			/*var vrmHumanoid = component.gameObject.AddComponent<VRMHumanoidDescription>();
+			vrmHumanoid.Avatar = avaAvatar.GetComponent<Animator>().avatar;
+			var humanDescription = ScriptableObject.CreateInstance<UniHumanoid.AvatarDescription>();
+			//humanDescription.SetHumanBones() // cant be arsed to deal with this
+			vrmHumanoid.Description = humanDescription;*/
+
 			context.AddResource(vrmMeta);
+			//context.AddResource(humanDescription);
 			context.RelMat.AddConverted(component, vrmMetaComponent);
 		}
 	}
