@@ -2,6 +2,7 @@
 #if UNIVRM_FOUND
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ava.Components;
 using stf.serialisation;
 using UnityEngine;
@@ -23,6 +24,7 @@ namespace ava.Converters
 
 			var vrmMetaComponent = component.gameObject.AddComponent<VRMMeta>();
 			var vrmMeta = new VRMMetaObject();
+			vrmMeta.name = "VRM_Meta";
 			vrmMetaComponent.Meta = vrmMeta;
 			vrmMeta.Title = avaAvatar.avatar_name;
 			vrmMeta.Version = avaAvatar.avatar_version;
@@ -30,6 +32,16 @@ namespace ava.Converters
 			vrmMeta.ExporterVersion = avaAvatar.avatar_version;
 			vrmMeta.OtherLicenseUrl = avaAvatar.license_link;
 			vrmMeta.Thumbnail = avaAvatar.icon;
+			
+			context.AddTask(new Task(() => {
+				AVAHumanoidMapping humanoid = context.RelMat.GetExtended<AVAHumanoidMapping>(component);
+
+				var vrmFirstPerson = component.gameObject.AddComponent<VRMFirstPerson>();
+				vrmFirstPerson.FirstPersonBone = avaAvatar.viewport_parent?.transform;
+				vrmFirstPerson.FirstPersonOffset = avaAvatar.viewport_position;
+				
+				//context.RelMat.AddConverted(component, vrmFirstPerson);
+			}));
 
 			/*var vrmHumanoid = component.gameObject.AddComponent<VRMHumanoidDescription>();
 			vrmHumanoid.Avatar = avaAvatar.GetComponent<Animator>().avatar;

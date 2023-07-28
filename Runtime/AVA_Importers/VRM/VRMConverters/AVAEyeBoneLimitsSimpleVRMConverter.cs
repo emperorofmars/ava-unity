@@ -21,11 +21,14 @@ namespace ava.Converters
 				AVAAvatar avaAvatar = context.RelMat.GetExtended<AVAAvatar>(component);
 				AVAHumanoidMapping humanoid = context.RelMat.GetExtended<AVAHumanoidMapping>(component);
 
-				var vrmFirstPerson = component.gameObject.AddComponent<VRMFirstPerson>();
-				vrmFirstPerson.FirstPersonBone = avaAvatar.viewport_parent?.transform;
-				vrmFirstPerson.FirstPersonOffset = avaAvatar.viewport_position;
+				var vrmLookat = component.gameObject.AddComponent<VRMLookAtBoneApplyer>();
+				vrmLookat.LeftEye.Transform = humanoid.mappings.Find(p => p.humanoidName == "EyeLeft")?.bone?.transform;
+				vrmLookat.RightEye.Transform = humanoid.mappings.Find(p => p.humanoidName == "EyeRight")?.bone?.transform;
 				
-				context.RelMat.AddConverted(component, vrmFirstPerson);
+				// vrmLookat.VerticalDown = // i cant be arsed to look at how this nonesense is defined
+				// etc
+				
+				context.RelMat.AddConverted(component, vrmLookat);
 			}));
 		}
 	}

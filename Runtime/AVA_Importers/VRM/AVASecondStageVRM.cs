@@ -31,8 +31,8 @@ namespace ava
 		protected override Dictionary<Type, ISTFSecondStageConverter> Converters => new Dictionary<Type, ISTFSecondStageConverter>() {
 			{typeof(AVAAvatar), new AVAAvatarVRMConverter()},
 			{typeof(AVAEyeBoneLimitsSimple), new AVAEyeBoneLimitsSimpleVRMConverter()},
-			/*{typeof(AVAFacialTrackingSimple), new AVAFacialTrackingSimpleVRCConverter()},
-			{typeof(AVAJankyFallbackPhysics), new AVAJankyFallbackPhysicsVRCConverter()},
+			{typeof(AVAFacialTrackingSimple), new AVAFacialTrackingSimpleVRMConverter()},
+			/*{typeof(AVAJankyFallbackPhysics), new AVAJankyFallbackPhysicsVRCConverter()},
 			{typeof(AVAVRCPhysbones), new AVAPhysboneVRCConverter()},
 #if UNITY_EDITOR
 			{typeof(AVAExpressionsSimple), new AVAExpressionsSimpleVRCConverter()}
@@ -40,7 +40,7 @@ namespace ava
 		};
 
 		protected override List<Type> WhitelistedComponents => new List<Type> {
-			typeof(Transform), typeof(Animator), typeof(RotationConstraint), typeof(SkinnedMeshRenderer), typeof(VRMMeta), typeof(VRMLookAtHead), typeof(VRMHumanoidDescription), typeof(VRMFirstPerson)
+			typeof(Transform), typeof(Animator), typeof(RotationConstraint), typeof(SkinnedMeshRenderer), typeof(VRMMeta), typeof(VRMLookAtHead), typeof(VRMHumanoidDescription), typeof(VRMFirstPerson), typeof(VRMLookAtBoneApplyer), typeof(VRMBlendShapeProxy)
 		};
 
 
