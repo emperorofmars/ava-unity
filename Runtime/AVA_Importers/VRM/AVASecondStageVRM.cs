@@ -51,7 +51,7 @@ namespace ava
 
 		public override bool CanHandle(ISTFAsset asset, UnityEngine.Object adaptedUnityAsset)
 		{
-			return asset.GetSTFAssetType() == "asset" && asset.GetAsset().GetType() == typeof(GameObject) && ((GameObject)asset.GetAsset()).GetComponent<AVAAvatar>() != null;
+			return asset.GetSTFAssetType() == "asset" && asset.GetAsset().GetType() == typeof(GameObject) && ((GameObject)asset.GetAsset()).GetComponent<AVAAvatar>() != null && ((GameObject)asset.GetAsset()).GetComponent<AVAHumanoidMapping>() != null;
 		}
 
 #if UNITY_EDITOR

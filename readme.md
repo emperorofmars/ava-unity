@@ -12,7 +12,7 @@ It will give you the option to spawn it only if you have the appropriate SDK inc
 
 ## Setup
 - It will not work standalone, please import the STF Unity implementation first: [https://github.com/emperorofmars/stf-unity](https://github.com/emperorofmars/stf-unity)
-- Download or clone the repository and copy the entire folder into your Unity projects 'Assets' folder.
+- Download or clone this repository and copy the entire folder into your Unity projects 'Assets' folder.
 - Ensure that you have either a current VRChat, ChilloutVR SDK or the UniVRM SDK in the version 0.89.0 (The same version that is required for the VSeeFace SDK).
 
 ---
