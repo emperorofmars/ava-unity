@@ -90,8 +90,38 @@ namespace ava.Converters
 
 				controller.layers = layers;
 
-				var animator = avatar.GetComponent<Animator>();
-				animator.runtimeAnimatorController = controller;
+				avatar.customizeAnimationLayers = true;
+				var baseLayers = new VRCAvatarDescriptor.CustomAnimLayer[5];
+				
+				var layerBase = new VRCAvatarDescriptor.CustomAnimLayer();
+				layerBase.type = VRCAvatarDescriptor.AnimLayerType.Base;
+				layerBase.isEnabled = false;
+				layerBase.isDefault = true;
+				baseLayers[0] = layerBase;
+				
+				var layerAdditive = new VRCAvatarDescriptor.CustomAnimLayer();
+				layerAdditive.type = VRCAvatarDescriptor.AnimLayerType.Additive;
+				layerAdditive.isDefault = true;
+				baseLayers[1] = layerAdditive;
+				
+				var layerGesture = new VRCAvatarDescriptor.CustomAnimLayer();
+				layerGesture.type = VRCAvatarDescriptor.AnimLayerType.Gesture;
+				layerGesture.isDefault = true;
+				baseLayers[2] = layerGesture;
+				
+				var layerAction = new VRCAvatarDescriptor.CustomAnimLayer();
+				layerAction.type = VRCAvatarDescriptor.AnimLayerType.Action;
+				layerAction.isDefault = true;
+				baseLayers[3] = layerAction;
+				
+				var layerFX = new VRCAvatarDescriptor.CustomAnimLayer();
+				layerFX.animatorController = controller;
+				layerFX.type = VRCAvatarDescriptor.AnimLayerType.FX;
+				layerFX.isEnabled = true;
+				layerFX.isDefault = false;
+				baseLayers[4] = layerFX;
+
+				avatar.baseAnimationLayers = baseLayers;
 				
 				AssetDatabase.Refresh();
 				EditorUtility.SetDirty(controller);
