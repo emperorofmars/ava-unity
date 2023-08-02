@@ -34,7 +34,7 @@ namespace ava
 		
 		public bool CanHandle(ISTFAsset asset, UnityEngine.Object adaptedUnityAsset)
 		{
-			return asset.GetSTFAssetType() == "asset" && asset.GetAsset().GetType() == typeof(GameObject) && ((GameObject)asset.GetAsset()).GetComponent<AVAAvatar>() != null;
+			return asset.GetSTFAssetType() == STFAssetExporter._TYPE && asset.GetAsset().GetType() == typeof(GameObject) && ((GameObject)asset.GetAsset()).GetComponent<AVAAvatar>() != null;
 		}
 
 		public SecondStageResult Convert(ISTFAsset asset, UnityEngine.Object adaptedUnityAsset)
