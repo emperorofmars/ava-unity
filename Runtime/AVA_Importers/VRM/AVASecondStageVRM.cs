@@ -32,15 +32,15 @@ namespace ava
 			{typeof(AVAAvatar), new AVAAvatarVRMConverter()},
 			{typeof(AVAEyeBoneLimitsSimple), new AVAEyeBoneLimitsSimpleVRMConverter()},
 			{typeof(AVAFacialTrackingSimple), new AVAFacialTrackingSimpleVRMConverter()},
-			/*{typeof(AVAJankyFallbackPhysics), new AVAJankyFallbackPhysicsVRCConverter()},
-			{typeof(AVAVRCPhysbones), new AVAPhysboneVRCConverter()},
-#if UNITY_EDITOR
+			{typeof(AVAJankyFallbackPhysics), new AVAJankyFallbackPhysicsVRMConverter()},
+/*#if UNITY_EDITOR
 			{typeof(AVAExpressionsSimple), new AVAExpressionsSimpleVRCConverter()}
 #endif*/
 		};
 
 		protected override List<Type> WhitelistedComponents => new List<Type> {
-			typeof(Transform), typeof(Animator), typeof(RotationConstraint), typeof(SkinnedMeshRenderer), typeof(VRMMeta), typeof(VRMLookAtHead), typeof(VRMHumanoidDescription), typeof(VRMFirstPerson), typeof(VRMLookAtBoneApplyer), typeof(VRMBlendShapeProxy)
+			typeof(Transform), typeof(Animator), typeof(RotationConstraint), typeof(SkinnedMeshRenderer), typeof(VRMMeta), typeof(VRMLookAtHead),
+			typeof(VRMHumanoidDescription), typeof(VRMFirstPerson), typeof(VRMLookAtBoneApplyer), typeof(VRMBlendShapeProxy), typeof(VRMSpringBone)
 		};
 
 

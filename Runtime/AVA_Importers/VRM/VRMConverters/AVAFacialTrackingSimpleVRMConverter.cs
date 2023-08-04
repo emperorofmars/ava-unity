@@ -36,6 +36,8 @@ namespace ava.Converters
 			createBlendshapeClip("oh", BlendShapePreset.O, c, vrmBlendshapeProxy, context);
 			createBlendshapeClip("ou", BlendShapePreset.U, c, vrmBlendshapeProxy, context);
 
+			createBlendshapeClip("blink", BlendShapePreset.Blink, c, vrmBlendshapeProxy, context);
+
 			context.RelMat.AddConverted(component, vrmBlendshapeProxy);
 		}
 

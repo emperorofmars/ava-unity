@@ -21,6 +21,7 @@ namespace ava.Components
 		public class SimpleExpression // for handgestures and such
 		{
 			public string mapping;
+			public string semantics;
 			public AnimationClip animation;
 		}
 		
@@ -55,7 +56,7 @@ namespace ava.Components
 
 			foreach(JObject e in json["expressions"])
 			{
-				c.expressions.Add(new AVAExpressionsSimple.SimpleExpression{mapping = (string)e["mapping"], animation = (AnimationClip)state.GetResource((string)e["animation"])});
+				c.expressions.Add(new AVAExpressionsSimple.SimpleExpression{mapping = (string)e["mapping"], semantics = (string)e["semantics"], animation = (AnimationClip)state.GetResource((string)e["animation"])});
 			}
 		}
 	}
@@ -84,7 +85,7 @@ namespace ava.Components
 			ret.Add("expressions", jsonExpressions);
 			foreach(var expression in c.expressions)
 			{
-				jsonExpressions.Add(new JObject{{"mapping", expression.mapping}, {"animation", state.GetResourceId(expression.animation)}});
+				jsonExpressions.Add(new JObject{{"mapping", expression.mapping}, {"semantics", expression.semantics}, {"animation", state.GetResourceId(expression.animation)}});
 			}
 
 			return ret;

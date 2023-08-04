@@ -39,18 +39,13 @@ namespace ava.Converters
 				var vrmFirstPerson = component.gameObject.AddComponent<VRMFirstPerson>();
 				vrmFirstPerson.FirstPersonBone = avaAvatar.viewport_parent?.transform;
 				vrmFirstPerson.FirstPersonOffset = avaAvatar.viewport_position;
-				
-				//context.RelMat.AddConverted(component, vrmFirstPerson);
 			}));
 
-			/*var vrmHumanoid = component.gameObject.AddComponent<VRMHumanoidDescription>();
-			vrmHumanoid.Avatar = avaAvatar.GetComponent<Animator>().avatar;
-			var humanDescription = ScriptableObject.CreateInstance<UniHumanoid.AvatarDescription>();
-			//humanDescription.SetHumanBones() // cant be arsed to deal with this
-			vrmHumanoid.Description = humanDescription;*/
+			var secondary = new GameObject();
+			secondary.name = "VRM_secondary";
+			secondary.transform.SetParent(root.transform, false);
 
 			context.AddResource(vrmMeta);
-			//context.AddResource(humanDescription);
 			context.RelMat.AddConverted(component, vrmMetaComponent);
 		}
 	}
