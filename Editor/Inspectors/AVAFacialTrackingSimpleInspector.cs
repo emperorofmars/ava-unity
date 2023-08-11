@@ -33,7 +33,7 @@ namespace ava.Components
 			c.TargetMeshInstance = (SkinnedMeshRenderer)EditorGUILayout.ObjectField(c.TargetMeshInstance, typeof(SkinnedMeshRenderer), true);
 			EditorGUILayout.EndHorizontal();
 
-			if(c.extends != null && c.extends.Count == 0 && c.GetComponent<AVAAvatar>() && GUILayout.Button("Setup Extends", GUILayout.ExpandWidth(false)))
+			if((c.extends != null || c.extends.Count == 0) && c.GetComponent<AVAAvatar>() && GUILayout.Button("Setup Extends", GUILayout.ExpandWidth(false)))
 			{
 				c.extends.Add(c.GetComponent<AVAAvatar>()?.id);
 			}
