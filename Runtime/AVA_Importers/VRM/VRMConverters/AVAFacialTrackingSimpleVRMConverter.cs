@@ -1,5 +1,5 @@
 
-#if VRCSDK3_FOUND
+#if UNIVRM_FOUND
 
 using System.Collections.Generic;
 using System.Linq;
