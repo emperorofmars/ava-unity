@@ -35,6 +35,7 @@ namespace ava.Components
 
 			if((c.extends != null || c.extends.Count == 0) && c.GetComponent<AVAAvatar>() && GUILayout.Button("Setup Extends", GUILayout.ExpandWidth(false)))
 			{
+				c.extends.Clear();
 				c.extends.Add(c.GetComponent<AVAAvatar>()?.id);
 			}
 
