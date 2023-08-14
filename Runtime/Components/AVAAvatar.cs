@@ -69,17 +69,23 @@ namespace ava.Components
 		{
 			var c = (AVAAvatar)component;
 			var ret = new JObject();
+			var resources_used = new JArray();
 			ret.Add("type", AVAAvatar._TYPE);
 			this.SerializeRelationships(c, ret);
 			ret.Add("avatar_name", c.avatar_name);
 			ret.Add("avatar_version", c.avatar_version);
 			if(c.icon != null)
+			{
 				ret.Add("icon", state.GetResourceId(c.icon));
+				resources_used.Add(state.GetResourceId(c.icon));
+			}
 			ret.Add("author", c.author);
 			ret.Add("license", c.license);
 			ret.Add("license_link", c.license_link);
 			ret.Add("viewport_parent", state.GetNodeId(c.viewport_parent));
 			ret.Add("viewport_position", new JArray() {c.viewport_position.x, c.viewport_position.y, c.viewport_position.z});
+			
+			ret.Add("resources_used", resources_used);
 			return ret;
 		}
 	}
