@@ -11,6 +11,8 @@ A set of hot-loadable extensions for the [STF format](https://github.com/emperor
 - Ensure that you have either a current VRChat, ChilloutVR SDK or the UniVRM SDK in the version 0.89.0 (The same version that is required for the VSeeFace SDK).
 - If you have an STF file with AVA components correctly set up, you can just import it. Its UI will give you the option to spawn a ready to upload VRChat, ChilloutVR or VRM avatar. It will give you the option to spawn it only if you have the appropriate SDK included.
 
+![Screenshot of an STF file's inspector in Unity with this project's extension included.](./doc/img/import_settings.png)
+
 ---
 
 Most components are only partly implemented without too much thought.
