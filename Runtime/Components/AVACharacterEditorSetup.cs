@@ -12,6 +12,7 @@ using UnityEditor.Animations;
 using UnityEditor;
 #endif
 
+// This exists for now purely to showcase how data could be stored to populate the ui of a character editor application
 namespace ava.Components
 {
 	public abstract class ACharacterEditorEntry
@@ -58,9 +59,6 @@ namespace ava.Components
 			state.AddComponent(id, c);
 			c.id = id;
 			this.ParseRelationships(json, c);
-			c.voice_parent = state.GetNode((string)json["voice_parent"]);
-			var voice_position_array = (JArray)json["voice_position"];
-			c.voice_position = new Vector3((float)voice_position_array[0], (float)voice_position_array[1], (float)voice_position_array[2]);
 		}
 	}
 
@@ -70,7 +68,6 @@ namespace ava.Components
 		{
 			var c = (AVACharacterEditorSetup)component;
 			var ret = new List<GameObject>();
-			if(c.voice_parent) ret.Add(c.voice_parent);
 			return ret;
 		}
 
@@ -81,8 +78,6 @@ namespace ava.Components
 			string voice_parent_node = state.GetNodeId(c.voice_parent);
 			ret.Add("type", AVACharacterEditorSetup._TYPE);
 			this.SerializeRelationships(c, ret);
-			ret.Add("voice_parent", voice_parent_node);
-			ret.Add("voice_position", new JArray() {c.voice_position.x, c.voice_position.y, c.voice_position.z});
 			return ret;
 		}
 	}
