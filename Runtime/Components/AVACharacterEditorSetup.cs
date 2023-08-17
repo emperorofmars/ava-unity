@@ -6,7 +6,6 @@ using stf.Components;
 using stf.serialisation;
 using UnityEngine;
 using System.Threading.Tasks;
-using UnityEditor.Animations;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -31,10 +30,10 @@ namespace ava.Components
 		public AnimationClip animation_on;
 		public AnimationClip animation_off;
 	}
-	public class CharacterEditorSliderEntry : ACharacterEditorEntry
+	/*public class CharacterEditorSliderEntry : ACharacterEditorEntry
 	{
 		public BlendTree blendtree;
-	}
+	}*/
 	public class CharacterEditorCategory
 	{
 		public string display_name;
