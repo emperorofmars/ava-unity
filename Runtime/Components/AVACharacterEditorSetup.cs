@@ -14,30 +14,24 @@ using UnityEditor;
 // This exists for now purely to showcase how data could be stored to populate the ui of a character editor application
 namespace ava.Components
 {
-	public abstract class ACharacterEditorEntry
+	[Serializable]
+	public class CharacterEditorEntry
 	{
+		public string type;
 		public string display_name;
-		public string description;
 		public string tooltip;
 		public Texture2D icon;
-	}
-	public class CharacterEditorSelectionEntry : ACharacterEditorEntry
-	{
 		public List<AnimationClip> options;
-	}
-	public class CharacterEditorToggleEntry : ACharacterEditorEntry
-	{
-		public AnimationClip animation_on;
-		public AnimationClip animation_off;
 	}
 	/*public class CharacterEditorSliderEntry : ACharacterEditorEntry
 	{
 		public BlendTree blendtree;
 	}*/
+	[Serializable]
 	public class CharacterEditorCategory
 	{
 		public string display_name;
-		public List<ACharacterEditorEntry> entries = new List<ACharacterEditorEntry>();
+		public List<CharacterEditorEntry> entries = new List<CharacterEditorEntry>();
 	}
 
 	public class AVACharacterEditorSetup : ASTFComponent
