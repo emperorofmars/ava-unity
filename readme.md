@@ -79,6 +79,8 @@ This project intends to provide components which represent such data and convert
 
 	If this component is remade with some proper thought put into it, it should support fallback functionality, so that targets like for example VRM, which support blendshape states only, can be supported.
 
+	**Warning:** Using this component messes up the hand rotation in VR usage for some reason. I've not yet spent any time debugging that.
+
 	Extends `AVA.avatar`.
 
 	*This component is very incomplete and made without much thought. Proof of concept only!*
