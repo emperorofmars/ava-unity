@@ -9,6 +9,8 @@
 - [General Description](#general-description)
 - [How to Use](#how-to-use)
 - [AVA Format](#ava-format)
+	- [Components](#components)
+	- [Resources](#resources)
 
 ## General Description
 
@@ -40,7 +42,7 @@ Most functionality of avatars in applications like VRChat, ChilloutVR or the VRM
 This project intends to provide components which represent such data and converters to all these target applications.
 
 ### Components
-Currently the following general components are included:
+#### Currently the following general components are included:
 - **AVA.avatar**
 	The presence of this component signifies that it is indeed an avatar. It must sit on a root node. This alone is enough to convert it to most targets (Not VRM, ill cry if i can't have an avatar be a non-humanoid 2d plane with the Sax-Gandalf meme on it).
 
@@ -58,23 +60,39 @@ Currently the following general components are included:
 
 	Extends AVA.avatar.
 - **AVA.facial_tracking_simple**
-	A list of blendshapes for facial expressions including visemes.
+	A list of blendshapes for facial expressions including visemes. Converts to all targets.
 	
 	Extends AVA.avatar.
 
 	*This component is very incomplete and made without much thought. Proof of concept only!*
 - **AVA.janky_fallback_physics**
+	Extremely simplified representation of bone physics. Converts to all targets.
 
 	*This component is very incomplete and made without much thought. Proof of concept only!*
 - **AVA.expressions_simple**
+	A simplified way to define an avatar's runtime features. This includes hand gestures, toggles and puppets.
+	Currently, only hand gestures actually get converted.
+
+	The idea is that most of an avatar's functionality are representable as simple definitions. This way they become more portable and future-proof as it should be very simple to parse these definitions into whatever format any application now or in the future will support.
+
+	This should convert in a predictable manner, so that this component can be extended by a more complex but less portable one to support everything that this does not account for.
 
 	Extends AVA.avatar.
 
 	*This component is very incomplete and made without much thought. Proof of concept only!*
+- **AVA.character-editor-setup**
+	Exists only to visually showcase what would be possible with this format.
 
-AVAVRCPhysbones
+#### The following application specific components are included:
+- **AVA.VRC.physbones**
+	STF representation of VRChat Physbones. Only applies to VRChat.
 
-AVACharacterEditor
+	In case a AVA.janky_fallback_physics component targets the same bone, it should be overrided.
+
+### Resources
+For now not additional resource types have been implemented.
+
+Good candidates would be blendtrees, 2d curves, color ramps and maybe state-machines.
 
 
 ---
