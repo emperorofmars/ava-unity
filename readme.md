@@ -60,6 +60,7 @@ This project intends to provide components which represent such data and convert
 	Extends AVA.avatar.
 - **AVA.facial_tracking_simple**
 	A list of blendshapes for facial expressions including visemes. Converts to all targets.
+	Currently, these are only blendshape mappings. Blendshapes only is a bad way to do things. When this is replaced with a more proper component, it should support animation states instead of only blendshapes, and use that only as a fallback method.
 	
 	Extends AVA.avatar.
 
@@ -75,6 +76,8 @@ This project intends to provide components which represent such data and convert
 	The idea is that most of an avatar's functionality are representable as simple definitions. This way they become more portable and future-proof as it should be very simple to parse these definitions into whatever format any application now or in the future will support.
 
 	This should convert in a predictable manner, so that this component can be extended by a more complex but less portable one to support everything that this does not account for.
+
+	If this component is remade with some proper thought put into it, it should support fallback functionality, so that targets like for example VRM, which support blendshape states only, can be supported.
 
 	Extends AVA.avatar.
 
