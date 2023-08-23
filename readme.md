@@ -29,8 +29,7 @@ For now, this exists only to show that this is possible and realistic.
 - Ensure you have the Newtonsoft JSON package imported in Unity. If you set up your Unity project with the VRC Creator Companion, it will be already imported. If not, install the official package in UPM.
 - Either:
 	- Download the latest release, which contains this set of extensions and the base STF implementation, and import the .unitypackage into Unity.
-	- Or set up the STF Unity implementation first: [https://github.com/emperorofmars/stf-unity](https://github.com/emperorofmars/stf-unity)
-	Then download or clone this repository and copy the entire folder into your Unity projects 'Assets' folder.
+	- Or clone the [STF Unity](https://github.com/emperorofmars/stf-unity) and then this repository into the 'Assets' folder of your Unity project.
 - Ensure that you have either a current VRChat SDK, ChilloutVR SDK or the UniVRM SDK in the version 0.89.0 (The same version that is required for the VSeeFace SDK).
 - If you have an STF file with AVA components correctly set up, you can just import it. Its UI will give you the option to spawn a ready to upload VRChat, ChilloutVR or VRM avatar. It will give you the option to spawn it only if you have the appropriate SDK included.
 
