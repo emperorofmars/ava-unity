@@ -86,10 +86,10 @@ This project intends to provide components which represent such data and convert
 - **AVA.VRC.physbones**
 	STF representation of VRChat Physbones. Only applies to VRChat.
 
-	In case a AVA.janky_fallback_physics component targets the same bone, it should be overrided.
+	In case an AVA.janky_fallback_physics component targets the same bone, it should be overrided.
 
 ### Resources
-For now not additional resource types have been implemented.
+For now no additional resource types have been implemented.
 
 Good candidates would be blendtrees, 2d curves, color ramps and maybe state-machines.
 
