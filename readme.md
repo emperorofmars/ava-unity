@@ -19,7 +19,7 @@ It contains a set of converters for specific targets like VRChat, VRM and Chillo
 
 I used this project to test and develop the capabilities of the [STF format](https://github.com/emperorofmars/stf-unity).
 
-This is very experimental, i tried various things for each component. As such using this will be a very inconsistent and half broken experience.
+This is very experimental, I tried various things for each component. As such using this will be a very inconsistent and half broken experience.
 
 Most components are only partly implemented without too much thought.
 
@@ -43,7 +43,7 @@ This project intends to provide components which represent such data and convert
 ### Components
 #### Currently the following general components are included:
 - `AVA.avatar`
-	The presence of this component signifies that it is indeed an avatar. It must sit on a root node. This alone is enough to convert it to most targets (Not VRM, ill cry if i can't have an avatar be a non-humanoid 2d plane with the Sax-Gandalf meme on it).
+	The presence of this component signifies that it is indeed an avatar. It must sit on a root node. This alone is enough to convert it to most targets (Not VRM, ill cry if I can't have an avatar be a non-humanoid 2d plane with the Sax-Gandalf meme on it).
 
 	It also contains the position of the viewport and the viewport parent node.
 - `AVA.humanoid_mappings`
@@ -53,7 +53,7 @@ This project intends to provide components which represent such data and convert
 
 	Extends `AVA.avatar` and `AVA.humanoid_mappings`.
 
-	It's called simple because it defines limit in a simpler manner than most target applications. This would be sufficient for most models that i have ever seen.
+	It's called simple because it defines limit in a simpler manner than most target applications. This would be sufficient for most models that I have ever seen.
 - `AVA.avatar_voice`
 	The position of the voice emitter and its parent node. Currently, only ChilloutVR has such a characteristic.
 
