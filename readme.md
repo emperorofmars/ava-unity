@@ -42,34 +42,34 @@ This project intends to provide components which represent such data and convert
 
 ### Components
 #### Currently the following general components are included:
-- **AVA.avatar**
+- `AVA.avatar`
 	The presence of this component signifies that it is indeed an avatar. It must sit on a root node. This alone is enough to convert it to most targets (Not VRM, ill cry if i can't have an avatar be a non-humanoid 2d plane with the Sax-Gandalf meme on it).
 
 	It also contains the position of the viewport and the viewport parent node.
-- **AVA.humanoid_mappings**
+- `AVA.humanoid_mappings`
 	Maps bone-instances to the Unity and VRM humanoid model. Will make avatars move with IK in all target applications.
-- **AVA.eye_bone_limits_simple**
+- `AVA.eye_bone_limits_simple`
 	Defines how far eye-bones can rotate. Requires for the eye rotation to be controlled by bones.
 
-	Extends AVA.avatar and AVA.humanoid_mappings.
+	Extends `AVA.avatar` and `AVA.humanoid_mappings`.
 
 	It's called simple because it defines limit in a simpler manner than most target applications. This would be sufficient for most models that i have ever seen.
-- **AVA.avatar_voice**
+- `AVA.avatar_voice`
 	The position of the voice emitter and its parent node. Currently, only ChilloutVR has such a characteristic.
 
-	Extends AVA.avatar.
-- **AVA.facial_tracking_simple**
+	Extends `AVA.avatar`.
+- `AVA.facial_tracking_simple`
 	A list of blendshapes for facial expressions including visemes. Converts to all targets.
 	Currently, these are only blendshape mappings. Blendshapes only is a bad way to do things. When this is replaced with a more proper component, it should support animation states instead of only blendshapes, and use that only as a fallback method.
 	
-	Extends AVA.avatar.
+	Extends `AVA.avatar`.
 
 	*This component is very incomplete and made without much thought. Proof of concept only!*
-- **AVA.janky_fallback_physics**
+- `AVA.janky_fallback_physics`
 	Extremely simplified representation of bone physics. Converts to all targets.
 
 	*This component is very incomplete and made without much thought. Proof of concept only!*
-- **AVA.expressions_simple**
+- `AVA.expressions_simple`
 	A simplified way to define an avatar's runtime features. This includes hand gestures, toggles and puppets.
 	Currently, only hand gestures actually get converted.
 
@@ -79,17 +79,17 @@ This project intends to provide components which represent such data and convert
 
 	If this component is remade with some proper thought put into it, it should support fallback functionality, so that targets like for example VRM, which support blendshape states only, can be supported.
 
-	Extends AVA.avatar.
+	Extends `AVA.avatar`.
 
 	*This component is very incomplete and made without much thought. Proof of concept only!*
-- **AVA.character-editor-setup**
+- `AVA.character-editor-setup`
 	Exists only to visually showcase what would be possible with this format.
 
 #### The following application specific components are included:
-- **AVA.VRC.physbones**
+- `AVA.VRC.physbones`
 	STF representation of VRChat Physbones. Only applies to VRChat.
 
-	In case an AVA.janky_fallback_physics component targets the same bone, it should be overrided.
+	In case a `AVA.janky_fallback_physics` component targets the same bone, it should be overrided.
 
 ### Resources
 For now no additional resource types have been implemented.
