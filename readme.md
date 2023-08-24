@@ -3,7 +3,11 @@
 
 **This is a proof of concept!**
 
-## [Watch the video presentation here!]()
+You are very welcome to open discussions with your ideas, suggestions and questions about the format and its possibilities.
+
+Open issues for concrete changes. Pull requests are very welcome!
+
+## [Watch the video presentation here!](https://youtu.be/ozkmGxFG_ug)
 
 ## Table of Content
 - [General Description](#general-description)
