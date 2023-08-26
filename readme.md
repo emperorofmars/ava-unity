@@ -1,7 +1,7 @@
 # AVA Format
 **A Set of Extensions for the [STF Format](https://github.com/emperorofmars/stf-unity) to Represent VR & V-Tubing Avatars**
 
-**This is a proof of concept!**
+### **This is a proof of concept!**
 
 You are very welcome to open discussions with your ideas, suggestions and questions about the format and its possibilities.
 
