@@ -88,7 +88,7 @@ namespace ava.Components
 			else
 			{
 				if(GUILayout.Button("Map Humanoid Bones From Root", GUILayout.ExpandWidth(false))) {
-					c.Map(Utils.getRoot(c.transform).GetComponentsInChildren<Transform>().Select(t => t.gameObject).ToArray());
+					c.Map(Utils.getRoot(c.transform).GetComponentsInChildren<Transform>().Select(t => t).ToArray());
 				}
 			}
 

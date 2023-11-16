@@ -168,7 +168,7 @@ namespace ava.Components
 			return _Translations[avaName];
 		}
 
-		public void Map(GameObject[] bones)
+		public void Map(Transform[] bones)
 		{
 			var tmpMappings = new Dictionary<string, GameObject>();
 			//if(armatureInstance == null) throw new Exception("Armature must be set");
@@ -200,12 +200,12 @@ namespace ava.Components
 						{
 							if(tmpMappings[mapping.Key].name.Length > bone.name.Length)
 							{
-								tmpMappings[mapping.Key] = bone;
+								tmpMappings[mapping.Key] = bone.gameObject;
 							}
 						}
 						else
 						{
-							tmpMappings.Add(mapping.Key, bone);
+							tmpMappings.Add(mapping.Key, bone.gameObject);
 						}
 					}
 				}
@@ -228,7 +228,7 @@ namespace ava.Components
 				c.mappings = new List<BoneMappingPair>();
 				foreach(var t in AVAHumanoidMapping._Translations)
 				{
-					if((string)json[t.Key] != null) c.mappings.Add(new BoneMappingPair(t.Key, c.armatureInstance.bones.First(b => b.GetComponent<STFUUID>().boneId == (string)json[t.Key])));
+					if((string)json[t.Key] != null) c.mappings.Add(new BoneMappingPair(t.Key, c.armatureInstance.bones.First(b => b.GetComponent<STFUUID>().boneId == (string)json[t.Key]).gameObject));
 				}
 			}));
 		}
